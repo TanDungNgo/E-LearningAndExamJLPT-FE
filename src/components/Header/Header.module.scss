@@ -1,0 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Lucida Sans Unicode';
+}
+
+body{
+    height: 100vh;
+    background-color: white;
+
+}
+
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #0A2640;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+a:hover{
+    color: #577694;
+}
+ header{
+    position: relative;
+    padding: 0 2px;
+ }
+
+ .navbar{
+    padding: 5px 25px 5px 5px;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+ }
+ .navbar .links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+ }
+ .action__btn{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+ }
+.action__btn-login{
+
+    width: 100px;
+    height: 40px;
+    font-size: 18px;
+
+}
+.action__btn-register{
+
+    width: 100px;
+    height: 40px;
+    font-size: 18px;
+}
+.action__btn-login:active{
+    scale: 0.95;
+}
+
+.navbar .toggle-btn{
+    color: #0A2640;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+ }
+
+
+ .dropdown-menu{
+    display: none;
+    position: absolute;
+    right: 22px;
+    top: 85px;
+    width: 285px;
+    background: #F4F4F4;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    border-radius: 10px;
+ }
+.dropdown-menu a{
+    text-decoration: none;
+    color: #0A2640;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    flex: none;
+    order: 0;
+    line-height: 0.7;
+    flex-grow: 0;
+}
+.dropdown-menu a:hover{
+    color:#577694;
+}
+ .dropdown-menu.open{
+    height: 0px;
+
+ }
+
+ .dropdown-menu li{
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .dropdown-menu .action__btn-login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-bottom: 5px;
+ }
+ .dropdown-menu .action__btn-register{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+ }
+@media (max-width: 1029px){
+    .navbar .links,
+    .navbar .action__btn-login,
+    .navbar .action__btn-register{
+        display: none;
+    }
+    .navbar .toggle-btn{
+        display: block;
+    }
+
+    .dropdown-menu{
+        display: block;
+    }
+}
+
+@media(max-width: 350px){
+    .dropdown-menu{
+        left: 2rem;
+        width: unset;
+    }
+}
+
+
