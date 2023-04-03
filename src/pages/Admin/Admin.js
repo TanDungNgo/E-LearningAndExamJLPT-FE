@@ -2,7 +2,7 @@ import { Badge, Drawer, List, Space } from "antd";
 import SideMenu from "./components/SideMenu/SideMenu";
 import classNames from "classnames/bind";
 import styles from "./Admin.module.scss";
-import "./Admin.css";
+import "./AntDesign.css";
 import React, { useEffect, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Avatar, Row, Col, Layout, Menu, theme } from "antd";
@@ -10,18 +10,12 @@ import { Link } from "react-router-dom";
 import config from "~/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { getComments } from "./API";
 const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
 
 function Admin({ children }) {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(["Hello"]);
   const [commentsOpen, setCommentsOpen] = useState(false);
-  useEffect(() => {
-    getComments().then((res) => {
-      setComments(res.comments.splice(0, 5));
-    });
-  }, []);
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -30,7 +24,7 @@ function Admin({ children }) {
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className={cx("admin__logo")}>
-          <Link to={config.routes.home}>
+          <Link to={config.routes.admin}>
             <img
               className={cx("admin__logo-image")}
               src="/image/logo2.png"

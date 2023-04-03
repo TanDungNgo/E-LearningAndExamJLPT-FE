@@ -95,11 +95,6 @@ function UserManagement() {
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}
       >
-        {/* <Search
-          placeholder="input search text"
-          onSearch={onSearch}
-          enterButton
-        /> */}
         <Button
           primary
           className={cx("btn-insert")}
