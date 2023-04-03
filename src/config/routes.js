@@ -1,7 +1,7 @@
 const routes = {
     signin: "/login",
     signup: "/register",
-    header: "/header"
+    home: "/"
 };
 
 export default routes;
