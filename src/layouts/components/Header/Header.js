@@ -4,8 +4,6 @@ import Button from "~/components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faComments,
-  faLanguage,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -25,6 +23,18 @@ const MENU_ITEMS = [
     title: "Grammar",
     to: "/grammar",
   },
+  {
+    title: "Vocabulary",
+    to: "/vocabulary",
+  },
+  {
+    title: "Article",
+    to: "/article",
+  },
+  {
+    title: "Postcast",
+    to: "/postcast",
+  }
 ];
 const Header = () => {
   const dropdown = () => {
