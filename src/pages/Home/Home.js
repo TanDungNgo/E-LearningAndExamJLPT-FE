@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import { useEffect, useState } from "react";
 import Slider from "~/components/Slider/Slider";
+import ListCourse from "~/components/ListCourse/ListCourse";
 const cx = classNames.bind(styles);
 
 const Home = () => {
@@ -25,7 +26,8 @@ const Home = () => {
           </div>
         </section>
       </section> */}
-      <Slider/>
+      {/* <Slider/> */}
+      <ListCourse/>
     </div>
   );
 };
