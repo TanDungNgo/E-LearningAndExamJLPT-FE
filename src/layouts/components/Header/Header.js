@@ -11,7 +11,7 @@ import Tippy from "@tippyjs/react";
 import 'tippy.js/dist/tippy.css'; 
 import { current } from "@reduxjs/toolkit";
 const cx = classNames.bind(styles);
-const currentUser = true;
+const currentUser = false;
 const MENU_ITEMS = [
   {
     title: "Home",
