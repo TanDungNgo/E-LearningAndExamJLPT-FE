@@ -3,6 +3,7 @@ import styles from "./Home.module.scss";
 import { useEffect, useState } from "react";
 import Slider from "~/components/Slider/Slider";
 import ListCourse from "~/components/ListCourse/ListCourse";
+import ListArticle from "~/components/ListArticle/ListArticle";
 const cx = classNames.bind(styles);
 
 const Home = () => {
@@ -28,6 +29,7 @@ const Home = () => {
       </section> */}
       {/* <Slider/> */}
       <ListCourse/>
+      <ListArticle/>
     </div>
   );
 };
