@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import Slider from "~/components/Slider/Slider";
 import ListCourse from "~/components/ListCourse/ListCourse";
 import ListArticle from "~/components/ListArticle/ListArticle";
+import TeacherCard from "~/components/TeacherCard/TeacherCard";
 const cx = classNames.bind(styles);
 
 const Home = () => {
   const [backgroundIndex, setBackgroundIndex] = useState(0);
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setBackgroundIndex(backgroundIndex => (backgroundIndex + 1) % 3);
+      setBackgroundIndex((backgroundIndex) => (backgroundIndex + 1) % 3);
     }, 10000);
 
     return () => clearInterval(intervalId);
@@ -28,8 +29,9 @@ const Home = () => {
         </section>
       </section> */}
       {/* <Slider/> */}
-      <ListCourse/>
-      <ListArticle/>
+      <ListCourse />
+      <ListArticle />
+      <TeacherCard />
     </div>
   );
 };
