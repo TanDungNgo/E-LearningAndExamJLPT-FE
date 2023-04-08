@@ -34,12 +34,12 @@ const Slider = () => {
     setCurrentSlide(0);
   }, []);
 
-//   useEffect(() => {
-//     if (autoScroll) {
-//       auto();
-//     }
-//     return () => clearInterval(slideInterval);
-//   }, [currentSlide]);
+  // useEffect(() => {
+  //   if (autoScroll) {
+  //     auto();
+  //   }
+  //   return () => clearInterval(slideInterval);
+  // }, [currentSlide]);
 
   return (
     <div className={cx("slider")}>
