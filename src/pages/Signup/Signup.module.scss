@@ -1,0 +1,142 @@
+.container{
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 5px;
+
+}
+.container .title{
+    font-family: 'Lucida Sans Unicode';
+    font-size: 45px;
+    position: relative;
+    margin-top: 70px;
+    color: #1B242E;
+}
+.input-box__Name{
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    justify-content: space-between;
+    
+}
+.input-box__Name input{
+    height: 30px;
+    width: 130px;
+    color: #000000;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #00000069;
+    padding-left: 15px;
+    margin-top: 25px;
+    font-size: 16px;
+}
+.input-box input{
+    height: 30px;
+    width: 300px;
+    color: #000000;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #00000069;
+    padding-left: 15px;
+    margin-top: 15px;
+    font-size: 16px;
+}
+.input-radio-box{
+    width: 59%;
+    margin-top: 10px;
+}
+input[type=radio]{
+    margin-left: 20px;
+    margin-right: 5px;
+    height: 15px;
+    width: 15px;
+}
+.input-radio-box .details{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #4D4F4E;
+    font-weight: 500;
+    font-size: 15px;
+}
+input[type=submit]{
+    font-family: Arial, Helvetica, sans-serif;
+    height: 38px;
+    width: 240px;
+    font-size: 17px;
+    background-color: #B79032;
+    color: #FFFFFF;
+    border: 0px;
+    border-radius: 12px;
+    margin-top: 40px;
+}
+.text{
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: none;
+    font-size: 13px;
+    color: #4D4F4E;
+    margin-top: 6px;
+}
+a{
+    color: red;
+}
+.img-right{
+    width: 670px;
+    margin-left: 80px;
+    margin-top: 100px;
+}
+.signup-left{
+    margin-top: 50px;
+    border: 2px solid #B79032;
+    border-radius: 70px;
+    align-items: center;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    height: 640px;
+    width: 500px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+@media screen and (max-width: 1340px) {
+    img{
+        width: 550px;
+    }
+}
+@media screen and (max-width: 1248px) {
+    img{
+        width: 450px;
+    }
+}
+@media screen and (max-width: 1140px) {
+    img{
+        display: none;
+    }
+}
+@media screen and (max-width: 613px) {
+    img{
+        display: none;
+    }
+    .signup-left{
+        box-shadow: none;
+        border: none;
+    }
+    .input-box__Name{
+        width: 64%;
+    }
+    .input-radio-box{
+        width: 63%;
+    }
+    .signup-left{
+        margin-left: 10px;
+    }
+}
+@media screen and (max-width: 488px) {
+    .input-box__Name{
+        width: 82%;
+    }
+    .input-radio-box{
+        width: 82%;
+    }
+}
+
+
