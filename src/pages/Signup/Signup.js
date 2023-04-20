@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBars, faCalendar, faComment, faCommentAlt, faComments, faEnvelope, faPhone, faVoicemail,
 } from "@fortawesome/free-solid-svg-icons";
+import Button from "~/components/Button/Button";
 const cx = classNames.bind(styles);
 
 function Signup(){
@@ -48,9 +49,7 @@ function Signup(){
                 <input type="radio" required/>
                 <span className={cx("details")}>Teacher</span>
             </div>
-            <div className={cx("button")}>
-                <input type="submit" value="Create account"/>
-            </div>
+            <Button className={cx("btn_submit")}>Create</Button>
             <div className={cx("text")}>
                 <span className={cx("text-detail")}>If you have account</span>
                 <a href="" target="_self"> LOG IN</a>

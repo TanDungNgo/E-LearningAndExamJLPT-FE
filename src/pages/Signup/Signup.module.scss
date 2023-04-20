@@ -59,7 +59,7 @@ input[type=radio]{
     font-weight: 500;
     font-size: 15px;
 }
-input[type=submit]{
+.btn_submit{
     font-family: Arial, Helvetica, sans-serif;
     height: 38px;
     width: 240px;
@@ -69,6 +69,7 @@ input[type=submit]{
     border: 0px;
     border-radius: 12px;
     margin-top: 40px;
+    font-weight: 80;
 }
 .text{
     font-family: Arial, Helvetica, sans-serif;
