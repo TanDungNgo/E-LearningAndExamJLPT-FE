@@ -1,14 +1,34 @@
-import React from "react";
-import ArticleCard from "~/components/ArticleCard/ArticleCard";
-import CourseCard from "~/components/CourseCard/CourseCard";
+import classNames from "classnames/bind";
+import styles from "./Home.module.scss";
+import { useEffect, useState } from "react";
+import Slider from "~/components/Slider/Slider";
+const cx = classNames.bind(styles);
 
-function Home() {
+const Home = () => {
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setBackgroundIndex(backgroundIndex => (backgroundIndex + 1) % 3);
+    }, 10000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <div>
-      {/* <CourseCard /> */}
-      <ArticleCard />
+      {/* <section className={cx("slider__container")}>
+        <section className={cx("slider")}>
+          <div className={cx("slider__item")}>
+            <img src="/images/backgroundHom2.png" alt="background-home" style={{width:"100%"}}></img>
+          </div>
+          <div className={cx("slider__item")}>
+            <img src="/images/backgroundHome.png" alt="background-home" style={{width:"100%"}}></img>
+          </div>
+        </section>
+      </section> */}
+      <Slider/>
     </div>
   );
-}
+};
+
 
 export default Home;
