@@ -35,9 +35,12 @@ const columns = [
     render: (_, { tags }) => (
       <>
         {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
+          let color = "geekblue";
+          if (tag === "student") {
             color = "volcano";
+          }
+          if (tag === "admin") {
+            color = "green";
           }
           return (
             <Tag color={color} key={tag}>
@@ -68,24 +71,38 @@ const columns = [
 const data = [
   {
     key: "1",
-    name: "John Brown",
+    name: "Ngo Tan Dung",
     age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
+    address: "Da Nang",
+    tags: ["admin"],
   },
   {
     key: "2",
-    name: "Jim Green",
+    name: "Le Thi Huyen Trang",
     age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
+    address: "Quang Tri",
+    tags: ["teacher"],
   },
   {
     key: "3",
-    name: "Joe Black",
+    name: "Tran Khanh Phuong",
     age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
+    address: "Da Nang",
+    tags: ["teacher"],
+  },
+  {
+    key: "4",
+    name: "Dao Thuy Trang",
+    age: 32,
+    address: "Ninh Binh",
+    tags: ["student"],
+  },
+  {
+    key: "4",
+    name: "Tran Hong Duc",
+    age: 32,
+    address: "Da Nang",
+    tags: ["student"],
   },
 ];
 function UserManagement() {
@@ -95,6 +112,11 @@ function UserManagement() {
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}
       >
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+        />
         <Button
           primary
           className={cx("btn-insert")}

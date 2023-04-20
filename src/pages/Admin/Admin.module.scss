@@ -3,13 +3,18 @@
   display: flex;
   justify-content: center;
   background-color: white;
-}
-.admin__logo-image {
-  height: 60px;
+  &-image {
+    height: 60px;
+  }
 }
 .admin__header-left {
   display: flex;
   align-items: center;
+  span.trigger svg {
+    width: 25px !important;
+    height: 25px !important;
+    margin: 10px !important;
+  }
 }
 .admin__header-right {
   display: flex;
@@ -17,10 +22,14 @@
   flex-direction: row-reverse;
   padding: 0 20px;
 }
-.admin__icon{
+.admin__icon {
   font-size: 24px;
   cursor: pointer;
 }
 .admin__page-content {
   padding: 10px;
+}
+.admin__body {
+  padding: 20;
+  min-height: 280;
 }
