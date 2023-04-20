@@ -25,10 +25,19 @@
   align-items: center;
   gap: 2rem;
 }
-.action__btn {
+.actions {
   display: flex;
   gap: 2rem;
   align-items: center;
+}
+.action__btn{
+  background-color: transparent;
+  font-size: 24px;
+  color: #0a2640;
+  padding: 4px 12px;
+  cursor: pointer;
+
+
 }
 .action__btn-login,.action__btn-register{
   height: 40px;
@@ -92,6 +101,7 @@
   display: flex;
   justify-content: center;
 }
+
 @media (max-width: 1029px) {
   .navbar .links,
   .navbar .action__btn-login,
@@ -105,6 +115,14 @@
   .dropdown-menu {
     display: block;
   }
+}
+.user-avt{
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+
 }
 
 @media (max-width: 350px) {
