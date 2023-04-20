@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Slider from "~/components/Slider/Slider";
 import ListCourse from "~/components/ListCourse/ListCourse";
 import ListArticle from "~/components/ListArticle/ListArticle";
-import TeacherCard from "~/components/TeacherCard/TeacherCard";
+import ListTeacher from "~/components/ListTeacher/ListTeacher";
 const cx = classNames.bind(styles);
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
       <Slider/>
       <ListCourse />
       <ListArticle />
-      <TeacherCard />
+      <ListTeacher />
     </div>
   );
 };
