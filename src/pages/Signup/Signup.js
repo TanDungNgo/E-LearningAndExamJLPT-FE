@@ -5,6 +5,8 @@ import {
     faBars, faCalendar, faComment, faCommentAlt, faComments, faEnvelope, faPhone, faVoicemail,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "~/components/Button/Button";
+import { Link } from "react-router-dom";
+import routes from "~/config/routes";
 const cx = classNames.bind(styles);
 
 function Signup(){
@@ -52,7 +54,7 @@ function Signup(){
             <Button className={cx("btn_submit")}>Create</Button>
             <div className={cx("text")}>
                 <span className={cx("text-detail")}>If you have account</span>
-                <a href="" target="_self"> LOG IN</a>
+                <Link  to={routes.signin}> LOG IN</Link>
             </div>
         </div>
         <div className={cx("signup-right")}>

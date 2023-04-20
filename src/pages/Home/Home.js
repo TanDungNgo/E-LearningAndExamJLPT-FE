@@ -8,27 +8,9 @@ import TeacherCard from "~/components/TeacherCard/TeacherCard";
 const cx = classNames.bind(styles);
 
 const Home = () => {
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setBackgroundIndex((backgroundIndex) => (backgroundIndex + 1) % 3);
-    }, 10000);
-
-    return () => clearInterval(intervalId);
-  }, []);
   return (
     <div>
-      {/* <section className={cx("slider__container")}>
-        <section className={cx("slider")}>
-          <div className={cx("slider__item")}>
-            <img src="/images/backgroundHom2.png" alt="background-home" style={{width:"100%"}}></img>
-          </div>
-          <div className={cx("slider__item")}>
-            <img src="/images/backgroundHome.png" alt="background-home" style={{width:"100%"}}></img>
-          </div>
-        </section>
-      </section> */}
-      {/* <Slider/> */}
+      <Slider/>
       <ListCourse />
       <ListArticle />
       <TeacherCard />
