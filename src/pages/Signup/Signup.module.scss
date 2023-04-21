@@ -97,12 +97,12 @@ input[type="radio"] {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 @media screen and (max-width: 1140px) {
-  img {
+  .img-right {
     display: none;
   }
 }
 @media screen and (max-width: 613px) {
-  img {
+  .img-right {
     display: none;
   }
   .signup-left {

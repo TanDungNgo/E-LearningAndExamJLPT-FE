@@ -18,7 +18,7 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { current } from "@reduxjs/toolkit";
 const cx = classNames.bind(styles);
-const currentUser = true;
+const currentUser = false;
 const MENU_ITEMS = [
   {
     title: "Home",
@@ -103,7 +103,8 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button outline className={cx("action__btn-register")}>
+              <Button outline className={cx("action__btn-register")}
+              to={routes.signup}>
                 Register
               </Button>
               <Button

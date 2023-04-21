@@ -1,10 +1,5 @@
 import { Space, Table, Tag } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  SearchOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import classNames from "classnames/bind";
 import styles from "./UserManagement.module.scss";
@@ -57,7 +52,9 @@ const columns = [
     render: (_, record) => (
       <Space size="middle">
         <a>
-          <EditOutlined style={{ fontSize: "20px", color: "#0a9a41" }} />
+          <EditOutlined
+            style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
+          />
         </a>
         <a>
           <DeleteOutlined

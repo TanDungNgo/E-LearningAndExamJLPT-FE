@@ -58,7 +58,7 @@ function Signup(){
             </div>
         </div>
         <div className={cx("signup-right")}>
-            <img className="img-right" src="https://img.freepik.com/premium-vector/group-happy-students-with-backpacks-books-their-hands-school-college-students-together_165429-1249.jpg"/>
+            <img className={cx("img-right")} src="https://img.freepik.com/premium-vector/group-happy-students-with-backpacks-books-their-hands-school-college-students-together_165429-1249.jpg"/>
         </div>
     </div>
   );
