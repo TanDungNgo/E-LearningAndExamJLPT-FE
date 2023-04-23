@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 7px;
+}
+.title {
+  margin-bottom: 20px;
+  &--primary {
+    color: var(--primary);
+  }
+}
+.list-card {
+  display: flex;
+  gap: 40px;
+}

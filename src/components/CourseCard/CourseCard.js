@@ -6,7 +6,7 @@ function CourseCard(props) {
   return (
     <div className={cx("card")}>
       <div className={cx("card__header")}>
-        <div className={cx("card__category")}>JNPT</div>
+        <div className={cx("card__category")}>JLPT</div>
         <img
           src="https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"
           alt=""

@@ -4,6 +4,10 @@ const routes = {
     home: "/",
     enrollCourse: "/enrollCourse",
     coursedetail: "/coursedetail",
-    allcourse: "/allcourse"
-}
+    allcourse: "/allcourse",
+    admin: "/admin",
+    courseManagement: "/admin/course",
+    userManagement: "/admin/user",
+};
+
 export default routes;
