@@ -53,27 +53,27 @@ h3 {
   margin-left: 40px;
 }
 
-.container::before {
-  content: "";
-  position: absolute;
-  height: 180px;
-  width: 1px;
-  left: 650px;
-  top: 800px;
-  background-color: #f0f8ff60;
-  border: none;
-}
+// .container::before {
+//   content: "";
+//   position: absolute;
+//   height: 180px;
+//   width: 1px;
+//   left: 650px;
+//   top: 800px;
+//   background-color: #f0f8ff60;
+//   border: none;
+// }
 
-.container::after {
-  content: "";
-  position: absolute;
-  height: 180px;
-  width: 1px;
-  left: 970px;
-  top: 800px;
-  background-color: #f0f8ff60;
-  border: none;
-}
+// .container::after {
+//   content: "";
+//   position: absolute;
+//   height: 180px;
+//   width: 1px;
+//   left: 970px;
+//   top: 800px;
+//   background-color: #f0f8ff60;
+//   border: none;
+// }
 
 .icon {
   color: rgba(227, 227, 227, 0.711);
