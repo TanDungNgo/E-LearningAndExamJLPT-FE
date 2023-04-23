@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./CourseCard.module.scss";
+import routes from "~/config/routes";
 const cx = classNames.bind(styles);
 function CourseCard(props) {
   return (
@@ -22,7 +23,7 @@ function CourseCard(props) {
         </div>
       </div>
       <div className={cx("card__footer")}>
-        <Button primary className={cx("card__button")}>View details</Button>
+        <Button primary className={cx("card__button")} to={routes.coursedetail}>View details</Button>
         <div className={cx("card__info")}>
           <div className={cx("card__author")}>
             <img

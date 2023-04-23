@@ -8,8 +8,6 @@ import Signin from "~/pages/Signin/Signin";
 import Signup from "~/pages/Signup/Signup";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
-import Footer from "~/layouts/components/Footer/Footer"
-import EnrollCourse from "~/pages/EnrollCourse/EnrollCourse";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 
 

@@ -3,6 +3,7 @@ import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
 import styles from "./ListCourse.module.scss";
 import Button from "../Button/Button";
+import routes from "~/config/routes";
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +41,7 @@ function ListCourse() {
       </div>
       <div className={cx("list-course")}>{renderCard()}</div>
       <div className={cx("list-course__footer")}>
-        <Button outline className={cx("button__explore")}>Explore all Courses</Button>
+        <Button outline className={cx("button__explore")} to={routes.allcourse}>Explore all Courses</Button>
       </div>
     </div>
   );
