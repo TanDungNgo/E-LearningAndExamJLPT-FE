@@ -9,7 +9,6 @@ import Signup from "~/pages/Signup/Signup";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import Footer from "~/layouts/components/Footer/Footer"
-import Home from "~/pages/Home/Home";
 import EnrollCourse from "~/pages/EnrollCourse/EnrollCourse";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 

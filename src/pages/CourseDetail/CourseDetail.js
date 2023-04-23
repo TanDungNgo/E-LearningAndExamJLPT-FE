@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./CourseDetail.module.scss";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "~/components/Button/Button";
 import Header from "~/layouts/components/Header/Header";
@@ -10,6 +11,21 @@ import EnrollCard from "~/components/EnrollCard/EnrollCard";
 const cx = classNames.bind(styles);
 
 function CourseDetail(){
+  const [listCourse, setListCourse] = useState([
+    "1",
+    "2",
+    "3",
+    "4",
+  ]);
+  const renderCard = () => {
+    return listCourse.map((item, index) => {
+      return (
+        <div key={index}>
+          <CourseCard />
+        </div>
+      );
+    });
+  };
   return (
     <div className={cx("container")}>
         <div className={cx("poster__course")}>
@@ -58,10 +74,7 @@ function CourseDetail(){
             <div className={cx("card__relatedcourse-title")}>Related Course</div>
             <div className={cx("card__relatedcourse-detail")}>
                 <FontAwesomeIcon icon={faChevronLeft} className={cx("icon__left")}></FontAwesomeIcon>
-                <CourseCard className={cx("card__course")}></CourseCard>
-                <CourseCard className={cx("card__course")}></CourseCard>
-                <CourseCard className={cx("card__course")}></CourseCard>
-                <CourseCard className={cx("card__course")}></CourseCard>
+                {renderCard()}
                 <FontAwesomeIcon icon={faChevronRight} className={cx("icon__right")}></FontAwesomeIcon>
             </div>
         </div>
