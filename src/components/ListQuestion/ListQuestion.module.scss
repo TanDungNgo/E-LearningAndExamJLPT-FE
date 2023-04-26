@@ -72,6 +72,15 @@
       border-radius: 50%;
       cursor: pointer;
     }
+    .done {
+      background-color: rgba(255, 174, 0, 0.3);
+    }
+    .not-done {
+      background-color: #dee5ef;
+    }
+    .selected {
+      border: 0.2rem solid #a0a1a3;
+    }
   }
   .button {
     display: flex;

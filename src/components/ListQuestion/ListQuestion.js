@@ -4,32 +4,80 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { ExamData } from "~/pages/Exam/ExamData";
+import Swal from "sweetalert2";
 const cx = classNames.bind(styles);
 
-function ListQuestion() {
-  const [questions, setQuestions] = useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
+function ListQuestion(props) {
+  const [questions, setQuestions] = useState(ExamData);
+  const isAllDone = props.statusAnswers.every((status) => status === "done");
   const renderQuestion = () => {
-    return questions.map((question, index) => {
-      return (
-        <div className={cx("question")} key={index}>
-          {index + 1}
-        </div>
-      );
+    return props.quizzes.map((question, index) => {
+      if (props.statusAnswers[index] === "done") {
+        return (
+          <div
+            className={
+              index === props.selectedQuestionIndex
+                ? cx("question", "done", "selected")
+                : cx("question", "done")
+            }
+            key={index}
+            onClick={() => {
+              props.onQuestionClick(index);
+            }}
+          >
+            {index + 1}
+          </div>
+        );
+      } else if (props.statusAnswers[index] === "not-done") {
+        return (
+          <div
+            className={
+              index === props.selectedQuestionIndex
+                ? cx("question", "not-done", "selected")
+                : cx("question", "not-done")
+            }
+            key={index}
+            onClick={() => {
+              props.onQuestionClick(index);
+            }}
+          >
+            {index + 1}
+          </div>
+        );
+      } else {
+        return (
+          <div
+            className={
+              index === props.selectedQuestionIndex
+                ? cx("question", "selected")
+                : cx("question")
+            }
+            key={index}
+            onClick={() => {
+              props.onQuestionClick(index);
+            }}
+          >
+            {index + 1}
+          </div>
+        );
+      }
+    });
+  };
+  const onSubmmit = () => {
+    console.log(props.quizzes);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Submited!", "You submited the exam", "success");
+      }
     });
   };
   return (
@@ -57,7 +105,9 @@ function ListQuestion() {
       </div>
       <div className={cx("list-question")}>{renderQuestion()}</div>
       <div className={cx("button")}>
-        <Button outline>Submit</Button>
+        <Button rounded onClick={onSubmmit} disabled={!isAllDone}>
+          Submit
+        </Button>
       </div>
     </div>
   );
