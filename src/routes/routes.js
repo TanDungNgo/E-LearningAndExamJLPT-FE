@@ -10,6 +10,7 @@ import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 import Overview from "~/pages/Overview/Overview";
+import ExamPage from "~/pages/Exam/ExamPage";
 
 
 // Public routes
@@ -20,6 +21,7 @@ const publicRoutes = [
     {path: config.routes.home, component: Home, layout: DefaultLayout},
     {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout},
     {path: config.routes.overview, component: Overview, layout: DefaultLayout},
+    {path: config.routes.exam, component: ExamPage}
 ];
 
 // Private routes
