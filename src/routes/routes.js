@@ -9,6 +9,7 @@ import Signup from "~/pages/Signup/Signup";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import AllCourse from "~/pages/AllCourse/AllCourse";
+import Overview from "~/pages/Overview/Overview";
 
 
 // Public routes
@@ -17,7 +18,8 @@ const publicRoutes = [
     {path: config.routes.signup, component: Signup},
     {path: config.routes.coursedetail, component: CourseDetail, layout: DefaultLayout},
     {path: config.routes.home, component: Home, layout: DefaultLayout},
-    {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout}
+    {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout},
+    {path: config.routes.overview, component: Overview, layout: DefaultLayout},
 ];
 
 // Private routes
