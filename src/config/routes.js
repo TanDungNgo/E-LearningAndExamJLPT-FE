@@ -8,6 +8,7 @@ const routes = {
     admin: "/admin",
     courseManagement: "/admin/course",
     userManagement: "/admin/user",
+    overview: "/overview",
 };
 
 export default routes;
