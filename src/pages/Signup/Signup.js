@@ -14,7 +14,7 @@ function Signup(){
     <div className={cx("container")}>
         <div className={cx("signup-left")}>
             <div className={cx("title")}>Sign Up</div>
-            <div className={cx("input-box__Name")}>
+            <div className={cx("input-box__name")}>
                 <div>
                 <input type="text" placeholder="First name" required/>
                 </div>

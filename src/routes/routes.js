@@ -11,6 +11,7 @@ import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import Footer from "~/layouts/components/Footer/Footer"
 import EnrollCourse from "~/pages/EnrollCourse/EnrollCourse";
 import AllCourse from "~/pages/AllCourse/AllCourse";
+import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 
 
 // Public routes
@@ -19,7 +20,8 @@ const publicRoutes = [
     {path: config.routes.signup, component: Signup},
     {path: config.routes.coursedetail, component: CourseDetail, layout: DefaultLayout},
     {path: config.routes.home, component: Home, layout: DefaultLayout},
-    {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout}
+    {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout},
+    {path: config.routes.createCourse, component: CreateCourse}
 ];
 
 // Private routes
