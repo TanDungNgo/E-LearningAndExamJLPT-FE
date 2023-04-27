@@ -28,7 +28,7 @@ function Overview() {
                 <div className={cx("container__poster")}>
                     <img className={cx("container__poster__backgroud")} src="/images/backgroundHome1.png" alt="" />
                     <div className={cx("container__poster__search")}>
-                        <input type="text" placeholder="Want to lear?" required />
+                        <input type="text" placeholder="  Want to learn?" required />
                         <Button primary className={cx("container__poster__btn-search")} > Search</Button>
                     </div>
                 </div>
