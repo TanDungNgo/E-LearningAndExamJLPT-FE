@@ -1,3 +1,5 @@
+import ProfileUser from "~/pages/ProfileUser/ProfileUser";
+
 const routes = {
     signin: "/login",
     signup: "/register",
@@ -9,6 +11,8 @@ const routes = {
     courseManagement: "/admin/course",
     userManagement: "/admin/user",
     createCourse: "/createCourse",
+    profileUser: "/profileUser",
+    cardProfile: "/cardProfile"
 };
 
 export default routes;
