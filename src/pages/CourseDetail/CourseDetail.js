@@ -1,9 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./CourseDetail.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "~/components/Button/Button";
-import Header from "~/layouts/components/Header/Header";
-import Footer from "~/layouts/components/Footer/Footer";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import EnrollCard from "~/components/EnrollCard/EnrollCard";
