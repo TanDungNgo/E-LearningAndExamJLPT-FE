@@ -1,0 +1,58 @@
+.exam-result {
+  margin: 20px;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #e8edf6;
+  &__header {
+    display: flex;
+    height: 130px;
+    .exam-image img {
+      height: 100%;
+      width: 200px;
+    }
+    .exam-info {
+      padding: 20px;
+      &__test-date {
+        color: #b0bac9;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        p {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  &__table {
+    margin-top: 20px;
+    table {
+      width: 100%;
+      background-color: #fff;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;   
+      text-align: center;   
+    }
+    .status{
+      font-weight: 700;
+      color: #04c40d;
+    }
+    .info{
+      display: flex;
+      font-size: 13px;
+      color: #b0bac9;
+      justify-content: center;
+      svg{
+        margin-top: 3px;
+      }
+      p{
+        margin-left: 5px;
+      }
+    }
+  }
+}
