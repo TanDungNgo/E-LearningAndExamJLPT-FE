@@ -69,7 +69,7 @@ function Admin({ children }) {
               <Link to={config.routes.admin}>
                 <img
                   className={cx("admin__logo-image")}
-                  src="/image/logo2.png"
+                  src="/images/logo2.png"
                   alt="logo"
                 />
               </Link>

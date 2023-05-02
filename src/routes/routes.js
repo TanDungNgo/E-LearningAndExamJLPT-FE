@@ -8,18 +8,30 @@ import Signin from "~/pages/Signin/Signin";
 import Signup from "~/pages/Signup/Signup";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
-import Footer from "~/layouts/components/Footer/Footer"
 import EnrollCourse from "~/pages/EnrollCourse/EnrollCourse";
 import AllCourse from "~/pages/AllCourse/AllCourse";
-
+import Overview from "~/pages/Overview/Overview";
+import ExamPage from "~/pages/Exam/ExamPage";
+import ExamResult from "~/pages/ExamResult/ExamResult";
 
 // Public routes
 const publicRoutes = [
-    {path: config.routes.signin, component: Signin},
-    {path: config.routes.signup, component: Signup},
-    {path: config.routes.coursedetail, component: CourseDetail, layout: DefaultLayout},
-    {path: config.routes.home, component: Home, layout: DefaultLayout},
-    {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout}
+  { path: config.routes.signin, component: Signin },
+  { path: config.routes.signup, component: Signup },
+  {
+    path: config.routes.coursedetail,
+    component: CourseDetail,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.home, component: Home, layout: DefaultLayout },
+  {
+    path: config.routes.allcourse,
+    component: AllCourse,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.overview, component: Overview, layout: DefaultLayout },
+  { path: config.routes.exam, component: ExamPage },
+  { path: config.routes.examResult, component: ExamResult },
 ];
 
 // Private routes

@@ -22,11 +22,11 @@ const currentUser = false;
 const MENU_ITEMS = [
   {
     title: "Home",
-    to: "/",
+    to: routes.home,
   },
   {
     title: "Course",
-    to: "/course",
+    to: routes.allcourse,
   },
   {
     title: "Grammar",
