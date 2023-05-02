@@ -16,9 +16,9 @@ import routes from "~/config/routes";
 import Menu from "~/components/Popper/Menu/Menu";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { current } from "@reduxjs/toolkit";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
-const currentUser = false;
 const MENU_ITEMS = [
   {
     title: "Home",
@@ -46,11 +46,16 @@ const MENU_ITEMS = [
   },
 ];
 const Header = () => {
+  const { getCurrentUser, logout } = AuthService();
+  const currentUser = useSelector((state) => state.auth.login.currentUser);
+  console.log("[User] ",currentUser);
   const dropdown = () => {
-    const toggleBtn = document.getElementsByClassName(cx("toggle-btn"));
     const dropDownMenu = document.getElementsByClassName(cx("dropdown-menu"));
     dropDownMenu[0].classList.toggle(cx("open"));
-    const isOpen = dropDownMenu[0].classList.contains(cx("open"));
+  };
+  const handleLogout = () => {
+    window.location.reload();
+    logout();
   };
   const renderMenu = () => {
     return MENU_ITEMS.map((item, index) => {
@@ -66,7 +71,7 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "View profile",
-      to: "/@trang",
+      to: "/profile",
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
@@ -81,10 +86,11 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faSignOut} />,
       title: "Log out",
-      to: "/logout",
       separate: true,
+      onClick: handleLogout,
     },
   ];
+
   return (
     <header>
       <div className={cx("navbar")}>
@@ -103,8 +109,11 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button outline className={cx("action__btn-register")}
-              to={routes.signup}>
+              <Button
+                outline
+                className={cx("action__btn-register")}
+                to={routes.signup}
+              >
                 Register
               </Button>
               <Button
@@ -119,9 +128,9 @@ const Header = () => {
           <Menu items={userMenu}>
             {currentUser ? (
               <img
-                src="https://scontent.fdad3-6.fna.fbcdn.net/v/t39.30808-1/335410932_769054791517289_1572875847638970262_n.jpg?stp=dst-jpg_p100x100&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=67gRauZQTLsAX-YxUqV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fdad3-6.fna&oh=00_AfAFfL3zUnI8LAaE86iIqIH-X4tEKj5n0RZoscl78Tu_Ow&oe=644712FA"
+                src={currentUser.avatar}
                 className={cx("user-avt")}
-                alt="Trang Le"
+                alt={currentUser.username}
               />
             ) : (
               <></>
@@ -133,7 +142,6 @@ const Header = () => {
             </div>
           </Menu>
         </div>
-
       </div>
     </header>
   );
