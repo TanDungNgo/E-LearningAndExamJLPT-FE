@@ -9,6 +9,7 @@ const routes = {
     admin: "/admin",
     courseManagement: "/admin/course",
     userManagement: "/admin/user",
+    createCourse: "/createCourse",
     overview: "/overview",
 };
 
