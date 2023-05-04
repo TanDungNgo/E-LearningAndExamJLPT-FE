@@ -60,38 +60,5 @@
 .card-pagination{
     display: flex;
     align-items: center;
-    color: #383838;
     padding: 10px 40px;
-}
-.ul-pagination{
-    margin: 20px 20px;
-}
-.ul-pagination li{
-    display: inline-block;
-    text-align: center;
-    justify-content: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    font-weight: 500;
-    padding-top: 7px;
-}
-.ul-pagination li.link_active{
-    color: #fff;
-    background-color: #C7923E;
-}
-.ul-pagination li.link_active:hover{
-    background-color: #d8a553;
-}
-.icon-pagination__right,
-.icon-pagination__left{
-    height: 20px;
-    padding: 8px 10px;
-    color: #C7923E;
-    background-color: #f3e8d7;
-}
-.icon-pagination__right:hover,
-.icon-pagination__left:hover{
-    transform: scale(1.06);
 }
