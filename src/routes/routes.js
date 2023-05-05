@@ -13,6 +13,7 @@ import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 import Overview from "~/pages/Overview/Overview";
 import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
+import NotFound from "~/pages/NotFound/NotFound";
 
 // Public routes
 const publicRoutes = [
@@ -32,7 +33,8 @@ const publicRoutes = [
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage },
   { path: config.routes.examResult, component: ExamResult },
-  {path: config.routes.createCourse, component: CreateCourse}
+  { path: config.routes.createCourse, component: CreateCourse },
+  { path: config.routes.notFound, component: NotFound },
 ];
 
 // Private routes
