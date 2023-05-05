@@ -1,14 +1,9 @@
 import classNames from "classnames/bind";
 import styles from "./AllCourse.module.scss";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "~/components/Button/Button";
-import Header from "~/layouts/components/Header/Header";
-import Footer from "~/layouts/components/Footer/Footer";
-import { faArrowLeft, faArrowRight, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
-import EnrollCard from "~/components/EnrollCard/EnrollCard";
-import { ConfigProvider, Pagination } from 'antd';
+import {Pagination } from 'antd';
 const cx = classNames.bind(styles);
 
 function AllCourse() {
@@ -60,16 +55,7 @@ function AllCourse() {
       <div className={cx("card-course")}>
         {renderCard()}
       </div>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#b79032",
-          },
-        }}
-      >
         <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
-      </ConfigProvider>
-
     </div>
   );
 }
