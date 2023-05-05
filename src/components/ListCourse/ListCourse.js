@@ -27,21 +27,45 @@ function ListCourse() {
       );
     });
   };
+  const [activeButton, setActiveButton] = useState("JLPT");
+
+  const handleButtonClick = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
   return (
-    <div >
+    <div>
       <div className={cx("list-course__header")}>
         <h1 className={cx("list-course__title")}>
-          Popular{" "}
+          Popular
           <span className={cx("list-course__title--primary")}>Courses</span>
         </h1>
         <div className={cx("list-course__action")}>
-          <button className={cx("list-course__button--active")}>JLPT</button>
-          <button className={cx("list-course__button--inactive")}>Kaiwa</button>
+          <button
+            className={cx("list-course__button", {
+              "list-course__button--active": activeButton === "JLPT",
+              "list-course__button--inactive": activeButton !== "JLPT",
+            })}
+            onClick={() => handleButtonClick("JLPT")}
+          >
+            JLPT
+          </button>
+          <button
+            className={cx("list-course__button", {
+              "list-course__button--active": activeButton === "Kaiwa",
+              "list-course__button--inactive": activeButton !== "Kaiwa",
+            })}
+            onClick={() => handleButtonClick("Kaiwa")}
+          >
+            Kaiwa
+          </button>
         </div>
       </div>
       <div className={cx("list-course")}>{renderCard()}</div>
       <div className={cx("list-course__footer")}>
-        <Button outline className={cx("button__explore")} to={routes.allcourse}>Explore all Courses</Button>
+        <Button outline className={cx("button__explore")} to={routes.allcourse}>
+          Explore all Courses
+        </Button>
       </div>
     </div>
   );
