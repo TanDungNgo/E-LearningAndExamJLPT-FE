@@ -9,8 +9,8 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Row, Col, Layout, theme } from "antd";
-import { Link } from "react-router-dom";
-import config from "~/config";
+import { Link, useLocation } from "react-router-dom";
+import config from "~/configs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Footer from "~/layouts/components/Footer/Footer";
@@ -54,6 +54,21 @@ function Admin({ children }) {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const location = useLocation();
+  const pathSnippets = location.pathname.split("/").filter((i) => i);
+  const breadcrumbItems = pathSnippets.map((snippet, index) => {
+    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+    const isLast = index === pathSnippets.length - 1;
+    return (
+      <Breadcrumb.Item key={url}>
+        {isLast ? (
+          <span>{snippet.toUpperCase()}</span>
+        ) : (
+          <Link to={url}>{snippet.toUpperCase()}</Link>
+        )}
+      </Breadcrumb.Item>
+    );
+  });
   return (
     <Layout>
       <Layout>
@@ -86,8 +101,10 @@ function Admin({ children }) {
                   }
                 )}
                 <Breadcrumb style={{ margin: "0 20px" }}>
-                  <Breadcrumb.Item>Home</Breadcrumb.Item>
-                  <Breadcrumb.Item>Courses</Breadcrumb.Item>
+                  {/* <Breadcrumb.Item>
+                    <Link to="/">Home</Link>
+                  </Breadcrumb.Item> */}
+                  {breadcrumbItems}
                 </Breadcrumb>
               </Col>
               <Col md={6} className={cx("admin__header-right")}>
@@ -111,9 +128,9 @@ function Admin({ children }) {
                     <Menu items={userMenu}>
                       {/* <FontAwesomeIcon icon={faUser} /> */}
                       <img
-                        src="https://scontent.fdad3-6.fna.fbcdn.net/v/t39.30808-1/335410932_769054791517289_1572875847638970262_n.jpg?stp=dst-jpg_p100x100&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=67gRauZQTLsAX-YxUqV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fdad3-6.fna&oh=00_AfAFfL3zUnI8LAaE86iIqIH-X4tEKj5n0RZoscl78Tu_Ow&oe=644712FA"
+                        src="https://i.pinimg.com/originals/51/90/10/519010d9ee8167bfe445e616f260f758.png"
                         className={cx("user-avt")}
-                        alt="Trang Le"
+                        alt="admin"
                       />
                     </Menu>
                   </Badge>

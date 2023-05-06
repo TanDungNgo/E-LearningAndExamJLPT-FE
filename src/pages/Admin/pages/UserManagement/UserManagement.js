@@ -1,12 +1,14 @@
-import { Space, Table, Tag } from "antd";
+import { Button, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import classNames from "classnames/bind";
-import styles from "./UserManagement.module.scss";
-import Button from "~/components/Button/Button";
+import userData from "~/data/userData";
 const { Search } = Input;
-const cx = classNames.bind(styles);
 const columns = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
   {
     title: "Name",
     dataIndex: "name",
@@ -65,47 +67,10 @@ const columns = [
     ),
   },
 ];
-const data = [
-  {
-    key: "1",
-    name: "Ngo Tan Dung",
-    age: 32,
-    address: "Da Nang",
-    tags: ["admin"],
-  },
-  {
-    key: "2",
-    name: "Le Thi Huyen Trang",
-    age: 42,
-    address: "Quang Tri",
-    tags: ["teacher"],
-  },
-  {
-    key: "3",
-    name: "Tran Khanh Phuong",
-    age: 32,
-    address: "Da Nang",
-    tags: ["teacher"],
-  },
-  {
-    key: "4",
-    name: "Dao Thuy Trang",
-    age: 32,
-    address: "Ninh Binh",
-    tags: ["student"],
-  },
-  {
-    key: "4",
-    name: "Tran Hong Duc",
-    age: 32,
-    address: "Da Nang",
-    tags: ["student"],
-  },
-];
 function UserManagement() {
   const onSearch = (value) => console.log(value);
   return (
-    <div className={cx("container")}>
+    <div>
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}
       >
@@ -115,14 +80,14 @@ function UserManagement() {
           enterButton
         />
         <Button
-          primary
-          className={cx("btn-insert")}
-          leftIcon={<PlusOutlined />}
+          type="primary"
+          icon={<PlusOutlined />}
+          style={{ marginLeft: "10px" }}
         >
           Insert
         </Button>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={userData} />
     </div>
   );
 }

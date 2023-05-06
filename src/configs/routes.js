@@ -6,12 +6,14 @@ const routes = {
   allcourse: "/allcourse",
   exam: "/exam",
   examResult: "/exam/result",
-  admin: "/admin",
-  courseManagement: "/admin/course",
-  userManagement: "/admin/user",
   createCourse: "/createCourse",
   overview: "/overview",
   notFound: "*",
+  // Admin routes
+  admin: "/admin",
+  courseManagement: "/admin/course",
+  userManagement: "/admin/user",
+  addCourse: "/admin/course/add",
 };
 
 export default routes;
