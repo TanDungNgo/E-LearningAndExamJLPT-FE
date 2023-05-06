@@ -8,67 +8,30 @@ import { useState } from "react";
 import { Progress } from "antd";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { UploadOutlined } from "@ant-design/icons";
-import storageFirebase from "~/configs/firebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import courseService from "~/services/courseService";
+import {
+  Form,
+  Input,
+  Select,
+  Upload,
+  Image,
+  InputNumber,
+  Switch,
+} from "antd";
 const cx = classNames.bind(styles);
+const { Option } = Select;
 
-function CreateCourse() {
-  const [name, setName] = useState("");
-  const [level, setLevel] = useState("N5");
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState("");
-  const [price, setPrice] = useState("");
-  const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
-  const [fileImage, setFileImage] = useState("");
-  const [percent, setPercent] = useState(0);
-  const { createCourse } = courseService();
-  const handleChangeFile = (e) => {
-    //Lấy file ra từ e
-    let file = e.target.files[0];
-    setFileImage(file);
-    if (
-      file.type === "image/jpeg" ||
-      file.type === "image/jpg" ||
-      file.type === "image/png"
-    ) {
-      //Tạo đối tượng để đọc file
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        // console.log(e.target.result);
-        setImgSrc(e.target.result);
-      };
-    }
+const CreateCourse = ({ onSubmit }) => {
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(true);
+  const onFinish = (values) => {
+    // setIsSubmitting(true);
+    setProgress(100);
+    onSubmit(values);
   };
-  const handleCreateCourse = async (e) => {
-    e.preventDefault();
-    const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, fileImage);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setPercent(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      async () => {
-        const url = await getDownloadURL(uploadTask.snapshot.ref);
-        const data = {
-          name: name,
-          level: level,
-          description: description,
-          duration: duration,
-          price: price,
-          banner: url,
-        };
-        console.log(data);
-        createCourse(data);
-      }
-    );
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
   return (
     <div className={cx("container")}>
@@ -77,51 +40,170 @@ function CreateCourse() {
         <div className={cx("card-create__title")}>Create a new course</div>
         <div className={cx("card-create__content")}>
           <div className={cx("card-create__left")}>
-            <div className="card-create__detail">
+            <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="horizontal">
+              <Form.Item className={cx("card-create__left-content")}
+                label="Name"
+                name="name"
+                rules={[{ required: true, message: "Please input a name!" }]}
+              >
+                <Input 
+                  style={{marginLeft: '12%', width: '88%'}}
+                />
+              </Form.Item>
+              <Form.Item className={cx("card-create__left-content")}
+                label="Description"
+                name="description"
+                rules={[
+                  { required: true, message: "Please input a description!" },
+                  {
+                    max: 100,
+                    message: "Description should be less than 100 characters!",
+                  },
+                ]}
+              >
+                <Input.TextArea />
+              </Form.Item>
+              <Form.Item className={cx("card-create__left-content")}
+                label="Level"
+                name="level"
+                rules={[{ required: true, message: "Please select a level!" }]}
+              >
+                <Select style={{width: '88%', marginLeft: '13%'}}>
+                  <Option value="N1">N1</Option>
+                  <Option value="N2">N2</Option>
+                  <Option value="N3">N3</Option>
+                  <Option value="N4">N4</Option>
+                  <Option value="N5">N5</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item className={cx("card-create__left-content")}
+                label="Type"
+                name="type"
+                rules={[{ required: true, message: "Please select a type!" }]}
+              >
+                <Select style={{width: '88%', marginLeft: '13%'}}>
+                  <Option value="JLPT">JLPT</Option>
+                  <Option value="Kaiwa">Kaiwa</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item className={cx("card-create__left-content")}
+                label="Duration"
+                name="duration"
+                rules={[
+                  {
+                    required: true,
+                    type: "number",
+                    message: "Please input a duration!",
+                  },
+                  //   {
+                  //     min: 0,
+                  //     message: "Duration should be greater than 0!",
+                  //   },
+                ]}
+              >
+                <InputNumber
+                  addonAfter={<Form.Item noStyle>Month</Form.Item>}
+                  style={{ width: '96%', marginLeft: '5%' }}
+                />
+              </Form.Item>
+              <Form.Item className={cx("card-create__left-content")}
+                label="Price"
+                name="price"
+                rules={[
+                  {
+                    required: true,
+                    type: "number",
+                    message: "Please input a price!",
+                  },
+                  //   {
+                  //     min: 0,
+                  //     message: "Price should be greater than 0!",
+                  //   },
+                ]}
+              >
+                <InputNumber
+                  addonAfter={<Form.Item noStyle>VND</Form.Item>}
+                  style={{ width: '89%', marginLeft: '12%' }}
+                />
+              </Form.Item>
+            </Form>
+            {/* <div className={cx("card-create__detail")}>
               <input
                 type="text"
                 placeholder="Course Name"
                 required
-                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className={cx("card-create__select")}>
-              <select onChange={(e) => setLevel(e.target.value)}>
-                <option value="N5">N5</option>
-                <option value="N4">N4</option>
-                <option value="N3">N3</option>
-                <option value="N2">N2</option>
-                <option value="N1">N1</option>
-              </select>
+              <Form.Item
+                label="Level"
+                name="level"
+                rules={[{ required: true, message: "Please select a level!" }]}
+              >
+                <Select>
+                  <Option value="N1">N1</Option>
+                  <Option value="N2">N2</Option>
+                  <Option value="N3">N3</Option>
+                  <Option value="N4">N4</Option>
+                  <Option value="N5">N5</Option>
+                </Select>
+              </Form.Item>
             </div>
-            <div className="card-create__detail">
-              <input
-                type="text"
-                placeholder="Description"
-                required
-                onChange={(e) => setDescription(e.target.value)}
-              />
+            <div className={cx("card-create__detail")}>
+              <Form.Item
+                label="Description"
+                name="description"
+                rules={[
+                  { required: true, message: "Please input a description!" },
+                  {
+                    max: 100,
+                    message: "Description should be less than 100 characters!",
+                  },
+                ]}
+              >
+                <Input.TextArea />
+              </Form.Item>
             </div>
-            <div className="card-create__detail">
-              <input
-                type="text"
-                placeholder="Duration"
-                required
-                onChange={(e) => setDuration(e.target.value)}
-              />
+            <div className={cx("card-create__detail")}>
+              <Form.Item
+                label="Duration"
+                name="duration"
+                rules={[
+                  {
+                    required: true,
+                    type: "number",
+                    message: "Please input a duration!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  addonAfter={<Form.Item noStyle>Month</Form.Item>}
+                  style={{ width: "90%"}}
+                />
+              </Form.Item>
             </div>
-            <div className="card-create__detail">
-              <input
-                type="text"
-                placeholder="Price"
-                required
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </div>
+            <div className={cx("card-create__rangeSlider")}>
+              <Form.Item
+                label="Price"
+                name="price"
+                rules={[
+                  {
+                    required: true,
+                    type: "number",
+                    message: "Please input a price!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  addonAfter={<Form.Item noStyle>VND</Form.Item>}
+                  style={{ width: "90%" }}
+                />
+              </Form.Item>
+            </div> */}
           </div>
 
           <div className={cx("card-create__right")}>
-            <img className={cx("card-create__banner")} src={imgSrc} />
+            <img className={cx("card-create__banner")} />
             <div className={cx("card-create__import-file")}>
               <label htmlFor="file">
                 <UploadOutlined />
@@ -132,8 +214,6 @@ function CreateCourse() {
                 name="file"
                 id="file"
                 className={cx("card-create__input-file")}
-                onChange={handleChangeFile}
-                accept="image/*"
               />
             </div>
           </div>
@@ -141,11 +221,10 @@ function CreateCourse() {
         <Button
           primary
           className={cx("card-create__btn")}
-          onClick={handleCreateCourse}
         >
           Create
         </Button>
-        <Progress percent={percent} />
+        <Progress />
       </div>
     </div>
   );

@@ -55,7 +55,7 @@ function AllCourse() {
       <div className={cx("card-course")}>
         {renderCard()}
       </div>
-        <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
+      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
     </div>
   );
 }
