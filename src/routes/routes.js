@@ -6,13 +6,35 @@ import UserManagement from "~/pages/Admin/pages/UserManagement/UserManagement";
 import Home from "~/pages/Home/Home";
 import Signin from "~/pages/Signin/Signin";
 import Signup from "~/pages/Signup/Signup";
+import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
+import AllCourse from "~/pages/AllCourse/AllCourse";
+import CreateCourse from "~/pages/CreateCourse/CreateCourse";
+import Overview from "~/pages/Overview/Overview";
+import ExamPage from "~/pages/Exam/ExamPage";
+import ExamResult from "~/pages/ExamResult/ExamResult";
+import NotFound from "~/pages/NotFound/NotFound";
 
 // Public routes
 const publicRoutes = [
-    {path: config.routes.signin, component: Signin},
-    {path: config.routes.signup, component: Signup},
-    {path: config.routes.home, component: Home, layout: DefaultLayout},
+  { path: config.routes.signin, component: Signin },
+  { path: config.routes.signup, component: Signup },
+  {
+    path: config.routes.coursedetail,
+    component: CourseDetail,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.home, component: Home, layout: DefaultLayout },
+  {
+    path: config.routes.allcourse,
+    component: AllCourse,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.overview, component: Overview, layout: DefaultLayout },
+  { path: config.routes.exam, component: ExamPage },
+  { path: config.routes.examResult, component: ExamResult },
+  { path: config.routes.createCourse, component: CreateCourse },
+  { path: config.routes.notFound, component: NotFound },
 ];
 
 // Private routes

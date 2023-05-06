@@ -16,17 +16,17 @@ import routes from "~/config/routes";
 import Menu from "~/components/Popper/Menu/Menu";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { current } from "@reduxjs/toolkit";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
-const currentUser = true;
 const MENU_ITEMS = [
   {
     title: "Home",
-    to: "/",
+    to: routes.home,
   },
   {
     title: "Course",
-    to: "/course",
+    to: routes.allcourse,
   },
   {
     title: "Grammar",
@@ -46,11 +46,16 @@ const MENU_ITEMS = [
   },
 ];
 const Header = () => {
+  const { getCurrentUser, logout } = AuthService();
+  const currentUser = useSelector((state) => state.auth.login.currentUser);
+  console.log("[User] ",currentUser);
   const dropdown = () => {
-    const toggleBtn = document.getElementsByClassName(cx("toggle-btn"));
     const dropDownMenu = document.getElementsByClassName(cx("dropdown-menu"));
     dropDownMenu[0].classList.toggle(cx("open"));
-    const isOpen = dropDownMenu[0].classList.contains(cx("open"));
+  };
+  const handleLogout = () => {
+    window.location.reload();
+    logout();
   };
   const renderMenu = () => {
     return MENU_ITEMS.map((item, index) => {
@@ -66,7 +71,7 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "View profile",
-      to: "/@trang",
+      to: "/profile",
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
@@ -81,10 +86,11 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faSignOut} />,
       title: "Log out",
-      to: "/logout",
       separate: true,
+      onClick: handleLogout,
     },
   ];
+
   return (
     <header>
       <div className={cx("navbar")}>
@@ -103,7 +109,11 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button outline className={cx("action__btn-register")}>
+              <Button
+                outline
+                className={cx("action__btn-register")}
+                to={routes.signup}
+              >
                 Register
               </Button>
               <Button
@@ -118,9 +128,9 @@ const Header = () => {
           <Menu items={userMenu}>
             {currentUser ? (
               <img
-                src="https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/335410932_769054791517289_1572875847638970262_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=kO9Iwm6C-O0AX9HD4on&_nc_ht=scontent.fdad1-3.fna&oh=00_AfClqIlNXaUdvNadA4H0mq9mPn_J1Ykn2l-XpIaPniiF4g&oe=6433DDC0"
+                src={currentUser.avatar}
                 className={cx("user-avt")}
-                alt="Trang Le"
+                alt={currentUser.username}
               />
             ) : (
               <></>

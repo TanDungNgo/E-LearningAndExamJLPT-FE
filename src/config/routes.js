@@ -1,10 +1,17 @@
 const routes = {
-    signin: "/login",
-    signup: "/register",
-    home: "/",
-    admin: "/admin",
-    courseManagement: "/admin/course",
-    userManagement: "/admin/user",
+  signin: "/login",
+  signup: "/register",
+  home: "/",
+  coursedetail: "/coursedetail",
+  allcourse: "/allcourse",
+  exam: "/exam",
+  examResult: "/exam/result",
+  admin: "/admin",
+  courseManagement: "/admin/course",
+  userManagement: "/admin/user",
+  createCourse: "/createCourse",
+  overview: "/overview",
+  notFound: "*",
 };
 
 export default routes;

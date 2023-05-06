@@ -1,7 +1,12 @@
 import {
+  faBook,
+  faFont,
   faGraduationCap,
   faGripHorizontal,
+  faLineChart,
+  faNewspaper,
   faUser,
+  faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu } from "antd";
@@ -10,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SideMenu.module.scss";
 import { useEffect, useState } from "react";
 import MenuItem from "antd/es/menu/MenuItem";
+import { AppstoreOutlined, SettingOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 
 function SideMenu() {
@@ -23,7 +29,7 @@ function SideMenu() {
   return (
     <Menu
       className={cx("side-menu")}
-      mode="vertical"
+      mode="inline"
       onClick={(item) => {
         navigate(item.key);
       }}
@@ -40,9 +46,45 @@ function SideMenu() {
           key: "/admin/user",
         },
         {
-          label: "Courses",
-          icon: <FontAwesomeIcon icon={faGraduationCap} />,
-          key: "/admin/course",
+          label: "Content",
+          icon: <AppstoreOutlined />,
+          children: [
+            {
+              label: "Courses",
+              icon: <FontAwesomeIcon icon={faGraduationCap} />,
+              key: "/admin/course",
+            },
+            {
+              label: "Lessons",
+              icon: <FontAwesomeIcon icon={faVideo} />,
+              key: "/admin/leson",
+            },
+            {
+              label: "Articles",
+              icon: <FontAwesomeIcon icon={faNewspaper} />,
+              key: "/admin/article",
+            },
+            {
+              label: "Grammar",
+              icon: <FontAwesomeIcon icon={faBook} />,
+              key: "/admin/grammar",
+            },
+            {
+              label: "Vocabulary",
+              icon: <FontAwesomeIcon icon={faFont} />,
+              key: "/admin/vocabulary",
+            },
+          ],
+        },
+        {
+          label: "Statistics",
+          icon: <FontAwesomeIcon icon={faLineChart} />,
+          key: "/admin/statistics",
+        },
+        {
+          label: "Settings",
+          icon: <SettingOutlined />,
+          key: "/admin/settings",
         },
       ]}
     ></Menu>

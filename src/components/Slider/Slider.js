@@ -34,21 +34,21 @@ const Slider = () => {
     setCurrentSlide(0);
   }, []);
 
-//   useEffect(() => {
-//     if (autoScroll) {
-//       auto();
-//     }
-//     return () => clearInterval(slideInterval);
-//   }, [currentSlide]);
+  // useEffect(() => {
+  //   if (autoScroll) {
+  //     auto();
+  //   }
+  //   return () => clearInterval(slideInterval);
+  // }, [currentSlide]);
 
   return (
     <div className={cx("slider")}>
-      <div className={cx("arrow","prev")} onClick={prevSlide}>
+      {/* <div className={cx("arrow","prev")} onClick={prevSlide}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </div>
       <div className={cx("arrow","next")} onClick={nextSlide}>
         <FontAwesomeIcon icon={faArrowRight} />
-      </div>
+      </div> */}
       {SliderData.map((slide, index) => {
         return (
           <div
