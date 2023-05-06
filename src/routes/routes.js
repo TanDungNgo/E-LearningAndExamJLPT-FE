@@ -1,4 +1,4 @@
-import config from "~/config";
+import config from "~/configs";
 import Admin from "~/pages/Admin/Admin";
 import CourseManagement from "~/pages/Admin/pages/CourseManagement/CourseManagement";
 import Dashboard from "~/pages/Admin/pages/Dashboard/Dashboard";
@@ -14,6 +14,7 @@ import Overview from "~/pages/Overview/Overview";
 import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
+import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
 
 // Public routes
 const publicRoutes = [
@@ -50,6 +51,7 @@ const privateRoutes = [
     component: UserManagement,
     layout: Admin,
   },
+  { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
 ];
 
 export { publicRoutes, privateRoutes };

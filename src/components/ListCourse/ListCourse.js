@@ -3,7 +3,7 @@ import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
 import styles from "./ListCourse.module.scss";
 import Button from "../Button/Button";
-import routes from "~/config/routes";
+import routes from "~/configs/routes";
 
 const cx = classNames.bind(styles);
 

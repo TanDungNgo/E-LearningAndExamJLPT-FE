@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./CourseCard.module.scss";
-import routes from "~/config/routes";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 function CourseCard(props) {
   return (

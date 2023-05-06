@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./Signup.module.scss";
 import Button from "~/components/Button/Button";
 import { Link } from "react-router-dom";
-import routes from "~/config/routes";
+import routes from "~/configs/routes";
 import { useState } from "react";
 import AuthService from "~/services/authService";
 import { Form, Input, Radio, Select } from "antd";
