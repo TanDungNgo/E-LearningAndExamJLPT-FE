@@ -15,6 +15,7 @@ import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
 import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
+import Lesson from "~/pages/Lesson/Lesson";
 
 // Public routes
 const publicRoutes = [
@@ -36,6 +37,7 @@ const publicRoutes = [
   { path: config.routes.examResult, component: ExamResult },
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
+  { path: config.routes.lesson, component: Lesson, layout: DefaultLayout },
 ];
 
 // Private routes
