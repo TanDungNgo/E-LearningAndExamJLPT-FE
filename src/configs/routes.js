@@ -10,6 +10,7 @@ const routes = {
   overview: "/overview",
   lessonDetail: "/lessonDetail",
   notFound: "*",
+  lesson: "/lesson",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
