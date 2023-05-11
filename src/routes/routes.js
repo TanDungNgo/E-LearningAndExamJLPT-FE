@@ -45,7 +45,6 @@ const publicRoutes = [
   { path: config.routes.examResult, component: ExamResult },
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
-  { path: config.routes.lessonDetail, component: LessonDetail, layout: DefaultLayout},
 ];
 
 // Private routes
