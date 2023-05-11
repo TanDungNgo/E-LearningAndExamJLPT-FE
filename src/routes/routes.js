@@ -24,6 +24,8 @@ import AddVocabularyFolderForm from "~/pages/Admin/pages/VocabularyManagement/Ad
 import VocabularyFolderManagement from "~/pages/Admin/pages/VocabularyManagement/VocabularyFolderManagement";
 import AddArticlesForm from "~/pages/Admin/pages/ArticlesManagement/AddArticlesForm";
 import ArticlesManagement from "~/pages/Admin/pages/ArticlesManagement/ArticlesManagement";
+import Lesson from "~/pages/Lesson/Lesson";
+
 
 // Public routes
 const publicRoutes = [
@@ -45,7 +47,7 @@ const publicRoutes = [
   { path: config.routes.examResult, component: ExamResult },
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
-  { path: config.routes.lessonDetail, component: LessonDetail, layout: DefaultLayout},
+  { path: config.routes.lesson, component: Lesson, layout: DefaultLayout },
 ];
 
 // Private routes
