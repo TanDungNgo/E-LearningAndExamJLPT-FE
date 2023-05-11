@@ -19,15 +19,14 @@ function EnrollCard(props) {
       <div className={cx("card")}>
         <div className={cx("card__header")}>
           <img
-            src="https://scontent.fhan5-9.fna.fbcdn.net/v/t1.15752-9/339923067_584554696969140_5225590373694856946_n.png?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=BtB3ewZBmTUAX-ypsIf&_nc_ht=scontent.fhan5-9.fna&oh=03_AdT1DOgpt7FsdZwdUSrxG7lIF_a71X63FjSUMUAZwh0FgQ&oe=64571677"
+            src="https://www.worldfirst.com/app/uploads/2020/01/Japan-business_blog.jpg"
             alt=""
             className={cx("card__image")}
           />
         </div>
         <div className={cx("card__body")}>
           <Button primary className={cx("card__button")}>
-            {" "}
-            Enroll{" "}
+            Enroll
           </Button>
         </div>
         <div className={cx("card__footer")}>
