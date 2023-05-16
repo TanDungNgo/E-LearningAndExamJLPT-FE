@@ -8,7 +8,8 @@ import { UploadOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 
 function PublicProfile() {
-  const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
+  const [fileImage, setFileImage] = useState("");
+  const [imgSrc, setImgSrc] = useState("/images/Phuong.jpg");
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
