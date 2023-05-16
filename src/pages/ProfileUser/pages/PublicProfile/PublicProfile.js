@@ -9,6 +9,24 @@ const cx = classNames.bind(styles);
 
 function PublicProfile() {
   const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
+  const handleChangeFile = (e) => {
+    //Lấy file ra từ e
+    let file = e.target.files[0];
+    setFileImage(file);
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png"
+    ) {
+      //Tạo đối tượng để đọc file
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        // console.log(e.target.result);
+        setImgSrc(e.target.result);
+      };
+    }
+  };
   return (
     <div className={cx("card")}>
       <div className={cx("card__title")}>Public profile</div>
@@ -16,7 +34,7 @@ function PublicProfile() {
         <div className={cx("card__avatar")}>
           <Image
             className={cx("card__avatar-img")}
-            src="/images/Phuong.jpg"
+            src={imgSrc}
           />
           <div className={cx("card__btn")}>
             {/* <Upload>
@@ -32,7 +50,7 @@ function PublicProfile() {
                 name="file"
                 id="file"
                 className={cx("card-create__input-file")}
-                //onChange={handleChangeFile}
+                onChange={handleChangeFile}
                 accept="image/*"
               />
             </div>
