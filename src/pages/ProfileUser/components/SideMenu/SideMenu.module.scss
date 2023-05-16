@@ -1,0 +1,8 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    &__menu{
+        height: 100%;
+    }
+}

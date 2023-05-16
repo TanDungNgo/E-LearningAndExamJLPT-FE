@@ -1,34 +1,9 @@
-.card{
-    display: flex;
-    flex-direction: column;
-    width: 25%;
-    height: 100%;
-}
-.card::after{
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 1px;
-    margin-left: 25%;
-    background-color: rgb(220, 220, 220);
-    border: none;
-}
-.card{
-    &__menu{
+.profile-user {
+    &__body {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 80px;
-        margin-bottom: -80px;
+        flex-direction: row;
     }
-    &__menu-btn{
-        color: #6b6b6b;
-        height: 40px;
-        width: 55%;
-        margin-bottom: 20px;
-        background-color: #fff;
-    }
-    &__menu-btn:hover{
-        border: 2px solid rgb(230, 230, 230);
-    }
+}
+.content__right{
+    width: 100%;
 }

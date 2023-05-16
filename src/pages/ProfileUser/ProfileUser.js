@@ -1,29 +1,26 @@
 import classNames from "classnames/bind";
 import styles from "./ProfileUser.module.scss";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "~/components/Button/Button";
-import routes from "~/config/routes";
+import { ConfigProvider, Layout, Menu } from "antd";
+import SideMenu from "./components/SideMenu/SideMenu";
+import { Content } from "antd/es/layout/layout";
+import Footer from "~/layouts/components/Footer/Footer";
+import Header from "~/layouts/components/Header/Header";
 const cx = classNames.bind(styles);
 
-function ProfileUser(){
+function ProfileUser({ children }) {
   return (
-    <div className={cx("card")}>
-        <div className={cx("card__menu")}>
-            <Button className={cx("card__menu-btn")} to={routes.signup}>Public Profile</Button>
+    <div>
+      <Header />
+      <div className={cx("profile-user__body")}>
+        <div className={cx("content__left")}>
+          <SideMenu />
         </div>
-        <div className={cx("card__menu")}>
-            <Button className={cx("card__menu-btn")} to={routes.signup}>Account Settings</Button>
+        <div className={cx("content__right")}>
+          {children}
         </div>
-        <div className={cx("card__menu")}>
-            <Button className={cx("card__menu-btn")} to={routes.signup}>Notifications</Button>
-        </div>
-        <div className={cx("card__menu")}>
-            <Button className={cx("card__menu-btn")} to={routes.signup}>My Courses</Button>
-        </div>
-        <div className={cx("card__menu")}>
-            <Button className={cx("card__menu-btn")} to={routes.signup}>Bookmarks</Button>
-        </div>
+      </div>
+      <Footer/>
     </div>
   );
 }

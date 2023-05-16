@@ -56,22 +56,19 @@ h3 {
 .container::before {
   content: "";
   position: absolute;
-  height: 180px;
+  height: 25%;
   width: 1px;
   left: 650px;
-  top: 800px;
   background-color: #f0f8ff60;
   border: none;
 }
-
-.container::after {
+.row::after{
   content: "";
   position: absolute;
-  height: 180px;
+  height: 25%;
   width: 1px;
-  left: 970px;
-  top: 800px;
   background-color: #f0f8ff60;
+  left: 980px;
   border: none;
 }
 

@@ -13,7 +13,8 @@ import EnrollCourse from "~/pages/EnrollCourse/EnrollCourse";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 import ProfileUser from "~/pages/ProfileUser/ProfileUser";
-import CardProfile from "~/components/CardProfile/CardProfile";
+import PublicProfile from "~/pages/ProfileUser/pages/PublicProfile/PublicProfile";
+import { layouts } from "chart.js";
 
 
 // Public routes
@@ -25,7 +26,6 @@ const publicRoutes = [
     {path: config.routes.allcourse, component: AllCourse, layout: DefaultLayout},
     {path: config.routes.createCourse, component: CreateCourse},
     {path: config.routes.profileUser, component: ProfileUser},
-    {path: config.routes.cardProfile, component: CardProfile}
 ];
 
 // Private routes
@@ -41,6 +41,12 @@ const privateRoutes = [
     component: UserManagement,
     layout: Admin,
   },
+  {path: config.routes.profileUser, component: ProfileUser, layout: ProfileUser},
+  {
+    path: config.routes.publicProfile,
+    component: PublicProfile,
+    layout: ProfileUser,
+  }
 ];
 
 export { publicRoutes, privateRoutes };
