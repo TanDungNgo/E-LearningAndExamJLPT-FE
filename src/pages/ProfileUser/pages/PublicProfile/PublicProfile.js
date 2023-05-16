@@ -42,10 +42,11 @@ function PublicProfile() {
               <Button primary className={cx("card__btn-change")}>Change picture</Button>
             </Upload> */}
             <div className={cx("card__btn-change")}>
-              <label htmlFor="file">
-                <UploadOutlined />
+              <Button primary>
+                <label htmlFor="file">
                 Change picture
-              </label>
+                </label>
+              </Button>
               <input
                 type="file"
                 name="file"

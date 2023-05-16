@@ -33,6 +33,20 @@
     &__btn-change{
         width: 155px;
         margin-right: 15px;
+        label {
+            cursor: pointer;
+            svg{
+              margin-right: 10px;
+            }
+        }
+        .card-create__input-file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
     }
     &__btn-delete{
         width: 155px;
