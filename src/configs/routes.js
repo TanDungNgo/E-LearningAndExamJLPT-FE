@@ -25,7 +25,7 @@ const routes = {
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyFolder/add",
   addArticles: "/admin/articles/add",
-
+  vocabularyFolder: "/vocabularyFolder",
 
 };
 

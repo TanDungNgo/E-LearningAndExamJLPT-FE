@@ -25,6 +25,7 @@ import AddArticlesForm from "~/pages/Admin/pages/ArticlesManagement/AddArticlesF
 import ArticlesManagement from "~/pages/Admin/pages/ArticlesManagement/ArticlesManagement";
 import Lesson from "~/pages/Lesson/Lesson";
 import Vocabulary from "~/pages/Vocabulary/Vocabulary";
+import VocabularyFolderCard from "~/components/VocabularyFolderCard/VocabularyFolderCard";
 
 // Public routes
 const publicRoutes = [
@@ -47,6 +48,7 @@ const publicRoutes = [
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
   { path: config.routes.lesson, component: Lesson, layout: DefaultLayout },
+  { path: config.routes.vocabularyFolder, component: VocabularyFolderCard},
   {
     path: config.routes.vocabulary,
     component: Vocabulary,
