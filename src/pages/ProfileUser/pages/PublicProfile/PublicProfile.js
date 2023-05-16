@@ -17,9 +17,23 @@ function PublicProfile() {
             src="/images/Phuong.jpg"
           />
           <div className={cx("card__btn")}>
-            <Upload>
+            {/* <Upload>
               <Button primary className={cx("card__btn-change")}>Change picture</Button>
-            </Upload>
+            </Upload> */}
+            <div className={cx("card__btn-change")}>
+              <label htmlFor="file">
+                {/* <UploadOutlined /> */}
+                Change picture
+              </label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                className={cx("card-create__input-file")}
+                //onChange={handleChangeFile}
+                accept="image/*"
+              />
+            </div>
               <Button outline className={cx("card__btn-delete")}>Delete picture</Button>
           </div>
         </div>
