@@ -1,12 +1,14 @@
 import classNames from "classnames/bind";
 import Button from "~/components/Button/Button";
 import styles from "./PublicProfile.module.scss";
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'antd';
 import { Select, Upload } from 'antd';
+import { UploadOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 
 function PublicProfile() {
+  const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
   return (
     <div className={cx("card")}>
       <div className={cx("card__title")}>Public profile</div>
@@ -22,7 +24,7 @@ function PublicProfile() {
             </Upload> */}
             <div className={cx("card__btn-change")}>
               <label htmlFor="file">
-                {/* <UploadOutlined /> */}
+                <UploadOutlined />
                 Change picture
               </label>
               <input
