@@ -3,6 +3,10 @@
         width: 430px;
         height: 150px;
         background-color: white;
+        &:hover {
+                box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.4);
+                transform: scale(1.03);
+              }
         &__img{
                 height: 150px;
                 width: 210px;

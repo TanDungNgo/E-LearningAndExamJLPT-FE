@@ -34,7 +34,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Vocabulary",
-    to: "/vocabulary",
+    to: "/vocabularyFolder",
   },
   {
     title: "Article",

@@ -12,6 +12,7 @@ const routes = {
   notFound: "*",
   lesson: "/lesson",
   vocabulary: "/vocabulary",
+  vocabularyFolder: "/vocabularyFolder",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
@@ -25,7 +26,7 @@ const routes = {
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyFolder/add",
   addArticles: "/admin/articles/add",
-  vocabularyFolder: "/vocabularyFolder",
+
 
 };
 
