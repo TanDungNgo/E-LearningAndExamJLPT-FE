@@ -16,11 +16,13 @@ import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
 import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
 import AddLessonForm from "~/pages/Admin/pages/LessonsManagement/AddLessonForm";
+import AddVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/AddVocabularyForm";
+import VocabularyManagement from "~/pages/Admin/pages/VocabularyManagement/VocabularyManagement";
 import LessonManagement from "~/pages/Admin/pages/LessonsManagement/LessonManagement";
 import AddGrammarForm from "~/pages/Admin/pages/GrammarManagement/AddGrammarForm";
 import GrammarManagement from "~/pages/Admin/pages/GrammarManagement/GrammarManagement";
-import AddVocabularyFolderForm from "~/pages/Admin/pages/VocabularyManagement/AddVocabularyFolderForm";
-import VocabularyFolderManagement from "~/pages/Admin/pages/VocabularyManagement/VocabularyFolderManagement";
+import AddVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManagement/AddVocabularyFolderForm";
+import VocabularyFolderManagement from "~/pages/Admin/pages/VocabularyFolderManagement/VocabularyFolderManagement";
 import AddArticlesForm from "~/pages/Admin/pages/ArticlesManagement/AddArticlesForm";
 import ArticlesManagement from "~/pages/Admin/pages/ArticlesManagement/ArticlesManagement";
 import Lesson from "~/pages/Lesson/Lesson";
@@ -93,6 +95,11 @@ const privateRoutes = [
     component: ArticlesManagement,
     layout: Admin,
   },
+  {
+    path: config.routes.vocabularyManagement,
+    component: VocabularyManagement,
+    layout: Admin
+  },
   { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
   { path: config.routes.addLesson, component: AddLessonForm, layout: Admin },
   { path: config.routes.addGrammar, component: AddGrammarForm, layout: Admin },
@@ -106,6 +113,12 @@ const privateRoutes = [
     component: AddArticlesForm,
     layout: Admin,
   },
+  {
+    path: config.routes.addVocabulary,
+    component: AddVocabularyForm,
+    layout: Admin,
+  },
+
 ];
 
 export { publicRoutes, privateRoutes };

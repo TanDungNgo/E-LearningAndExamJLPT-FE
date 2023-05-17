@@ -75,7 +75,7 @@ function VocabularyFolderManagement() {
     <div>
       <div style={{ marginBottom: 16 }}>
         <Input
-          placeholder="Search by name"
+          placeholder="Search by title"
           value={searchText}
           onChange={handleSearchTextChange}
           style={{ width: 200, marginRight: 16 }}
@@ -112,13 +112,14 @@ function VocabularyFolderManagement() {
           </Button>
         </Link>
       </div>
+      <Link to = "/admin/vocabulary">
       <Table
         columns={columns}
         dataSource={filteredvocabularyFolder}
         pagination={{ pageSize: 8}}
       />
+      </Link>
     </div>
   );
 }
-
 export default VocabularyFolderManagement;
