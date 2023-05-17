@@ -14,6 +14,7 @@ const routes = {
   vocabulary: "/vocabulary",
   vocabularyFolder: "/vocabularyFolder",
   articlesFolder: "/articlesFolder",
+  article: "/article",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",

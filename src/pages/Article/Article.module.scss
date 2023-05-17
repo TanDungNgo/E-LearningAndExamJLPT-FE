@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.card-img{
+    width: 100%;
+}
+.card-img__detail{
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+.card-search{
+    margin: -150px 0px 20px 0px;
+}
+.card-search input{
+    height: 45px;
+    width: 700px;
+    border: none;
+    padding-left: 20px;
+    border-radius: 10px;
+}
+.btn-search{
+    color: white;
+    background-color: #C7923E;
+    font-weight: 500;
+    margin-left: -106px;
+    height: 35px;
+    border-radius: 8px;
+}
+
+

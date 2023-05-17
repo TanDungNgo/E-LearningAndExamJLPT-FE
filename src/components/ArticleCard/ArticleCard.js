@@ -2,10 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./ArticleCard.module.scss";
+import { Link, useParams } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function ArticleCard() {
   return (
-    <a href="#" className={cx("card")}>
+    <div>
+      <Link to={'/article'}>
+      <a href="#" className={cx("card")}>
       <div className={cx("card__media")}>
         <img
           src="/images/bgr-article.png"
@@ -37,6 +40,8 @@ function ArticleCard() {
         </div>
       </div>
     </a>
+      </Link>
+    </div>
   );
 }
 
