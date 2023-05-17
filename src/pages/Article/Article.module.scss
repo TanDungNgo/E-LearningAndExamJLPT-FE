@@ -1,4 +1,4 @@
-.container {
+.article {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,26 +10,42 @@
 }
 .card-img__detail{
     width: 100%;
-    height: 320px;
+    height: 500px;
     object-fit: cover;
 }
-.card-search{
-    margin: -150px 0px 20px 0px;
+.article{
+    &__header{
+        align-items: center;
+        margin-top: -13%;
+        width: 60%;
+    }
+    &__title{
+        width: 100%;
+        font-family: 'Lucida Sans Unicode';
+        background-color: #268bd2;
+        color: #fff;
+        font-size: 38px;
+        padding-left: 2%;
+
+    }
+    &__subtitle{
+        font-family: 'Lucida Sans Unicode';
+        background-color: #268bd2;
+        color: #fff;
+        font-size: 24px;
+        width: 75%;
+        padding-left: 2%;
+    }
 }
-.card-search input{
-    height: 45px;
-    width: 700px;
-    border: none;
-    padding-left: 20px;
-    border-radius: 10px;
-}
-.btn-search{
-    color: white;
-    background-color: #C7923E;
-    font-weight: 500;
-    margin-left: -106px;
-    height: 35px;
-    border-radius: 8px;
+.article-container{
+    width: 60%;
+    background-color: #fff;
+    margin-top: 3%;
+    margin-bottom: 10%;
+
+    &__content{
+        padding: 4.8% 0% 0% 4.4%;
+    }
 }
 
 

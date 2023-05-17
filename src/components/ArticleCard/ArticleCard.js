@@ -11,7 +11,7 @@ function ArticleCard() {
       <a href="#" className={cx("card")}>
       <div className={cx("card__media")}>
         <img
-          src="/images/bgr-article.png"
+          src="/images/bgr-article1.png"
           className={cx("card__image")}
         />
       </div>
