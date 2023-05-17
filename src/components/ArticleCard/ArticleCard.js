@@ -8,12 +8,12 @@ function ArticleCard() {
     <a href="#" className={cx("card")}>
       <div className={cx("card__media")}>
         <img
-          src="https://files.tofugu.com/articles/japanese/2022-11-08-teiru-tearu-teoku/header-320x.jpg"
+          src="/images/bgr-article.png"
           className={cx("card__image")}
         />
       </div>
       <div className={cx("card__info")}>
-        <div className={cx("card__topic")}>Grammar</div>
+        <div className={cx("card__topic")}>#SERIES</div>
         <div className={cx("card__title")}>
           〜ている VS 〜てある VS 〜ておく: HOW ARE THEY DIFFERENT?
         </div>
