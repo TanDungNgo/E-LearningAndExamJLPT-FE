@@ -30,12 +30,12 @@ function SideMenu(){
                 {
                 label: "Public Profile",
                 icon: <FontAwesomeIcon icon={faUser} />,
-                key: "/profileUser/PublicProfile",
+                key: "/profileUser",
                 },
                 {
                 label: "Change Password",
                 icon: <SettingOutlined />,
-                key: "/profileUser/",
+                key: "/profileUser/changePassword",
                 },
                 {
                 label: "My Courses",

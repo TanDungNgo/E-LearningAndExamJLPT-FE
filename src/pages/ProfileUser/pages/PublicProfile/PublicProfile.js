@@ -38,9 +38,6 @@ function PublicProfile() {
             src={imgSrc}
           />
           <div className={cx("card__btn")}>
-            {/* <Upload>
-              <Button primary className={cx("card__btn-change")}>Change picture</Button>
-            </Upload> */}
             <div className={cx("card__btn-change")}>
               <Button primary>
                 <label htmlFor="file">
@@ -69,7 +66,7 @@ function PublicProfile() {
               <Select
                 className={cx("card__select")}
                 defaultValue="Gender"
-                style={{ width: 505, color: 'green' }}
+                style={{ width: 505 }}
                 options={[
                   { value: 'male', label: 'Male' },
                   { value: 'female', label: 'Female' }
@@ -77,6 +74,7 @@ function PublicProfile() {
               />
               <input type="text" placeholder="Position" required/>
           </div>
+          <Button primary className={cx("card__btn-save")}>Save</Button>
         </div>
       </div>
     </div>

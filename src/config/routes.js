@@ -9,8 +9,8 @@ const routes = {
     courseManagement: "/admin/course",
     userManagement: "/admin/user",
     createCourse: "/createCourse",
-    profileUser: "/profileUser",
-    publicProfile: "/profileUser/publicProfile",
+    publicProfile: "/profileUser",
+    changePassword: "profileUser/changePassword",
 };
 
 export default routes;

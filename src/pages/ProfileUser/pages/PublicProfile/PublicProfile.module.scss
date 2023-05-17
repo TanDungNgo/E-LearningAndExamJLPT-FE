@@ -16,14 +16,15 @@
         flex-direction: row;
     }
     &__avatar{
+        width: 35%;
         display: flex;
         flex-direction: column;
         padding: 50px;
-    }
-    &__avatar-img{
-        max-height: 320px;
-        object-fit: cover;
-        border-radius: 170px;
+        .card__avatar-img{
+            height: 320px;
+            object-fit: cover;
+            border-radius: 170px;
+        }
     }
     &__btn{
         display: flex;
@@ -85,5 +86,9 @@
     }
     &__select{
         margin-bottom: 5%;
+    }
+    &__btn-save{
+        width: 90px;
+        margin-left: 80%;
     }
 }

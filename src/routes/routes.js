@@ -15,6 +15,7 @@ import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 import ProfileUser from "~/pages/ProfileUser/ProfileUser";
 import PublicProfile from "~/pages/ProfileUser/pages/PublicProfile/PublicProfile";
 import { layouts } from "chart.js";
+import ChangePassword from "~/pages/ProfileUser/pages/ChangePassword/ChangePassword";
 
 
 // Public routes
@@ -45,6 +46,11 @@ const privateRoutes = [
   {
     path: config.routes.publicProfile,
     component: PublicProfile,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.changePassword,
+    component: ChangePassword,
     layout: ProfileUser,
   }
 ];
