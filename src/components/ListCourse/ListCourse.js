@@ -1,28 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
 import styles from "./ListCourse.module.scss";
 import Button from "../Button/Button";
 import routes from "~/configs/routes";
+import courseService from "~/services/courseService";
 
 const cx = classNames.bind(styles);
 
 function ListCourse() {
-  const [listCourse, setListCourse] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-  ]);
+  const [listCourse, setListCourse] = useState([]);
+  const { getAllCourse } = courseService();
+  useEffect(() => {
+    getAllCourse().then((res) => {
+      setListCourse(res);
+    });
+  }, []);
   const renderCard = () => {
-    return listCourse.map((item, index) => {
+    return listCourse?.map((item, index) => {
       return (
         <div key={index}>
-          <CourseCard />
+          <CourseCard course={item} />
         </div>
       );
     });

@@ -2,15 +2,14 @@ const routes = {
   signin: "/login",
   signup: "/register",
   home: "/",
-  coursedetail: "/coursedetail",
+  coursedetail: "/coursedetail/:id",
   allcourse: "/allcourse",
   exam: "/exam",
   examResult: "/exam/result",
   createCourse: "/createCourse",
   overview: "/overview",
-  lessonDetail: "/lessonDetail",
   notFound: "*",
-  lesson: "/lesson",
+  lesson: "/lesson/:id",
   vocabulary: "/vocabulary",
   // Admin routes
   admin: "/admin",
@@ -25,8 +24,6 @@ const routes = {
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyFolder/add",
   addArticles: "/admin/articles/add",
-
-
 };
 
 export default routes;

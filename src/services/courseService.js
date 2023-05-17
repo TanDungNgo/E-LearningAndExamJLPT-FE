@@ -23,7 +23,7 @@ function courseService() {
   };
   const getAllCourse = async () => {
     try {
-      const res = await request.get("/courses");
+      const res = await request.get("/courses/all");
       return res.data.data;
     } catch (error) {
       console.log(error);

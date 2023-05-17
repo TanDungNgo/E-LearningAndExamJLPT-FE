@@ -10,7 +10,7 @@ import {
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import routes from "~/configs/routes";
 import Menu from "~/components/Popper/Menu/Menu";
@@ -47,8 +47,14 @@ const MENU_ITEMS = [
 ];
 const Header = () => {
   const { getCurrentUser, logout } = AuthService();
-  const currentUser = useSelector((state) => state.auth.login.currentUser);
-  console.log("[User] ",currentUser);
+  // const currentUser = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    getCurrentUser().then((res) => {
+      setCurrentUser(res);
+    });
+  }, []);
+  console.log("[User] ", currentUser);
   const dropdown = () => {
     const dropDownMenu = document.getElementsByClassName(cx("dropdown-menu"));
     dropDownMenu[0].classList.toggle(cx("open"));

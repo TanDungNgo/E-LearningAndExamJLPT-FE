@@ -90,7 +90,7 @@ const CreateCourse = () => {
                 rules={[
                   { required: true, message: "Please input a description!" },
                   {
-                    max: 100,
+                    max: 500,
                     message: "Description should be less than 100 characters!",
                   },
                 ]}

@@ -40,7 +40,7 @@ function AuthService() {
               title: "Success!",
             }).then(() => {
               navigate("/");
-              dispatch(loginSuccess(res.data.data));
+              // dispatch(loginSuccess(res.data.data));
               setToken(res.data.data.token);
             });
           }
@@ -60,7 +60,14 @@ function AuthService() {
     localStorage.removeItem("token");
   };
 
-  const getCurrentUser = () => {};
+  const getCurrentUser = async () => {
+    try {
+      const res = await request.get(`/auth/info`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return { register, login, logout, getCurrentUser };
 }

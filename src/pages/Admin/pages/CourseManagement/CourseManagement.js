@@ -1,12 +1,13 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import courseData from "~/data/courseData";
-import { useState } from "react";
+// import courseData from "~/data/courseData";
+import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import courseService from "~/services/courseService";
 const columns = [
   {
     title: "ID",
@@ -73,10 +74,18 @@ const columns = [
   },
 ];
 function CourseManagement() {
+  const { getAllCourse } = courseService();
+  const [courseData, setCourseData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
   const [filterPrice, setFilterPrice] = useState("");
+
+  useEffect(() => {
+    getAllCourse().then((res) => {
+      setCourseData(res);
+    });
+  }, []);
 
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);

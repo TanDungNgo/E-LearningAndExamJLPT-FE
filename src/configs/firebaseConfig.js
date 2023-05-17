@@ -3,13 +3,13 @@ import { getStorage } from "firebase/storage";
 
 // Initialize Firebase
 const firebase = initializeApp({
-  apiKey: "AIzaSyCm9d63FSTA0_0AMCFEWuGhdreMCtj4JJg",
-  authDomain: "fir-react-upload-bad49.firebaseapp.com",
-  projectId: "fir-react-upload-bad49",
-  storageBucket: "fir-react-upload-bad49.appspot.com",
-  messagingSenderId: "546825938108",
-  appId: "1:546825938108:web:e8254bdfe57edd4d8a5cb9",
-  measurementId: "G-K6P6N7TK27",
+  apiKey: "AIzaSyCm_XvkP2q-5clHfZBHQP8UhS8ux-Ig9lE",
+  authDomain: "e-learning-dpt.firebaseapp.com",
+  projectId: "e-learning-dpt",
+  storageBucket: "e-learning-dpt.appspot.com",
+  messagingSenderId: "896351039188",
+  appId: "1:896351039188:web:0cd503ee8ca4420f205541",
+  measurementId: "G-DDD1TYE5EM",
 });
 
 // Firebase storage reference
