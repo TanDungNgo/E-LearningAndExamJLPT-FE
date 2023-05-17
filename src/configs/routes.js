@@ -20,6 +20,7 @@ const routes = {
   lessonManagement: "/admin/lesson",
   grammarManagement: "/admin/grammar",
   vocabularyFolderManagement: "/admin/vocabularyFolder",
+  vocabularyManagement: "/admin/vocabulary",
   articlesManagement: "admin/articles",
   userManagement: "/admin/user",
   addCourse: "/admin/course/add",
@@ -27,6 +28,7 @@ const routes = {
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyFolder/add",
   addArticles: "/admin/articles/add",
+  addVocabulary: "/admin/vocabulary/add",
 };
 
 export default routes;
