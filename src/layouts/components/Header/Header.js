@@ -38,7 +38,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Article",
-    to: "/article",
+    to: "/articlesFolder",
   },
   {
     title: "Postcast",
