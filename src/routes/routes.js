@@ -15,6 +15,9 @@ import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
 import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
+import ProfileUser from "~/pages/ProfileUser/ProfileUser";
+import PublicProfile from "~/pages/ProfileUser/pages/PublicProfile/PublicProfile";
+import ChangePassword from "~/pages/ProfileUser/pages/ChangePassword/ChangePassword";
 
 // Public routes
 const publicRoutes = [
@@ -52,6 +55,17 @@ const privateRoutes = [
     layout: Admin,
   },
   { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
+  {path: config.routes.profileUser, component: ProfileUser, layout: ProfileUser},
+  {
+    path: config.routes.publicProfile,
+    component: PublicProfile,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.changePassword,
+    component: ChangePassword,
+    layout: ProfileUser,
+  }
 ];
 
 export { publicRoutes, privateRoutes };

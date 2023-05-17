@@ -14,7 +14,8 @@ const routes = {
   courseManagement: "/admin/course",
   userManagement: "/admin/user",
   addCourse: "/admin/course/add",
-  
+  publicProfile: "/profileUser",
+  changePassword: "/profileUser/changePassword",
 };
 
 export default routes;

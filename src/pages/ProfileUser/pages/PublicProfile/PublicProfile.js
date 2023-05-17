@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 function PublicProfile() {
   const [fileImage, setFileImage] = useState("");
-  const [imgSrc, setImgSrc] = useState("/images/Phuong.jpg");
+  const [imgSrc, setImgSrc] = useState("/images/Phuong.png");
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
