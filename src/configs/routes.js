@@ -14,6 +14,7 @@ const routes = {
   courseManagement: "/admin/course",
   userManagement: "/admin/user",
   addCourse: "/admin/course/add",
+  
 };
 
 export default routes;
