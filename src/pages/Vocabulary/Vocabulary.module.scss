@@ -1,0 +1,73 @@
+.vocabulary {
+    &__title {
+      font-family: 'Lucida Sans Unicode';
+      font-size: 32px;
+      font-weight: 600;
+      margin-top: 4%;
+      color: black;
+      margin-left: 5%;
+    }
+  
+    &__description {
+      display: flex;
+      flex-direction: row;
+  
+      &-title {
+        font-size: 24px;
+        margin-left: 1.5%;
+      }
+    }
+  
+    &__image {
+      object-fit: cover;
+      width: 38px;
+      height: 38px;
+      margin-left: 5%;
+    }
+  
+    &__content {
+      &__vocabulary-card {
+        margin-left: 25%;
+        margin-top: 1.5%;
+      }
+  
+      &__icon-left {
+        position: absolute;
+        margin-top: 12%;
+        margin-left: 21%;
+        font-size: 35px;
+        color: black;
+      }
+  
+      &__icon-right {
+        margin-left: 71.5%;
+        margin-top: -14%;
+        font-size: 35px;
+        position: absolute;
+        color: black;
+      }
+    }
+  }
+  
+  .list-vocabulary-folder {
+    width: 100%;
+    background-color: #F2F2F2;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 460px;
+  
+    &__card1 {
+      padding-top: 4%;
+      display: flex;
+      gap: 45px;
+      justify-content: center;
+    }
+  
+    &__card2 {
+      padding-top: 2%;
+      display: flex;
+      gap: 45px;
+      justify-content: center;
+    }
+  }
+  

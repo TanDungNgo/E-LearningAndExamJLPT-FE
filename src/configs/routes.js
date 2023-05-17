@@ -11,6 +11,8 @@ const routes = {
   notFound: "*",
   lesson: "/lesson/:id",
   vocabulary: "/vocabulary",
+  vocabularyFolder: "/vocabularyFolder",
+  articlesFolder: "/articlesFolder",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
