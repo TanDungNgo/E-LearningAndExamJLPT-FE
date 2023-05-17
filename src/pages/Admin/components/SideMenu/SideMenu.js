@@ -57,12 +57,12 @@ function SideMenu() {
             {
               label: "Lessons",
               icon: <FontAwesomeIcon icon={faVideo} />,
-              key: "/admin/leson",
+              key: "/admin/lesson",
             },
             {
               label: "Articles",
               icon: <FontAwesomeIcon icon={faNewspaper} />,
-              key: "/admin/article",
+              key: "/admin/articles",
             },
             {
               label: "Grammar",
@@ -72,7 +72,7 @@ function SideMenu() {
             {
               label: "Vocabulary",
               icon: <FontAwesomeIcon icon={faFont} />,
-              key: "/admin/vocabulary",
+              key: "/admin/vocabularyFolder",
             },
           ],
         },

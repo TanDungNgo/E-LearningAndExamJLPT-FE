@@ -1,5 +1,6 @@
 .card {
   width: 240px;
+  height: 345px;
   background: #fff;
   box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -37,6 +38,7 @@
   /* Body */
   &__body {
     padding: 16px;
+    max-height: 115px;
   }
   &__title {
     font-size: 18px;

@@ -7,31 +7,53 @@ function CourseCard(props) {
   return (
     <div className={cx("card")}>
       <div className={cx("card__header")}>
-        <div className={cx("card__category")}>JLPT</div>
+        <div className={cx("card__category")}>
+          {props.course.type ? props.course.type : "JLPT"}
+        </div>
         <img
-          src="https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"
+          src={
+            props.course.banner
+              ? props.course.banner
+              : "https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"
+          }
           alt=""
           className={cx("card__image")}
         />
       </div>
       <div className={cx("card__body")}>
         <div className={cx("card__title")}>
-          Let's conquer JLPT N2 - Grammar & Reading
+          {props.course.name
+            ? props.course.name
+            : "Let's conquer JLPT N2 - Grammar & Reading"}
         </div>
         <div className={cx("card__description")}>
-          This is a JLPT N2 (Grammar and Reading) course for Vietnamese.
+          {props.course.description
+            ? props.course.description
+            : "This is a JLPT N2 (Grammar and Reading) course for Vietnamese."}
         </div>
       </div>
       <div className={cx("card__footer")}>
-        <Button primary className={cx("card__button")} to={routes.coursedetail}>View details</Button>
+        <Button
+          primary
+          className={cx("card__button")}
+          to={`coursedetail/${props.course.id}`}
+        >
+          View details
+        </Button>
         <div className={cx("card__info")}>
           <div className={cx("card__author")}>
             <img
-              src="https://upload.motgame.vn/photos/motgame-vn/2022/05/Spy-x-family-Anya_3.jpg"
+              src={
+                props.course.createdBy.avatar
+                  ? props.course.createdBy.avatar
+                  : "https://upload.motgame.vn/photos/motgame-vn/2022/05/Spy-x-family-Anya_3.jpg"
+              }
               alt=""
               className={cx("card__author-image")}
             />
-            <div className={cx("card__author-name")}>Anya</div>
+            <div className={cx("card__author-name")}>
+              {props.course.createdBy.username}
+            </div>
           </div>
           <div className={cx("card__rating")}>
             <div className={cx("card__rating-number")}>4.5</div>

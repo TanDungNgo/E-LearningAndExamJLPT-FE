@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #f2f2f2;
+}
+.card-img{
+    width: 100%;
+}
+.card-img__detail{
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+}
+.card-search{
+    margin: -150px 0px 20px 0px;
+}
+.card-search input{
+    height: 45px;
+    width: 700px;
+    border: none;
+    padding-left: 20px;
+    border-radius: 10px;
+}
+.btn-search{
+    color: white;
+    background-color: #C7923E;
+    font-weight: 500;
+    margin-left: -106px;
+    height: 35px;
+    border-radius: 8px;
+}
+.card-select{
+    margin-left: 18%;
+}
+.card-select__level{
+    border: none;
+    font-size: 15px;
+    width: 180px;
+    height: 35px;
+    border-radius: 7px;
+    padding-left: 15px;
+    margin-left: -280px;
+}
+.card-select__learning{
+    border: none;
+    font-size: 15px;
+    width: 180px;
+    height: 35px;
+    border-radius: 7px;
+    margin-left: 50px;
+    padding-left: 15px;
+}
+.card-vocabulary-folder{
+    width: 70%;
+    height: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 100px 0px -25px 0px;
+}
+.card-pagination{
+    display: flex;
+    align-items: center;
+    padding: 10px 40px;
+}
