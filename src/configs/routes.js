@@ -24,6 +24,8 @@ const routes = {
   articlesManagement: "admin/articles",
   userManagement: "/admin/user",
   addCourse: "/admin/course/add",
+  publicProfile: "/profileUser",
+  changePassword: "/profileUser/changePassword",
   addLesson: "/admin/lesson/add",
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyFolder/add",
