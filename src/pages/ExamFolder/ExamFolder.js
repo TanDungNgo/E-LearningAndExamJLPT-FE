@@ -84,12 +84,8 @@ function ExamFolder() {
               <img src="https://riki.edu.vn/online/design-jlpt/images/jlpt102022/3.png" className={cx("exam-folder__honors__img3")}></img>
             </div>
           </div>
-
         </div>
-
-
       </div>
-      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
       <Modal
         title={
           <div>
