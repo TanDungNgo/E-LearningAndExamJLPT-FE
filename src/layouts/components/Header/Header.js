@@ -30,7 +30,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Grammar",
-    to: "/grammar",
+    to: "/grammarsFolder",
   },
   {
     title: "Vocabulary",

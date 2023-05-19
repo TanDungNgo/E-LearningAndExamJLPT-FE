@@ -36,6 +36,10 @@ import Vocabulary from "~/pages/Vocabulary/Vocabulary";
 import VocabularyFolder from "~/pages/VocavularyFolder/VocavularyFolder";
 import ArticleFolder from  "~/pages/ArticleFolder/ArticleFolder";
 import Article from "~/pages/Article/Article";
+import GrammarCard from "~/components/GrammarCard/GrammarCard";
+import ListGrammar from "~/components/ListGrammar/ListGrammar";
+import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
+import Grammar from "~/pages/Grammar/Grammar";
 
 // Public routes
 const publicRoutes = [
@@ -67,6 +71,8 @@ const publicRoutes = [
   { path: config.routes.vocabularyFolder, component: VocabularyFolder, layout: DefaultLayout},
   { path: config.routes.articlesFolder, component: ArticleFolder, layout: DefaultLayout},
   { path: config.routes.article, component: Article, layout: DefaultLayout},
+  { path: config.routes.grammarsFolder, component: GrammarsFolder, layout: DefaultLayout},
+  { path: config.routes.grammar, component: Grammar, layout: DefaultLayout},
 ];
 
 // Private routes
