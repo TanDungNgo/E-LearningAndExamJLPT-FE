@@ -4,6 +4,7 @@ const routes = {
   home: "/",
   coursedetail: "/coursedetail/:id",
   allcourse: "/allcourse",
+  examFolder: "/examFolder",
   exam: "/exam",
   examResult: "/exam/result",
   createCourse: "/createCourse",

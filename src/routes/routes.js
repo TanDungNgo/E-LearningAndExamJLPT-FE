@@ -11,6 +11,7 @@ import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 import Overview from "~/pages/Overview/Overview";
+import ExamFolder from "~/pages/ExamFolder/ExamFolder";
 import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
@@ -57,6 +58,7 @@ const publicRoutes = [
   },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage },
+  { path: config.routes.examFolder, component: ExamFolder, layout: DefaultLayout},
   { path: config.routes.examResult, component: ExamResult },
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
