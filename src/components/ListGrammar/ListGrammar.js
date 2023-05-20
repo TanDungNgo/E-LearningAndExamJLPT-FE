@@ -20,7 +20,7 @@ function ListGrammar() {
     <div className={cx("container")}>
       <div className={cx("title")}>
         <h1>
-          Recent <span className={cx("title--primary")}>Grammar</span>
+          All <span className={cx("title--primary")}>Grammar</span>
         </h1>
       </div>
       {renderCard()}
