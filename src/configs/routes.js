@@ -17,6 +17,8 @@ const routes = {
   article: "/article",
   grammarsFolder: "/grammarsFolder",
   grammar: "/grammar",
+  publicProfile: "/profileUser",
+  changePassword: "/profileUser/changePassword",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
@@ -27,8 +29,6 @@ const routes = {
   articlesManagement: "admin/articles",
   userManagement: "/admin/user",
   addCourse: "/admin/course/add",
-  publicProfile: "/profileUser",
-  changePassword: "/profileUser/changePassword",
   addLesson: "/admin/lesson/add",
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyfolder/add",
