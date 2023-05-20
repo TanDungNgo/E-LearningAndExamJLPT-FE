@@ -36,7 +36,7 @@ function CourseCard(props) {
         <Button
           primary
           className={cx("card__button")}
-          to={`coursedetail/${props.course.id}`}
+          to={`/coursedetail/${props.course.id}`}
         >
           View details
         </Button>

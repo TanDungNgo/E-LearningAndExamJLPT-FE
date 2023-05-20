@@ -8,22 +8,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import EnrollCard from "~/components/EnrollCard/EnrollCard";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import courseService from "~/services/courseService";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function CourseDetail() {
   const { getCourseById } = courseService();
   const { id } = useParams();
   const [isEnroll, setIsEnroll] = useState(false);
-  const [course, setCourse] = useState({});
-  const [listCourse, setListCourse] = useState(["1", "2", "3", "4"]);
+  const [course, setCourse] = useState();
+  const navigate = useNavigate();
+  const [listCourse, setListCourse] = useState([]);
   useEffect(() => {
     getCourseById(id).then((res) => {
       console.log(res);
       setCourse(res);
     });
   }, []);
+  if (course === null) {
+    console.log("null");
+    navigate(routes.notFound);
+  }
   const renderCard = () => {
     return listCourse.map((item, index) => {
       return (
@@ -33,13 +39,10 @@ function CourseDetail() {
       );
     });
   };
-  function splitString(str) {
-    const parts = str.split(';'); // Tách chuỗi thành mảng các phần tử
-
-    return parts.map((part, index) => (
-      <li key={index}>{part}</li> // Hiển thị từng phần tử trên một dòng riêng biệt
-    ));
-  }
+  const splitString = (str) => {
+    const parts = str.split(";");
+    return parts.map((part, index) => <li key={index}>{part}</li>);
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("poster__course")}>
@@ -102,20 +105,17 @@ function CourseDetail() {
           splitString(course?.description)
         ) : (
           <>
-            <li>
-            </li>
-            <li>
-            </li>
+            <li></li>
+            <li></li>
           </>
         )}
       </div>
       <div className={cx("card__content")}>
         <div className={cx("card__content-title")}>Course Content</div>
         <li>
-          {course.lessons?.length ? course.lessons?.length : "0"} video
+          {course?.lessons?.length ? course?.lessons?.length : "0"} video
           lectures.
         </li>
-        {/* <li>10 downloadable resources.</li> */}
         <li>Full access for life.</li>
         <li>Certificate of course completion.</li>
       </div>

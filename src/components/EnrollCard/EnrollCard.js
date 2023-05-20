@@ -18,12 +18,8 @@ function EnrollCard(props) {
     <div className={cx("card")}>
       <div className={cx("card__header")}>
         <img
-          src={
-            props.course.banner
-              ? props.course.banner
-              : ""
-          }
-          alt={props.course.name}
+          src={props.course?.banner ? props.course?.banner : ""}
+          alt={props.course?.name}
           className={cx("card__image")}
         />
       </div>
@@ -41,8 +37,8 @@ function EnrollCard(props) {
               <p>Teacher: </p>
             </div>
             <div className={cx("card__detail-teacher")}>
-              {props.course.createdBy?.username
-                ? props.course.createdBy?.username
+              {props.course?.createdBy?.username
+                ? props.course?.createdBy?.username
                 : "Dung Mori"}
             </div>
           </div>
@@ -52,7 +48,7 @@ function EnrollCard(props) {
               <p>Duration: </p>
             </div>
             <div className={cx("card__detail-dur")}>
-              {props.course.duration} Months
+              {props.course?.duration} Months
             </div>
           </div>
           <div className={cx("card__info-details")}>
@@ -64,7 +60,7 @@ function EnrollCard(props) {
               <p>Level: </p>
             </div>
             <div className={cx("card__detail-des")}>
-              JLPT {props.course.level}
+              JLPT {props.course?.level}
             </div>
           </div>
           {/* <div className={cx("card__info-details")}>

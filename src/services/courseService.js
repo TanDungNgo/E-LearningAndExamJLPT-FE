@@ -35,6 +35,7 @@ function courseService() {
       return res.data.data;
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
   const updateCourse = async (id, course) => {
