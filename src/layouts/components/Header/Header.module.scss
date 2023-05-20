@@ -2,14 +2,17 @@
   text-decoration: none;
   color: #0a2640;
   font-size: 24px;
-  line-height: 28px;
   display: flex;
   align-items: center;
   flex: none;
   order: 0;
   flex-grow: 0;
+
   &:hover{
     color: var(--secondary)
+  }
+  &.active {
+    color: var(--primary);
   }
 }
 .navbar {
@@ -18,7 +21,10 @@
   height: fit-content;
   display: flex;
   justify-content: space-between;
+  background-color: var(--white);
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  position: fixed;
+  z-index: 10;
 }
 .navbar .links {
   display: flex;

@@ -51,14 +51,16 @@
 }
 .card-course{
     width: 80%;
-    height: 800px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 20rem));
+    gap: 7rem;
+    justify-content: center;
+    justify-items: center;
     margin: 100px 0px -25px 0px;
 }
 .card-pagination{
     display: flex;
     align-items: center;
     padding: 10px 40px;
+    margin: 40px 0px 20px 0px;
 }

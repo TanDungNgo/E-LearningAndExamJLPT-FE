@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes/routes";
 import { ConfigProvider } from "antd";
 import ScrollToTop from "./utils/ScrollToTop";
+import UserRoute from "./routes/UserRoute";
 
 function App() {
   return (
@@ -21,21 +22,35 @@ function App() {
               let Layout = Fragment;
               if (route.layout) {
                 Layout = route.layout;
-              } else if (route.layout === null) {
-                Layout = Fragment;
               }
               const Page = route.component;
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    <Layout>
-                      <Page />
-                    </Layout>
-                  }
-                ></Route>
-              );
+              if (route.protected) {
+                return (
+                  <Route element={<UserRoute/>}>
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={
+                        <Layout>
+                          <Page />
+                        </Layout>
+                      }
+                    ></Route>
+                  </Route>
+                );
+              } else {
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    }
+                  ></Route>
+                );
+              }
             })}
             {privateRoutes.map((route, index) => {
               let Layout = route.layout;

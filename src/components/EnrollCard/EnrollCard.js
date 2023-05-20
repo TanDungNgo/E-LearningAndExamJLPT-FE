@@ -21,7 +21,7 @@ function EnrollCard(props) {
           src={
             props.course.banner
               ? props.course.banner
-              : "https://www.worldfirst.com/app/uploads/2020/01/Japan-business_blog.jpg"
+              : ""
           }
           alt={props.course.name}
           className={cx("card__image")}

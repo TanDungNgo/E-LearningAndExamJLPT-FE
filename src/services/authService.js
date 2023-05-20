@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -8,6 +9,7 @@ function AuthService() {
   const { request, setToken } = RequestHttp();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const register = async (userData) => {
     console.log(userData);
     try {
@@ -34,24 +36,30 @@ function AuthService() {
         })
         .then((res) => {
           if (res.data.data.token) {
-            Swal.fire({
-              icon: "success",
-              text: res.data.message,
-              title: "Success!",
-            }).then(() => {
-              navigate("/");
-              // dispatch(loginSuccess(res.data.data));
-              setToken(res.data.data.token);
+            // Swal.fire({
+            //   icon: "success",
+            //   text: res.data.message,
+            //   title: "Success!",
+            // }).then(() => {
+            //   navigate("/");
+            //   // dispatch(loginSuccess(res.data.data));
+            //   setToken(res.data.data.token);
+            // });
+            notification.success({
+              message: res.data.message,
+              description: `Welcome ${res.data.data.firstname}!`,
             });
+            setToken(res.data.data.token);
+            navigate("/");
           }
         });
     } catch (err) {
-      dispatch(loginFailed());
-      Swal.fire({
-        icon: "error",
-        text: "Username or password is incorrect!",
-        title: "Error!",
-      });
+      // dispatch(loginFailed());
+      // Swal.fire({
+      //   icon: "error",
+      //   text: "Username or password is incorrect!",
+      //   title: "Error!",
+      // });
       console.log(err);
     }
   };

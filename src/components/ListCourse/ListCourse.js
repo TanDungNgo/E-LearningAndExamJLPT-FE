@@ -5,11 +5,12 @@ import styles from "./ListCourse.module.scss";
 import Button from "../Button/Button";
 import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
+import { Space, Spin } from "antd";
 
 const cx = classNames.bind(styles);
 
 function ListCourse() {
-  const [listCourse, setListCourse] = useState([]);
+  const [listCourse, setListCourse] = useState();
   const { getAllCourse } = courseService();
   useEffect(() => {
     getAllCourse().then((res) => {
@@ -59,9 +60,19 @@ function ListCourse() {
           </button>
         </div>
       </div>
-      <div className={cx("list-course")}>{renderCard()}</div>
+      <div className={cx("list-course")}>
+        {listCourse ? (
+          renderCard()
+        ) : (
+          <Space>
+            <Spin tip="Loading" size="large">
+              <div className="content" />
+            </Spin>
+          </Space>
+        )}
+      </div>
       <div className={cx("list-course__footer")}>
-        <Button outline className={cx("button__explore")} to={routes.allcourse}>
+        <Button outline className={cx("button__explore")} to={routes.allCourse}>
           Explore all Courses
         </Button>
       </div>

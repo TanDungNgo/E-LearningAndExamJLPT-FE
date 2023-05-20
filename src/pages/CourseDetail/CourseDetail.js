@@ -33,6 +33,13 @@ function CourseDetail() {
       );
     });
   };
+  function splitString(str) {
+    const parts = str.split(';'); // Tách chuỗi thành mảng các phần tử
+
+    return parts.map((part, index) => (
+      <li key={index}>{part}</li> // Hiển thị từng phần tử trên một dòng riêng biệt
+    ));
+  }
   return (
     <div className={cx("container")}>
       <div className={cx("poster__course")}>
@@ -91,22 +98,13 @@ function CourseDetail() {
       </div>
       <div className={cx("card__intro")}>
         <div className={cx("card__intro-title")}>Course Introduction</div>
-        {course.description ? (
-          course.description
+        {course?.description ? (
+          splitString(course?.description)
         ) : (
           <>
             <li>
-              This is a foundation course to help you master the basics of
-              N3-level grammar, vocabulary, kanji, and reading comprehension.
             </li>
             <li>
-              The course also alternates methods-tips for quick reading
-              comprehension as well as how to memorize N3-level kanji.
-            </li>
-            <li>
-              By the end of the course, you will be able to master about 400-800
-              kanji, vocabulary, and most important grammar patterns of level
-              N3.
             </li>
           </>
         )}
