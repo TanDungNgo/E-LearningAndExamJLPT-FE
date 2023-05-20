@@ -81,7 +81,7 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "View profile",
-      to: "/profile",
+      to: routes.publicProfile,
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
