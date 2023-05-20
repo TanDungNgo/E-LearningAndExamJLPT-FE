@@ -1,36 +1,59 @@
 import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./CourseCard.module.scss";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 function CourseCard(props) {
   return (
     <div className={cx("card")}>
       <div className={cx("card__header")}>
-        <div className={cx("card__category")}>JLPT</div>
+        <div className={cx("card__category")}>
+          {props.course.type ? props.course.type : "JLPT"}
+        </div>
         <img
-          src="https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"
+          src={
+            props.course.banner
+              ? props.course.banner
+              : "https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"
+          }
           alt=""
           className={cx("card__image")}
         />
       </div>
       <div className={cx("card__body")}>
         <div className={cx("card__title")}>
-          Let's conquer JLPT N2 - Grammar & Reading
+          {props.course.name
+            ? props.course.name
+            : "Let's conquer JLPT N2 - Grammar & Reading"}
         </div>
         <div className={cx("card__description")}>
-          This is a JLPT N2 (Grammar and Reading) course for Vietnamese.
+          {props.course.description
+            ? props.course.description
+            : "This is a JLPT N2 (Grammar and Reading) course for Vietnamese."}
         </div>
       </div>
       <div className={cx("card__footer")}>
-        <Button primary className={cx("card__button")}>View details</Button>
+        <Button
+          primary
+          className={cx("card__button")}
+          to={`/coursedetail/${props.course.id}`}
+        >
+          View details
+        </Button>
         <div className={cx("card__info")}>
           <div className={cx("card__author")}>
             <img
-              src="https://upload.motgame.vn/photos/motgame-vn/2022/05/Spy-x-family-Anya_3.jpg"
+              src={
+                props.course?.teacherAvatar
+                  ? props.course?.teacherAvatar
+                  : "https://upload.motgame.vn/photos/motgame-vn/2022/05/Spy-x-family-Anya_3.jpg"
+              }
               alt=""
               className={cx("card__author-image")}
             />
-            <div className={cx("card__author-name")}>Anya</div>
+            <div className={cx("card__author-name")}>
+              {props.course?.teacherName}
+            </div>
           </div>
           <div className={cx("card__rating")}>
             <div className={cx("card__rating-number")}>4.5</div>

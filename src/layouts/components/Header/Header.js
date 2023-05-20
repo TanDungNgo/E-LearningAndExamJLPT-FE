@@ -10,35 +10,35 @@ import {
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import routes from "~/config/routes";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import routes from "~/configs/routes";
 import Menu from "~/components/Popper/Menu/Menu";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { current } from "@reduxjs/toolkit";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
-const currentUser = true;
 const MENU_ITEMS = [
   {
     title: "Home",
-    to: "/",
+    to: routes.home,
   },
   {
     title: "Course",
-    to: "/course",
+    to: routes.allCourse,
   },
   {
     title: "Grammar",
-    to: "/grammar",
+    to: routes.grammarsFolder,
   },
   {
     title: "Vocabulary",
-    to: "/vocabulary",
+    to: routes.vocabularyFolder,
   },
   {
     title: "Article",
-    to: "/article",
+    to: routes.articlesFolder,
   },
   {
     title: "Postcast",
@@ -46,18 +46,33 @@ const MENU_ITEMS = [
   },
 ];
 const Header = () => {
+  const { getCurrentUser, logout } = AuthService();
+  // const currentUser = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    getCurrentUser().then((res) => {
+      setCurrentUser(res);
+    });
+  }, []);
+  console.log("[User] ", currentUser);
   const dropdown = () => {
-    const toggleBtn = document.getElementsByClassName(cx("toggle-btn"));
     const dropDownMenu = document.getElementsByClassName(cx("dropdown-menu"));
     dropDownMenu[0].classList.toggle(cx("open"));
-    const isOpen = dropDownMenu[0].classList.contains(cx("open"));
+  };
+  const handleLogout = () => {
+    window.location.reload();
+    logout();
   };
   const renderMenu = () => {
     return MENU_ITEMS.map((item, index) => {
       return (
-        <Link key={index} className={cx("header__link-item")} to={item.to}>
+        <NavLink
+          key={index}
+          className={(nav) => cx("header__link-item", { active: nav.isActive })}
+          to={item.to}
+        >
           {item.title}
-        </Link>
+        </NavLink>
       );
     });
   };
@@ -66,7 +81,7 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "View profile",
-      to: "/@trang",
+      to: "/profile",
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
@@ -81,59 +96,62 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faSignOut} />,
       title: "Log out",
-      to: "/logout",
       separate: true,
+      onClick: handleLogout,
     },
   ];
+
   return (
-    <header>
-      <div className={cx("navbar")}>
-        <div className={cx("logo")}>
-          <img width="80" src="/images/Logo1.png" />
-        </div>
-        <div className={cx("links")}>{renderMenu()}</div>
-        <div className={cx("actions")}>
-          {currentUser ? (
-            <>
-              <Tippy content="Notification" placement="bottom">
-                <button className={cx("action__btn")}>
-                  <FontAwesomeIcon icon={faBell} className={cx("icon")} />
-                </button>
-              </Tippy>
-            </>
-          ) : (
-            <>
-              <Button outline className={cx("action__btn-register")}>
-                Register
-              </Button>
-              <Button
-                primary
-                className={cx("action__btn-login")}
-                to={routes.signin}
-              >
-                Login
-              </Button>
-            </>
-          )}
-          <Menu items={userMenu}>
-            {currentUser ? (
-              <img
-                src="https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/335410932_769054791517289_1572875847638970262_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=kO9Iwm6C-O0AX9HD4on&_nc_ht=scontent.fdad1-3.fna&oh=00_AfClqIlNXaUdvNadA4H0mq9mPn_J1Ykn2l-XpIaPniiF4g&oe=6433DDC0"
-                className={cx("user-avt")}
-                alt="Trang Le"
-              />
-            ) : (
-              <></>
-            )}
-          </Menu>
-          <Menu items={MENU_ITEMS}>
-            <div className={cx("toggle-btn")} onClick={dropdown}>
-              <FontAwesomeIcon icon={faBars} />
-            </div>
-          </Menu>
-        </div>
+    <div className={cx("navbar")}>
+      <div className={cx("logo")}>
+        <img width="80" src="/images/Logo1.png" />
       </div>
-    </header>
+      <div className={cx("links")}>{renderMenu()}</div>
+      <div className={cx("actions")}>
+        {currentUser ? (
+          <>
+            <Tippy content="Notification" placement="bottom">
+              <button className={cx("action__btn")}>
+                <FontAwesomeIcon icon={faBell} className={cx("icon")} />
+              </button>
+            </Tippy>
+          </>
+        ) : (
+          <>
+            <Button
+              outline
+              className={cx("action__btn-register")}
+              to={routes.signup}
+            >
+              Register
+            </Button>
+            <Button
+              primary
+              className={cx("action__btn-login")}
+              to={routes.signin}
+            >
+              Login
+            </Button>
+          </>
+        )}
+        <Menu items={userMenu}>
+          {currentUser ? (
+            <img
+              src={currentUser.avatar}
+              className={cx("user-avt")}
+              alt={currentUser.username}
+            />
+          ) : (
+            <></>
+          )}
+        </Menu>
+        <Menu items={MENU_ITEMS}>
+          <div className={cx("toggle-btn")} onClick={dropdown}>
+            <FontAwesomeIcon icon={faBars} />
+          </div>
+        </Menu>
+      </div>
+    </div>
   );
 };
 

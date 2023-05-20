@@ -2,18 +2,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./ArticleCard.module.scss";
+import { Link, useParams } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function ArticleCard() {
   return (
-    <a href="#" className={cx("card")}>
+    <div>
+      <Link to={'/article'}>
+      <a href="#" className={cx("card")}>
       <div className={cx("card__media")}>
         <img
-          src="https://files.tofugu.com/articles/japanese/2022-11-08-teiru-tearu-teoku/header-320x.jpg"
+          src="/images/bgr-article1.png"
           className={cx("card__image")}
         />
       </div>
       <div className={cx("card__info")}>
-        <div className={cx("card__topic")}>Grammar</div>
+        <div className={cx("card__topic")}>#SERIES</div>
         <div className={cx("card__title")}>
           〜ている VS 〜てある VS 〜ておく: HOW ARE THEY DIFFERENT?
         </div>
@@ -37,6 +40,8 @@ function ArticleCard() {
         </div>
       </div>
     </a>
+      </Link>
+    </div>
   );
 }
 

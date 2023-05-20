@@ -1,0 +1,43 @@
+.admin__logo {
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  &-image {
+    height: 60px;
+  }
+}
+.admin__header-left {
+  display: flex;
+  align-items: center;
+  span.trigger svg {
+    width: 25px !important;
+    height: 25px !important;
+    margin: 10px !important;
+  }
+}
+.admin__header-right {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 0 20px;
+  .user-avt {
+    margin: 15px 0 0 10px;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
+.admin__icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+.admin__page-content {
+  padding: 10px;
+}
+.admin__body {
+  padding: 20;
+  min-height: 280;
+}

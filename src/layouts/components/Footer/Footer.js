@@ -3,11 +3,11 @@ import styles from "./Footer.module.scss";
 import Button from "~/components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faBars, faCalendar, faComment, faCommentAlt, faComments, faEnvelope, faPhone, faVoicemail,
+    faCalendar, faComments, faEnvelope, faPhone, 
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import routes from "~/config/routes";
+import routes from "~/configs/routes";
 import Menu from "~/components/Popper/Menu/Menu";
 import { faFacebook, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
 const cx = classNames.bind(styles);

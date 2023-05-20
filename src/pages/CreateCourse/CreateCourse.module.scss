@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 753px;
+  background-color: #c6c5c3;
+}
+.bg-create {
+  height: 100%;
+  width: 100%;
+}
+.card-create {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 20px;
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 29px;
+  &__header {
+    width: 100%;
+    padding: 0 40px;
+    label {
+      color: var(--primary);
+      cursor: pointer;
+    }
+    label:hover {
+      color: #b79032ab;
+    }
+  }
+  &__header-title {
+    width: 100%;
+    height: 12%;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+  }
+}
+.card-create__content {
+  display: flex;
+  justify-content: center;
+}
+.card-create__left {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  .form__input {
+    background-color: #ece1c9;
+  }
+}
+
+.card-create__right {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .card-create__banner {
+    width: 350px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+}
+
+.card-create__import-file {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  label {
+    color: var(--primary);
+    cursor: pointer;
+    svg {
+      margin-right: 10px;
+    }
+  }
+  label:hover {
+    color: #b79032ab;
+  }
+  .card-create__input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+}
+.form__submit {
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  .btn__submit {
+    width: 150px;
+  }
+}

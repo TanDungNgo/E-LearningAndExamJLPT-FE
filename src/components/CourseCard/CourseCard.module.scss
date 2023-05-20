@@ -1,31 +1,31 @@
 .card {
-    width: 240px;
-    background: #fff;
-    box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-decoration: none;
-    color: #14213d;
-    position: relative;
-    transition: all 400ms ease;
-  }
-  .card:hover {
+  width: 240px;
+  height: 345px;
+  background: #fff;
+  box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #14213d;
+  position: relative;
+  transition: all 400ms ease;
+  &:hover {
     box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.4);
     transform: scale(1.03);
   }
   /* Header */
-  .card__header {
+  &__header {
     position: relative;
   }
-  .card__image {
+  &__image {
     width: 100%;
     height: 150px;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
   }
-  .card__category {
+  &__category {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -36,63 +36,62 @@
     text-transform: uppercase;
   }
   /* Body */
-  .card__body {
+  &__body {
     padding: 16px;
+    max-height: 115px;
+    overflow: hidden;
   }
-  .card__title {
+  &__title {
     font-size: 18px;
     line-height: 1.4;
   }
-  .card__description {
+  &__description {
     font-size: 12px;
     color: #333;
     margin: 0;
     line-height: 1.2;
   }
-  
   /* Footer */
-  .card__footer {
+  &__footer {
     display: flex;
     justify-content: space-between;
-    background: #F6F7F5;
+    background: #f6f7f5;
     border-radius: 0 0 10px 10px;
     padding: 12px 16px;
     align-items: center;
   }
-  .card__button {
-    font-size: 12px;
+
+  &__button {
+    font-size: 10px;
   }
-  
-  .card__info {
-  }
-  .card__author {
+  &__author {
     display: flex;
     align-items: center;
   }
-  .card__author-image {
+  &__author-image {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 8px;
   }
-  .card__author-name {
+  &__author-name {
     font-size: 12px;
     color: #333;
   }
-  .card__rating {
+  &__rating {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-right: 4px;
   }
-  .card__rating-star {
+  &__rating-star {
     fill: gold;
     margin-left: 4px;
     width: 5px;
   }
-  .card__rating-number {
+  &__rating-number {
     font-size: 12px;
     color: #333;
   }
-  
+}

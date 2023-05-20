@@ -1,3 +1,110 @@
+.container {
+  justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px 0 20px 0;
+}
+.container .title {
+  font-family: "Lucida Sans Unicode";
+  font-size: 45px;
+  position: relative;
+  color: #1b242e;
+  margin: 5px;
+}
+.input-box__name {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 75%;
+  height: fit-content;
+}
+.input-box__name input {
+  width: 150px;
+}
+.input-box {
+  width: 75%;
+}
+.input-radio-box {
+  width: 75%;
+}
+.input-radio-box .details {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #4d4f4e;
+  font-weight: 500;
+  font-size: 15px;
+}
+.btn_submit {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 38px;
+  width: 240px;
+  font-size: 17px;
+  background-color: #b79032;
+  color: #ffffff;
+  border: 0px;
+  border-radius: 12px;
+  font-weight: 80;
+}
+.text {
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: none;
+  font-size: 13px;
+  color: #4d4f4e;
+  margin-top: 6px;
+  a {
+    color: red;
+  }
+}
+.img-right {
+  width: 670px;
+  margin-left: 80px;
+  margin-top: 100px;
+}
+.signup-left {
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid #b79032;
+  border-radius: 70px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+@media screen and (max-width: 1140px) {
+  .img-right {
+    display: none;
+  }
+}
+@media screen and (max-width: 613px) {
+  .img-right {
+    display: none;
+  }
+  .signup-left {
+    box-shadow: none;
+    border: none;
+  }
+  .input-box__Name {
+    width: 64%;
+  }
+  .input-radio-box {
+    width: 63%;
+  }
+  .signup-left {
+    margin-left: 10px;
+  }
+}
+@media screen and (max-width: 488px) {
+  .input-box__Name {
+    width: 82%;
+  }
+  .input-radio-box {
+    width: 82%;
+  }
+}
+=======
 .container{
     justify-content: center;
     display: flex;
@@ -139,5 +246,4 @@ a{
         width: 82%;
     }
 }
-
 
