@@ -49,7 +49,6 @@ function Signup() {
             >
               <Input
                 placeholder="First name"
-                required
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </Form.Item>
@@ -61,7 +60,6 @@ function Signup() {
             >
               <Input
                 placeholder="Last name"
-                required
                 onChange={(e) => setLastName(e.target.value)}
               />
             </Form.Item>
@@ -86,11 +84,16 @@ function Signup() {
           <div className={cx("input-box")}>
             <Form.Item
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[
+                { type: "email", message: "The input is not valid E-mail!" },
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+              ]}
             >
               <Input
                 placeholder="Email"
-                required
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Item>
@@ -104,7 +107,6 @@ function Signup() {
             >
               <Input
                 placeholder="Username"
-                required
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Form.Item>
@@ -114,7 +116,6 @@ function Signup() {
               name="password"
               rules={[
                 {
-                  type: email,
                   required: true,
                   message: "Please input your password!",
                 },
@@ -122,7 +123,6 @@ function Signup() {
             >
               <Input.Password
                 placeholder="Password"
-                required
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Item>
@@ -139,7 +139,6 @@ function Signup() {
             >
               <Input.Password
                 placeholder="Confirm Password"
-                required
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Form.Item>

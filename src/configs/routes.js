@@ -14,7 +14,7 @@ const routes = {
   vocabulary: "/vocabulary",
   vocabularyFolder: "/vocabularyfolder",
   articlesFolder: "/articlesFolder",
-  article: "/article",
+  article: "/article/:id",
   grammarsFolder: "/grammarsFolder",
   grammar: "/grammar",
   publicProfile: "/profileUser",
