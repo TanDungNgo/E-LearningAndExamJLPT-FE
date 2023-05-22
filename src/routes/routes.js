@@ -38,6 +38,7 @@ import ArticleFolder from  "~/pages/ArticleFolder/ArticleFolder";
 import Article from "~/pages/Article/Article";
 import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
 import Grammar from "~/pages/Grammar/Grammar";
+import Podcast from "~/pages/Podcast/Podcast";
 
 
 // Public routes
@@ -73,6 +74,7 @@ const publicRoutes = [
   { path: config.routes.article, component: Article, layout: DefaultLayout},
   { path: config.routes.grammarsFolder, component: GrammarsFolder, layout: DefaultLayout},
   { path: config.routes.grammar, component: Grammar, layout: DefaultLayout},
+  { path: config.routes.podcast, component: Podcast, layout: DefaultLayout},
 ];
 
 // Private routes
