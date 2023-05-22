@@ -3,7 +3,7 @@ import styles from "./Podcast.module.scss";
 import React, { useState } from "react";
 import { Card, Button } from "antd";
 import AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
+// import "react-h5-audio-player/lib/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
