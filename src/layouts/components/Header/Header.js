@@ -45,8 +45,8 @@ const MENU_ITEMS = [
     to: routes.articlesFolder,
   },
   {
-    title: "Postcast",
-    to: "/postcast",
+    title: "Podcast",
+    to: "/podcast",
   },
 ];
 const Header = () => {

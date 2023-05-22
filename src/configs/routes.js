@@ -19,6 +19,7 @@ const routes = {
   grammar: "/grammar",
   publicProfile: "/profileUser",
   changePassword: "/profileUser/changePassword",
+  podcast: "/podcast",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
