@@ -42,7 +42,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Article",
-    to: routes.publicProfile,
+    to: routes.articlesFolder,
   },
   {
     title: "Podcast",
@@ -118,7 +118,7 @@ const Header = () => {
               <button className={cx("action__btn")}>
                 <FontAwesomeIcon icon={faBell} className={cx("icon")} />
               </button>
-            </Tippy>
+            </Tippy> 
           </>
         ) : (
           <>
