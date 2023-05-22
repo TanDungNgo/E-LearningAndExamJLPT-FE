@@ -37,6 +37,10 @@ const MENU_ITEMS = [
     to: routes.vocabularyFolder,
   },
   {
+    title: "Exam",
+    to: routes.examFolder,
+  },
+  {
     title: "Article",
     to: routes.articlesFolder,
   },
