@@ -37,8 +37,8 @@ function EnrollCard(props) {
               <p>Teacher: </p>
             </div>
             <div className={cx("card__detail-teacher")}>
-              {props.course?.createdBy?.username
-                ? props.course?.createdBy?.username
+              {props.course?.teacherName
+                ? props.course?.teacherName
                 : "Dung Mori"}
             </div>
           </div>

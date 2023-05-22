@@ -10,19 +10,17 @@ const cx = classNames.bind(styles);
 
 function ProfileUser({ children }) {
   return (
-    <div>
+    <div className={cx("wrapper")}>
       <Header />
       <div className={cx("profile-user__body")}>
         <div className={cx("content__left")}>
           <SideMenu />
         </div>
-        <div className={cx("content__right")}>
-          {children}
-        </div>
+        <div className={cx("content__right")}>{children}</div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
 
-export default ProfileUser
+export default ProfileUser;
