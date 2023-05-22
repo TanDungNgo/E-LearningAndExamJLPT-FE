@@ -36,7 +36,7 @@ function CourseCard(props) {
         <Button
           primary
           className={cx("card__button")}
-          to={`coursedetail/${props.course.id}`}
+          to={`/coursedetail/${props.course.id}`}
         >
           View details
         </Button>
@@ -44,15 +44,15 @@ function CourseCard(props) {
           <div className={cx("card__author")}>
             <img
               src={
-                props.course.createdBy.avatar
-                  ? props.course.createdBy.avatar
+                props.course?.teacherAvatar
+                  ? props.course?.teacherAvatar
                   : "https://upload.motgame.vn/photos/motgame-vn/2022/05/Spy-x-family-Anya_3.jpg"
               }
               alt=""
               className={cx("card__author-image")}
             />
             <div className={cx("card__author-name")}>
-              {props.course.createdBy.username}
+              {props.course?.teacherName}
             </div>
           </div>
           <div className={cx("card__rating")}>

@@ -8,22 +8,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import EnrollCard from "~/components/EnrollCard/EnrollCard";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import courseService from "~/services/courseService";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function CourseDetail() {
   const { getCourseById } = courseService();
   const { id } = useParams();
   const [isEnroll, setIsEnroll] = useState(false);
-  const [course, setCourse] = useState({});
-  const [listCourse, setListCourse] = useState(["1", "2", "3", "4"]);
+  const [course, setCourse] = useState();
+  const navigate = useNavigate();
+  const [listCourse, setListCourse] = useState([]);
   useEffect(() => {
     getCourseById(id).then((res) => {
       console.log(res);
       setCourse(res);
     });
   }, []);
+  if (course === null) {
+    console.log("null");
+    navigate(routes.notFound);
+  }
   const renderCard = () => {
     return listCourse.map((item, index) => {
       return (
@@ -32,6 +38,10 @@ function CourseDetail() {
         </div>
       );
     });
+  };
+  const splitString = (str) => {
+    const parts = str.split(";");
+    return parts.map((part, index) => <li key={index}>{part}</li>);
   };
   return (
     <div className={cx("container")}>
@@ -91,33 +101,21 @@ function CourseDetail() {
       </div>
       <div className={cx("card__intro")}>
         <div className={cx("card__intro-title")}>Course Introduction</div>
-        {course.description ? (
-          course.description
+        {course?.description ? (
+          splitString(course?.description)
         ) : (
           <>
-            <li>
-              This is a foundation course to help you master the basics of
-              N3-level grammar, vocabulary, kanji, and reading comprehension.
-            </li>
-            <li>
-              The course also alternates methods-tips for quick reading
-              comprehension as well as how to memorize N3-level kanji.
-            </li>
-            <li>
-              By the end of the course, you will be able to master about 400-800
-              kanji, vocabulary, and most important grammar patterns of level
-              N3.
-            </li>
+            <li></li>
+            <li></li>
           </>
         )}
       </div>
       <div className={cx("card__content")}>
         <div className={cx("card__content-title")}>Course Content</div>
         <li>
-          {course.lessons?.length ? course.lessons?.length : "0"} video
+          {course?.lessons?.length ? course?.lessons?.length : "0"} video
           lectures.
         </li>
-        {/* <li>10 downloadable resources.</li> */}
         <li>Full access for life.</li>
         <li>Certificate of course completion.</li>
       </div>

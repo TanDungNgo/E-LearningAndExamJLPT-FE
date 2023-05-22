@@ -1,9 +1,14 @@
-.profile-user {
-    &__body {
-        display: flex;
-        flex-direction: row;
-    }
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
-.content__right{
-    width: 100%;
+.profile-user {
+  &__body {
+    display: flex;
+    flex-direction: row;
+    margin-top: 85px;
+  }
+}
+.content__right {
+  width: 100%;
 }

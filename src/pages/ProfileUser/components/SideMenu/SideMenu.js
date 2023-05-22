@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { faBookmark, faUser } from "@fortawesome/free-regular-svg-icons";
 const cx = classNames.bind(styles);
 
-function SideMenu(){
+function SideMenu() {
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(["/profileUser"]);
   useEffect(() => {
@@ -19,39 +19,38 @@ function SideMenu(){
   const navigate = useNavigate();
   return (
     <div className={cx("card")}>
-        <Menu
-            className={cx("card__menu")}
-            mode="inline"
-            onClick={(item) => {
-                navigate(item.key);
-            }}
-            selectedKeys={selectedKey}
-            items={[
-                {
-                label: "Public Profile",
-                icon: <FontAwesomeIcon icon={faUser} />,
-                key: "/profileUser",
-                },
-                {
-                label: "Change Password",
-                icon: <SettingOutlined />,
-                key: "/profileUser/changePassword",
-                },
-                // {
-                // label: "My Courses",
-                // icon: <FontAwesomeIcon icon={faListUl} />,
-                // key: "/profileUser/"
-                // },
-                // {
-                // label: "Bookmarks",
-                // icon: <FontAwesomeIcon icon={faBookmark} />,
-                // key: "/profileUser/",
-                // },
-            ]}
-        ></Menu>
-        
+      <Menu
+        className={cx("card__menu")}
+        mode="inline"
+        onClick={(item) => {
+          navigate(item.key);
+        }}
+        selectedKeys={selectedKey}
+        items={[
+          {
+            label: "Public Profile",
+            icon: <FontAwesomeIcon icon={faUser} />,
+            key: "/profileUser",
+          },
+          {
+            label: "Change Password",
+            icon: <SettingOutlined />,
+            key: "/profileUser/changePassword",
+          },
+          // {
+          //   label: "My Courses",
+          //   icon: <FontAwesomeIcon icon={faListUl} />,
+          //   key: "/profileUser/",
+          // },
+          // {
+          //   label: "Bookmarks",
+          //   icon: <FontAwesomeIcon icon={faBookmark} />,
+          //   key: "/profileUser/",
+          // },
+        ]}
+      ></Menu>
     </div>
   );
 }
 
-export default SideMenu
+export default SideMenu;

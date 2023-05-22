@@ -11,7 +11,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import routes from "~/configs/routes";
 import Menu from "~/components/Popper/Menu/Menu";
 import Tippy from "@tippyjs/react";
@@ -26,23 +26,27 @@ const MENU_ITEMS = [
   },
   {
     title: "Course",
-    to: routes.allcourse,
+    to: routes.allCourse,
   },
   {
     title: "Grammar",
-    to: "/grammar",
+    to: routes.grammarsFolder,
   },
   {
     title: "Vocabulary",
-    to: "/vocabularyFolder",
+    to: routes.vocabularyFolder,
+  },
+  {
+    title: "Exam",
+    to: routes.examFolder,
   },
   {
     title: "Article",
-    to: "/articlesFolder",
+    to: routes.articlesFolder,
   },
   {
-    title: "Postcast",
-    to: "/postcast",
+    title: "Podcast",
+    to: "/podcast",
   },
 ];
 const Header = () => {
@@ -66,9 +70,13 @@ const Header = () => {
   const renderMenu = () => {
     return MENU_ITEMS.map((item, index) => {
       return (
-        <Link key={index} className={cx("header__link-item")} to={item.to}>
+        <NavLink
+          key={index}
+          className={(nav) => cx("header__link-item", { active: nav.isActive })}
+          to={item.to}
+        >
           {item.title}
-        </Link>
+        </NavLink>
       );
     });
   };
@@ -77,7 +85,7 @@ const Header = () => {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "View profile",
-      to: "/profile",
+      to: routes.publicProfile,
     },
     {
       icon: <FontAwesomeIcon icon={faGear} />,
@@ -98,58 +106,56 @@ const Header = () => {
   ];
 
   return (
-    <header>
-      <div className={cx("navbar")}>
-        <div className={cx("logo")}>
-          <img width="80" src="/images/Logo1.png" />
-        </div>
-        <div className={cx("links")}>{renderMenu()}</div>
-        <div className={cx("actions")}>
-          {currentUser ? (
-            <>
-              <Tippy content="Notification" placement="bottom">
-                <button className={cx("action__btn")}>
-                  <FontAwesomeIcon icon={faBell} className={cx("icon")} />
-                </button>
-              </Tippy>
-            </>
-          ) : (
-            <>
-              <Button
-                outline
-                className={cx("action__btn-register")}
-                to={routes.signup}
-              >
-                Register
-              </Button>
-              <Button
-                primary
-                className={cx("action__btn-login")}
-                to={routes.signin}
-              >
-                Login
-              </Button>
-            </>
-          )}
-          <Menu items={userMenu}>
-            {currentUser ? (
-              <img
-                src={currentUser.avatar}
-                className={cx("user-avt")}
-                alt={currentUser.username}
-              />
-            ) : (
-              <></>
-            )}
-          </Menu>
-          <Menu items={MENU_ITEMS}>
-            <div className={cx("toggle-btn")} onClick={dropdown}>
-              <FontAwesomeIcon icon={faBars} />
-            </div>
-          </Menu>
-        </div>
+    <div className={cx("navbar")}>
+      <div className={cx("logo")}>
+        <img width="80" src="/images/Logo1.png" />
       </div>
-    </header>
+      <div className={cx("links")}>{renderMenu()}</div>
+      <div className={cx("actions")}>
+        {currentUser ? (
+          <>
+            <Tippy content="Notification" placement="bottom">
+              <button className={cx("action__btn")}>
+                <FontAwesomeIcon icon={faBell} className={cx("icon")} />
+              </button>
+            </Tippy>
+          </>
+        ) : (
+          <>
+            <Button
+              outline
+              className={cx("action__btn-register")}
+              to={routes.signup}
+            >
+              Register
+            </Button>
+            <Button
+              primary
+              className={cx("action__btn-login")}
+              to={routes.signin}
+            >
+              Login
+            </Button>
+          </>
+        )}
+        <Menu items={userMenu}>
+          {currentUser ? (
+            <img
+              src={currentUser.avatar}
+              className={cx("user-avt")}
+              alt={currentUser.username}
+            />
+          ) : (
+            <></>
+          )}
+        </Menu>
+        <Menu items={MENU_ITEMS}>
+          <div className={cx("toggle-btn")} onClick={dropdown}>
+            <FontAwesomeIcon icon={faBars} />
+          </div>
+        </Menu>
+      </div>
+    </div>
   );
 };
 

@@ -59,12 +59,11 @@ function Vocabulary() {
             <div className={cx("list-vocabulary-folder__card1")}>
               <VocabularyFolderCard/>
               <VocabularyFolderCard/>
-              <VocabularyFolderCard/>
             </div>
             <div className={cx("list-vocabulary-folder__card2")}>
               <VocabularyFolderCard/>
               <VocabularyFolderCard/>
-              <VocabularyFolderCard/>
+
             </div>
 
             </div>

@@ -1,16 +1,27 @@
 import classNames from "classnames/bind";
 import styles from "./ListArticle.module.scss";
 import ArticleCard from "../ArticleCard/ArticleCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import articlesService from "~/services/articlesService";
+import { Space, Spin } from "antd";
 const cx = classNames.bind(styles);
 
 function ListArticle() {
-  const [listArticle, setListArticle] = useState(["1", "2", "3"]);
+  const { getAllArticles } = articlesService();
+  const [listArticle, setListArticle] = useState();
+  useEffect(() => {
+    const getListArticle = async () => {
+      const res = await getAllArticles();
+      setListArticle(res);
+    };
+    getListArticle();
+  }, []);
+  console.log(listArticle);
   const renderCard = () => {
     return listArticle.map((item, index) => {
       return (
-        <div key={index} className="item">
-          <ArticleCard />
+        <div key={index}>
+          <ArticleCard article={item} />
         </div>
       );
     });
@@ -22,7 +33,15 @@ function ListArticle() {
           Recent <span className={cx("title--primary")}>Articles</span>
         </h1>
       </div>
-      {renderCard()}
+      {listArticle ? (
+        renderCard()
+      ) : (
+        <Space>
+          <Spin tip="Loading" size="large">
+            <div className="content" />
+          </Spin>
+        </Space>
+      )}
     </div>
   );
 }

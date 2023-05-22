@@ -11,6 +11,7 @@ import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import AllCourse from "~/pages/AllCourse/AllCourse";
 import CreateCourse from "~/pages/CreateCourse/CreateCourse";
 import Overview from "~/pages/Overview/Overview";
+import ExamFolder from "~/pages/ExamFolder/ExamFolder";
 import ExamPage from "~/pages/Exam/ExamPage";
 import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
@@ -35,6 +36,10 @@ import Vocabulary from "~/pages/Vocabulary/Vocabulary";
 import VocabularyFolder from "~/pages/VocavularyFolder/VocavularyFolder";
 import ArticleFolder from  "~/pages/ArticleFolder/ArticleFolder";
 import Article from "~/pages/Article/Article";
+import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
+import Grammar from "~/pages/Grammar/Grammar";
+import Podcast from "~/pages/Podcast/Podcast";
+
 
 // Public routes
 const publicRoutes = [
@@ -44,15 +49,17 @@ const publicRoutes = [
     path: config.routes.coursedetail,
     component: CourseDetail,
     layout: DefaultLayout,
+    protected: true,
   },
   { path: config.routes.home, component: Home, layout: DefaultLayout },
   {
-    path: config.routes.allcourse,
+    path: config.routes.allCourse,
     component: AllCourse,
     layout: DefaultLayout,
   },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage },
+  { path: config.routes.examFolder, component: ExamFolder, layout: DefaultLayout},
   { path: config.routes.examResult, component: ExamResult },
   { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
@@ -65,6 +72,9 @@ const publicRoutes = [
   { path: config.routes.vocabularyFolder, component: VocabularyFolder, layout: DefaultLayout},
   { path: config.routes.articlesFolder, component: ArticleFolder, layout: DefaultLayout},
   { path: config.routes.article, component: Article, layout: DefaultLayout},
+  { path: config.routes.grammarsFolder, component: GrammarsFolder, layout: DefaultLayout},
+  { path: config.routes.grammar, component: Grammar, layout: DefaultLayout},
+  { path: config.routes.podcast, component: Podcast, layout: DefaultLayout},
 ];
 
 // Private routes
@@ -137,3 +147,4 @@ const privateRoutes = [
 ];
 
 export { publicRoutes, privateRoutes };
+
