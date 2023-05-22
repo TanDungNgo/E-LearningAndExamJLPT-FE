@@ -15,14 +15,14 @@ const podcastData = [
     description: "Description of Episode 1",
     thumbnail:
       "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
-    audioUrl: "https://example.com/episode1-audio.mp3",
+    audioUrl: "",
   },
   {
     title: "Podcast Episode 2",
     description: "Description of Episode 2",
     thumbnail:
       "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
-    audioUrl: "https://example.com/episode2-audio.mp3",
+    audioUrl: "",
   },
   // Add more episodes here...
 ];
