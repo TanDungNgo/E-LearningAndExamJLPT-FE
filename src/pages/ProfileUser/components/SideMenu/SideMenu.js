@@ -37,16 +37,16 @@ function SideMenu(){
                 icon: <SettingOutlined />,
                 key: "/profileUser/changePassword",
                 },
-                {
-                label: "My Courses",
-                icon: <FontAwesomeIcon icon={faListUl} />,
-                key: "/profileUser/"
-                },
-                {
-                label: "Bookmarks",
-                icon: <FontAwesomeIcon icon={faBookmark} />,
-                key: "/profileUser/",
-                },
+                // {
+                // label: "My Courses",
+                // icon: <FontAwesomeIcon icon={faListUl} />,
+                // key: "/profileUser/"
+                // },
+                // {
+                // label: "Bookmarks",
+                // icon: <FontAwesomeIcon icon={faBookmark} />,
+                // key: "/profileUser/",
+                // },
             ]}
         ></Menu>
         
