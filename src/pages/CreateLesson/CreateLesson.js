@@ -1,18 +1,34 @@
 import classNames from "classnames/bind";
-import styles from "./CreateCourse.module.scss";
+import styles from "./CreateLesson.module.scss";
 import { Link } from "react-router-dom";
 import routes from "~/configs/routes";
 import { useState } from "react";
-import { Button, Progress } from "antd";
-import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
-import { Form, Input, Select, Upload, Image, InputNumber, Switch } from "antd";
+import { Button, Progress, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Select } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import courseService from "~/services/courseService";
 const cx = classNames.bind(styles);
 const { Option } = Select;
-
-const CreateCourse = () => {
+const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+const CreateLesson = () => {
   const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
   const [fileImage, setFileImage] = useState("");
   const { createCourse } = courseService();
@@ -65,20 +81,13 @@ const CreateCourse = () => {
   };
   return (
     <div className={cx("container")}>
-      {/* <img className={cx("bg-create")} src="/images/bg_create-course.png" /> */}
       <div className={cx("card-create")}>
         <div className={cx("card-create__header")}>
-          {/* <label>
-            <ArrowLeftOutlined />
-            Back
-          </label> */}
-          <div className={cx("card-create__header-title")}>
-            Create a new course
-          </div>
+          Create a new lesson
         </div>
         <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          <div className={cx("card-create__content")}>
-            <div className={cx("card-create__left")}>
+          <div className={cx("card-create__body")}>
+            <div className={cx("card-create__input")}>
               <Form.Item
                 name="name"
                 rules={[{ required: true, message: "Please input a name!" }]}
@@ -97,74 +106,19 @@ const CreateCourse = () => {
               >
                 <Input.TextArea placeholder="Description" />
               </Form.Item>
-              <Form.Item
-                name="level"
-                rules={[{ required: true, message: "Please select a level!" }]}
-              >
-                <Select placeholder="Level">
-                  <Option value="N1">N1</Option>
-                  <Option value="N2">N2</Option>
-                  <Option value="N3">N3</Option>
-                  <Option value="N4">N4</Option>
-                  <Option value="N5">N5</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="type"
-                rules={[{ required: true, message: "Please select a type!" }]}
-              >
-                <Select placeholder="Type">
-                  <Option value="JLPT">JLPT</Option>
-                  <Option value="Kaiwa">Kaiwa</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="duration"
-                rules={[
-                  {
-                    required: true,
-                    type: "number",
-                    message: "Please input a duration!",
-                  },
-                  //   {
-                  //     min: 0,
-                  //     message: "Duration should be greater than 0!",
-                  //   },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Duration"
-                  addonAfter={<Form.Item noStyle>Month</Form.Item>}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-              <Form.Item
-                name="price"
-                rules={[
-                  {
-                    required: true,
-                    type: "number",
-                    message: "Please input a price!",
-                  },
-                  //   {
-                  //     min: 0,
-                  //     message: "Price should be greater than 0!",
-                  //   },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Price"
-                  addonAfter={<Form.Item noStyle>$</Form.Item>}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
             </div>
-            <div className={cx("card-create__right")}>
-              <img className={cx("card-create__banner")} src={imgSrc} />
-              <div className={cx("card-create__import-file")}>
+            <div className={cx("card-create__import-file")}>
+              <div className={cx("card-create__input")}>
+                <Form.Item
+                  name="urlVideo"
+                  rules={[{ required: true, message: "Please input a URL!" }]}
+                >
+                  <Input placeholder="URL Video" />
+                </Form.Item>
+              </div>
                 <label htmlFor="file">
                   <UploadOutlined />
-                  Choose a file
+                  Import URL
                 </label>
                 <input
                   type="file"
@@ -174,7 +128,6 @@ const CreateCourse = () => {
                   onChange={handleChangeFile}
                   accept="image/*"
                 />
-              </div>
             </div>
           </div>
           <div className={cx("form__submit")}>
@@ -193,4 +146,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreateLesson;
