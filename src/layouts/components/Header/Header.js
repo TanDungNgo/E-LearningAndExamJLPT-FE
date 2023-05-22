@@ -42,7 +42,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Article",
-    to: routes.publicProfile,
+    to: routes.articlesFolder,
   },
   {
     title: "Podcast",
