@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ExamFolder.module.scss";
 import React, { useState } from "react";
 import Button from "~/components/Button/Button";
-import { Pagination, Select, Modal } from 'antd';
+import { Select, Modal } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -89,7 +89,6 @@ function ExamFolder() {
 
 
       </div>
-      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
       <Modal
         title={
           <div>
