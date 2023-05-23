@@ -60,6 +60,7 @@
                 width: 180px;
                 height: 180px;
                 object-fit: cover;
+                border-radius: 20px;
             } 
         }
     }
@@ -126,9 +127,4 @@
     &__icon-time{
         margin-top: 4px;
     }
-}
-.card-pagination{
-    display: flex;
-    align-items: center;
-    padding: 10px 40px;
 }
