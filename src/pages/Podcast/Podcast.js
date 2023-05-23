@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./Podcast.module.scss";
 import React, { useState } from "react";
-import { Card, Button } from "antd";
-import AudioPlayer from "react-h5-audio-player";
-// import "react-h5-audio-player/lib/styles.css";
+import { Card } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import AudioPlayer from "~/components/AudioPlayer/AudioPlayer";
 const cx = classNames.bind(styles);
 const { Meta } = Card;
 
@@ -15,19 +14,21 @@ const podcastData = [
     description: "Description of Episode 1",
     thumbnail:
       "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
-    audioUrl: "",
+    audioUrl:
+      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
   },
   {
     title: "Podcast Episode 2",
     description: "Description of Episode 2",
     thumbnail:
       "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
-    audioUrl: "",
+    audioUrl:
+      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
   },
   // Add more episodes here...
 ];
 function Podcast() {
-  const [currentAudio, setCurrentAudio] = React.useState(null);
+  const [currentAudio, setCurrentAudio] = useState(null);
 
   const handlePlay = (audioUrl) => {
     setCurrentAudio(audioUrl);
@@ -83,14 +84,7 @@ function Podcast() {
             ))}
           </ul>
 
-          {currentAudio && (
-            <AudioPlayer
-              autoPlay
-              src={currentAudio}
-              onEnded={handleAudioEnded}
-              style={{ marginTop: 20 }}
-            />
-          )}
+          {currentAudio && <AudioPlayer src={currentAudio} />}
         </div>
       </div>
     </div>
