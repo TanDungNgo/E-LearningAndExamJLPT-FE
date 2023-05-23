@@ -38,31 +38,18 @@ function AuthService() {
         })
         .then((res) => {
           if (res.data.data.token) {
-            // Swal.fire({
-            //   icon: "success",
-            //   text: res.data.message,
-            //   title: "Success!",
-            // }).then(() => {
-            //   navigate("/");
-            //   // dispatch(loginSuccess(res.data.data));
-            //   setToken(res.data.data.token);
-            // });
             notification.success({
               message: res.data.message,
               description: `Welcome ${res.data.data.firstname}!`,
             });
+            dispatch(loginSuccess(res.data.data));
             setToken(res.data.data.token);
             navigate(routes.home);
           }
         });
     } catch (err) {
-      // dispatch(loginFailed());
-      // Swal.fire({
-      //   icon: "error",
-      //   text: "Username or password is incorrect!",
-      //   title: "Error!",
-      // });
       console.log(err);
+      dispatch(loginFailed());
       notification.error({
         message: "Error",
         description: "Username or password is incorrect!",
@@ -72,6 +59,8 @@ function AuthService() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    dispatch(loginFailed());
+    navigate(routes.home);
   };
 
   const getCurrentUser = async () => {
