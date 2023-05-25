@@ -11,8 +11,10 @@ function examService() {
     }
   };
   const submitExam = async (examId, answers) => {
+    console.log(answers);
     try {
       const res = await request.post(`/exams/submit/${examId}`, answers);
+      console.log(res.data.data);
       return res.data.data;
     } catch (error) {
       console.log(error);

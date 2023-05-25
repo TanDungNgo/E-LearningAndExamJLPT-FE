@@ -12,12 +12,14 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import examService from "~/services/examService";
+import { useDispatch, useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 function ExamPage() {
   const { level } = useParams();
-  const { getExam } = examService();
-  const [exam, setExam] = useState();
+  const { type } = useParams();
+  const exam = useSelector((state) => state.exam);
+  const answers = useSelector((state) => state.exam.answer);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -68,19 +70,38 @@ function ExamPage() {
     }
   };
   useEffect(() => {
-    const fetchExam = async () => {
-      const exam = await getExam(level);
-      setExam(exam);
-      setQuestions(exam.readingQuestions);
-      setSelectedAnswers(Array(exam.readingQuestions.length).fill(""));
-      setStatusAnswers(
-        exam.readingQuestions.map((_, index) =>
-          index === 0 ? "not-done" : "not-seen"
-        )
-      );
+    const fetchExam = () => {
+      if (type === "languageKnowledge") {
+        setQuestions(exam.languageKnowledgeQuestions);
+        setSelectedAnswers(
+          Array(exam.languageKnowledgeQuestions.length).fill("")
+        );
+        setStatusAnswers(
+          exam.languageKnowledgeQuestions.map((_, index) =>
+            index === 0 ? "not-done" : "not-seen"
+          )
+        );
+      } else if (type === "reading") {
+        setQuestions(exam.readingQuestions);
+        setSelectedAnswers(Array(exam.readingQuestions.length).fill(""));
+        setStatusAnswers(
+          exam.readingQuestions.map((_, index) =>
+            index === 0 ? "not-done" : "not-seen"
+          )
+        );
+      } else {
+        setQuestions(exam.listeningQuestions);
+        setSelectedAnswers(Array(exam.listeningQuestions.length).fill(""));
+        setStatusAnswers(
+          exam.listeningQuestions.map((_, index) =>
+            index === 0 ? "not-done" : "not-seen"
+          )
+        );
+      }
     };
     fetchExam();
-  }, []);
+    setCurrentQuestion(0);
+  }, [type]);
   useEffect(() => {
     let timer;
     if (isCounting) {

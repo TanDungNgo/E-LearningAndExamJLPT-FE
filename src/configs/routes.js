@@ -5,7 +5,7 @@ const routes = {
   coursedetail: "/coursedetail/:id",
   allCourse: "/allcourse",
   examFolder: "/examfolder",
-  exam: "/exam/:level",
+  exam: "/exam/:level/:type",
   examResult: "/exam/result",
   createCourse: "/createcourse",
   overview: "/overview",

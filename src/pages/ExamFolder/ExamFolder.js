@@ -6,6 +6,9 @@ import { Select, Modal } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
+import examService from "~/services/examService";
+import { useDispatch } from "react-redux";
+import { setExam } from "~/redux/examSlice";
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +16,8 @@ function ExamFolder() {
   const [openModal, setOpenModal] = useState(false);
   const [examLevel, setExamLevel] = useState(""); // N5, N4, N3, N2, N1
   const navigate = useNavigate();
+  const { getExam } = examService();
+  const dispatch = useDispatch();
 
   const handleClickExam = (level) => {
     setExamLevel(level);
@@ -20,8 +25,11 @@ function ExamFolder() {
   };
 
   // Handle click out boundary of modal
-  const handleClickStart = () => {
-    navigate(`/exam/${examLevel}`);
+  const handleClickStart = async () => {
+    const res = await getExam(examLevel);
+    console.log(res);
+    dispatch(setExam(res));
+    navigate(`/exam/${examLevel}/languageKnowledge`);
   };
 
   // Handle click button "X" of modal
