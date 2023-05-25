@@ -2,8 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 753px;
-  background-color: #c6c5c3;
+  padding: 30px;
 }
 .bg-create {
   height: 100%;
@@ -17,7 +16,7 @@
   align-items: center;
   background-color: #ffffff;
   border-radius: 20px;
-  position: absolute;
+  //position: absolute;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 29px;
   &__header {
     width: 100%;

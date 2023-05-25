@@ -7,7 +7,7 @@ const routes = {
   examFolder: "/examfolder",
   exam: "/exam",
   examResult: "/exam/result",
-  createCourse: "/createcourse",
+  createCourse: "/profileUser/createCourse",
   overview: "/overview",
   notFound: "*",
   lesson: "/lesson/:id",
@@ -20,6 +20,7 @@ const routes = {
   publicProfile: "/profileUser",
   changePassword: "/profileUser/changePassword",
   podcast: "/podcast",
+  createLesson: "/profileUser/createLesson",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
