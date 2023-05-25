@@ -1,28 +1,49 @@
 import classNames from "classnames/bind";
 import styles from "./ArticleFolder.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "~/components/Button/Button";
 import {Pagination } from 'antd';
 import ArticleCard from "~/components/ArticleCard/ArticleCard";
+import { useParams } from "react-router-dom";
+import articlesService from "~/services/articlesService";
 const cx = classNames.bind(styles);
 
 function ArticleFolder() {
-  const [listArticleFolder, setListArticleFolder] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
+  // const [listArticleFolder, setListArticleFolder] = useState([
+  //   "1",
+  //   "2",
+  //   "3",
+  //   "4",
 
-  ]);
-  const renderCard = () => {
-    return listArticleFolder.map((item, index) => {
-      return (
-        <div key={index}>
-          <ArticleCard/>
-        </div>
-      );
+  // ]);
+  // const renderCard = () => {
+  //   return listArticleFolder.map((item, index) => {
+  //     return (
+  //       <div key={index}>
+  //         <ArticleCard/>
+  //       </div>
+  //     );
+  //   });
+  // };
+
+  const { id } = useParams();
+  const { getAllArticles } = articlesService();
+  const [listArticle, setListArticle] = useState();
+  useEffect(() => {
+    getAllArticles().then((res) => {
+      setListArticle(res);
     });
-  };
+  }, []);
+  const renderCard = () => {
+    return listArticle?.map((item, index) => {
+      return(
+        <div key = {index}>
+          <ArticleCard article = {item}/>
+        </div>
+      )
+    
+    })
+  }
   return (
     <div className={cx("container")}>
       <div className={cx("card-img")}>
@@ -44,7 +65,6 @@ function ArticleFolder() {
       <div className={cx("card-article")}>
         {renderCard()}
       </div>
-      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
     </div>
   );
 }

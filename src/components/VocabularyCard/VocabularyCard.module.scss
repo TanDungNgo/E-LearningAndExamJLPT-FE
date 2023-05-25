@@ -21,9 +21,12 @@
 }
 .card-kanji-body {
   display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  align-content: center;
+  flex-direction: column;
+  font-size: 25px;
+  align-items: flex-start;
+  padding: 120px;
+  
+
 }
 
 .flip-card-front,
@@ -31,7 +34,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 2rem;
+  border-radius: 10px;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border: 1.5px solid var(--black);

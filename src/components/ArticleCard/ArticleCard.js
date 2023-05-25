@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 const cx = classNames.bind(styles);
 function ArticleCard(props) {
-  console.log(props.article);
+  // console.log(props.article);
   return (
     <div>
       <Link to={`/article/${props?.article?.id}`} className={cx("card")}>

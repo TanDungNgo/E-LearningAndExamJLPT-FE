@@ -1,32 +1,36 @@
 import classNames from "classnames/bind";
 import styles from "./VocavularyFolder.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "~/components/Button/Button";
 import {Pagination, Select } from 'antd';
 import VocabularyFolderCard from "~/components/VocabularyFolderCard/VocabularyFolderCard";
+import vocabularyFolderService from "~/services/vocabularyFolderService";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 const { Option } = Select;
 
 function VocabularyFolder() {
-  const [listVocabularyFolder, setListVocabularyFolder] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-  ]);
-  const renderCard = () => {
-    return listVocabularyFolder.map((item, index) => {
-      return (
-        <div key={index}>
-          <VocabularyFolderCard />
-        </div>
-      );
+  const [listVocabularyFolder, setListVocabularyFolder] = useState();
+  const {getAllVocabularyFolder} = vocabularyFolderService();
+
+  useEffect(() => {
+    getAllVocabularyFolder().then((res) => {
+      console.log(res);
+      setListVocabularyFolder(res);
     });
-  };
+
+  }, []);
+
+  const renderCard = () => {
+    return listVocabularyFolder?.map((item, index) => {
+      return(
+        <div key={index}>
+          <VocabularyFolderCard vocabularyFolder={item}/>
+        </div>
+      )
+    })
+  }
+
   return (
     <div className={cx("container")}>
       <div className={cx("card-img")}>
@@ -60,7 +64,6 @@ function VocabularyFolder() {
       <div className={cx("card-vocabulary-folder")}>
         {renderCard()}
       </div>
-      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
     </div>
   );
 }

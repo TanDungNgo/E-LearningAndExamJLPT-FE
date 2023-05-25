@@ -26,9 +26,8 @@ function App() {
               const Page = route.component;
               if (route.protected) {
                 return (
-                  <Route element={<UserRoute/>}>
+                  <Route key={index} element={<UserRoute />}>
                     <Route
-                      key={index}
                       path={route.path}
                       element={
                         <Layout>

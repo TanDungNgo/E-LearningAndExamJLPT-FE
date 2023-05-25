@@ -16,7 +16,6 @@ function ListArticle() {
     };
     getListArticle();
   }, []);
-  console.log(listArticle);
   const renderCard = () => {
     return listArticle.map((item, index) => {
       return (
