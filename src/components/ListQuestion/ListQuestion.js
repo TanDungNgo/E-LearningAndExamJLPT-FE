@@ -1,15 +1,14 @@
 import classNames from "classnames/bind";
 import styles from "./ListQuestion.module.scss";
-import { useState } from "react";
 import Button from "../Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { ExamData } from "~/pages/Exam/ExamData";
 import Swal from "sweetalert2";
+import examService from "~/services/examService";
 const cx = classNames.bind(styles);
 
 function ListQuestion(props) {
-  const [questions, setQuestions] = useState(ExamData);
+  const { submitExam } = examService();
   const isAllDone = props.statusAnswers.every((status) => status === "done");
   const renderQuestion = () => {
     return props.quizzes.map((question, index) => {
@@ -76,6 +75,7 @@ function ListQuestion(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
+        submitExam(props.examId, props.quizzes);
         Swal.fire("Submited!", "You submited the exam", "success");
       }
     });
