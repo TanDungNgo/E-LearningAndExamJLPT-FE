@@ -14,9 +14,11 @@ import config from "~/configs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Footer from "~/layouts/components/Footer/Footer";
+import AvatarWithDropdown from "~/components/AvatarWithDropdown/AvatarWithDropdown";
 import {
   faCircleQuestion,
   faGear,
+  faListCheck,
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +41,11 @@ const userMenu = [
     icon: <FontAwesomeIcon icon={faCircleQuestion} />,
     title: "Feedback and help",
     to: "/feedback",
+  },
+  {
+    icon: <FontAwesomeIcon icon={faListCheck} />,
+    title: "System Management",
+    to: "/admin/user",
   },
   {
     icon: <FontAwesomeIcon icon={faSignOut} />,
