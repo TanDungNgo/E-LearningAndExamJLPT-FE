@@ -16,7 +16,7 @@ const routes = {
   articlesFolder: "/articlesFolder",
   article: "/article/:id",
   grammarsFolder: "/grammarsFolder",
-  grammar: "/grammar",
+  grammar: "/grammar/:id",
   publicProfile: "/profileUser",
   changePassword: "/profileUser/changePassword",
   podcast: "/podcast",
