@@ -2,7 +2,6 @@ import classNames from "classnames/bind";
 import styles from "./VocabularyCard.module.scss";
 import { useState } from "react";
 import "./Card.css";
-
 const cx = classNames.bind(styles);
 function VocabularyCard({ props }) {
   const [change, setChange] = useState(true);
@@ -36,7 +35,12 @@ function VocabularyCard({ props }) {
         </div>
         <div className={cx("flip-card-back")}>
           <div className={cx("card-kanji-body")}>
-            <h5 className={cx("title")}>{props.mean}</h5>
+            <div className={cx("mean")}> Nghĩa: {props.meaning}</div>
+            <div className={cx("mean")}>Phiên âm: {props.pronunciation}</div>
+            <div className={cx("mean")}>Cách đọc: {props.spelling}</div>
+            <div className={cx("mean")}>{props.audio}</div>
+            <div className={cx("mean")}>Ví dụ: {props.example}</div>
+
           </div>
         </div>
       </div>
