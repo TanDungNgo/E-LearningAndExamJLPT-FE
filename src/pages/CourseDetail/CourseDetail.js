@@ -11,30 +11,38 @@ import EnrollCard from "~/components/EnrollCard/EnrollCard";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import courseService from "~/services/courseService";
 import routes from "~/configs/routes";
+import { getSuggestedQuery } from "@testing-library/react";
 const cx = classNames.bind(styles);
 
 function CourseDetail() {
-  const { getCourseById } = courseService();
+  const { getCourseById, getSuggestedCourses } = courseService();
   const { id } = useParams();
   const [isEnroll, setIsEnroll] = useState(false);
   const [course, setCourse] = useState();
   const navigate = useNavigate();
   const [listCourse, setListCourse] = useState([]);
+  const [suggestCourses, setSuggestCourse] = useState([]);
   useEffect(() => {
     getCourseById(id).then((res) => {
       console.log(res);
       setCourse(res);
     });
-  }, []);
+  }, [id]);
   if (course === null) {
     console.log("null");
     navigate(routes.notFound);
   }
+  useEffect(() => {
+    getSuggestedCourses().then((res) => {
+      console.log(res);
+      setSuggestCourse(res);
+    });
+  }, []);
   const renderCard = () => {
-    return listCourse.map((item, index) => {
+    return suggestCourses.map((item, index) => {
       return (
         <div key={index}>
-          <CourseCard />
+          <CourseCard course={item} />
         </div>
       );
     });
@@ -126,7 +134,7 @@ function CourseDetail() {
             icon={faChevronLeft}
             className={cx("icon__left")}
           ></FontAwesomeIcon>
-          {/* {renderCard()} */}
+          {renderCard()}
           <FontAwesomeIcon
             icon={faChevronRight}
             className={cx("icon__right")}
