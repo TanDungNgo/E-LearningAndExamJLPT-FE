@@ -75,12 +75,22 @@ function courseService() {
     }
   };
 
+  const getSuggestedCourses = async () => {
+    try {
+      const res = await request.get("/courses/suggest");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     createCourse,
     getAllCourse,
     getCourseById,
     updateCourse,
     deleteCourse,
+    getSuggestedCourses,
   };
 }
 
