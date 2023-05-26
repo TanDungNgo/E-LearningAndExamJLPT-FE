@@ -3,7 +3,7 @@
       font-family: 'Lucida Sans Unicode';
       font-size: 32px;
       font-weight: 600;
-      margin-top: 4%;
+      margin-top: 2%;
       color: black;
       margin-left: 5%;
     }
@@ -26,27 +26,26 @@
     }
   
     &__content {
+      // width: 46%;
+      margin-left: 28%;
+      
       &__vocabulary-card {
-        margin-left: 25%;
-        margin-top: 1.5%;
-      }
-  
-      &__icon-left {
-        position: absolute;
-        margin-top: 12%;
-        margin-left: 21%;
-        font-size: 35px;
-        color: black;
-      }
-  
-      &__icon-right {
-        margin-left: 71.5%;
-        margin-top: -14%;
-        font-size: 35px;
-        position: absolute;
-        color: black;
+        width: 61.5%;
+        margin-top: 3%;
+        // margin-left: 28%;
+        
       }
     }
+
+    &__container{
+      display: flex;
+      margin-top: 1%;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      gap: 20px;
+    }
+
   }
   
   .list-vocabulary-folder {
@@ -57,7 +56,7 @@
     height: 420px;
   
     &__card1 {
-      padding-top: 4%;
+      padding-top: 3%;
       display: flex;
       gap: 120px;
       justify-content: center;
@@ -70,5 +69,11 @@
       justify-content: center;
     }
   }
-
+  .icon-sound{
+    font-size: 18px;
+    margin-left: 73.8%;
+    position: absolute;
+    margin-top: 40px;
+    cursor: pointer;
+  }
   
