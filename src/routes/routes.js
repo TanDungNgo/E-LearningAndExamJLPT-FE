@@ -17,9 +17,9 @@ import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
 import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
 
-import ProfileUser from "~/pages/ProfileUser/ProfileUser";
-import PublicProfile from "~/pages/ProfileUser/pages/PublicProfile/PublicProfile";
-import ChangePassword from "~/pages/ProfileUser/pages/ChangePassword/ChangePassword";
+import ProfileUser from "~/layouts/ProfileUser/ProfileUser";
+import PublicProfile from "~/pages/PublicProfile/PublicProfile";
+import ChangePassword from "~/pages/ChangePassword/ChangePassword";
 
 import AddLessonForm from "~/pages/Admin/pages/LessonsManagement/AddLessonForm";
 import AddVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/AddVocabularyForm";
@@ -39,6 +39,8 @@ import Article from "~/pages/Article/Article";
 import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
 import Grammar from "~/pages/Grammar/Grammar";
 import Podcast from "~/pages/Podcast/Podcast";
+import CreateLesson from "~/pages/CreateLesson/CreateLesson";
+import ListArticle from "~/components/ListArticle/ListArticle";
 
 
 // Public routes
@@ -61,7 +63,6 @@ const publicRoutes = [
   { path: config.routes.exam, component: ExamPage },
   { path: config.routes.examFolder, component: ExamFolder, layout: DefaultLayout},
   { path: config.routes.examResult, component: ExamResult },
-  { path: config.routes.createCourse, component: CreateCourse },
   { path: config.routes.notFound, component: NotFound },
   { path: config.routes.lesson, component: Lesson, layout: DefaultLayout },
   {
@@ -75,6 +76,27 @@ const publicRoutes = [
   { path: config.routes.grammarsFolder, component: GrammarsFolder, layout: DefaultLayout},
   { path: config.routes.grammar, component: Grammar, layout: DefaultLayout},
   { path: config.routes.podcast, component: Podcast, layout: DefaultLayout},
+  {path: config.routes.profileUser, component: ProfileUser, layout: ProfileUser},
+  {
+    path: config.routes.publicProfile,
+    component: PublicProfile,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.changePassword,
+    component: ChangePassword,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.createCourse,
+    component: CreateCourse,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.createLesson,
+    component: CreateLesson,
+    layout: ProfileUser,
+  },
 ];
 
 // Private routes
@@ -116,17 +138,6 @@ const privateRoutes = [
     layout: Admin
   },
   { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
-  {path: config.routes.profileUser, component: ProfileUser, layout: ProfileUser},
-  {
-    path: config.routes.publicProfile,
-    component: PublicProfile,
-    layout: ProfileUser,
-  },
-  {
-    path: config.routes.changePassword,
-    component: ChangePassword,
-    layout: ProfileUser,
-  },
   { path: config.routes.addLesson, component: AddLessonForm, layout: Admin },
   { path: config.routes.addGrammar, component: AddGrammarForm, layout: Admin },
   {

@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
-import { faListUl } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { faBookmark, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function SideMenu() {
@@ -30,23 +31,23 @@ function SideMenu() {
           {
             label: "Public Profile",
             icon: <FontAwesomeIcon icon={faUser} />,
-            key: "/profileUser",
+            key: `${routes.publicProfile}`,
           },
           {
             label: "Change Password",
             icon: <SettingOutlined />,
-            key: "/profileUser/changePassword",
+            key: `${routes.changePassword}`,
           },
-          // {
-          //   label: "My Courses",
-          //   icon: <FontAwesomeIcon icon={faListUl} />,
-          //   key: "/profileUser/",
-          // },
-          // {
-          //   label: "Bookmarks",
-          //   icon: <FontAwesomeIcon icon={faBookmark} />,
-          //   key: "/profileUser/",
-          // },
+          {
+            label: "Create Course",
+            icon: <FontAwesomeIcon icon={faFolderPlus} />,
+            key: `${routes.createCourse}`,
+          },
+          {
+            label: "Create Lesson",
+            icon: <FontAwesomeIcon icon={faAdd} />,
+            key: `${routes.createLesson}`,
+          },
         ]}
       ></Menu>
     </div>
