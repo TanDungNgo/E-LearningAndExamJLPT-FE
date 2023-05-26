@@ -1,52 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Carousel } from "antd";
 import classNames from "classnames/bind";
 import VocabularyCard from "~/components/VocabularyCard/VocabularyCard";
 import VocabularyFolderCard from "~/components/VocabularyFolderCard/VocabularyFolderCard";
 import styles from "./Vocabulary.module.scss";
+import { useParams } from "react-router-dom";
+import vocabularyFolderService from "~/services/vocabularyFolderService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
 function Vocabulary() {
+  const { id } = useParams();
+  const { getVocabularyFolderById } = vocabularyFolderService();
+  const [listVocabularies, setListVocabularies] = useState([]);
+  const [vocabularyFolder, setVocabularyFolder] = useState();
+  const [indexVocabulary, setIndexVocabulary] = useState(0);
+  useEffect(() => {
+    getVocabularyFolderById(id).then((res) => {
+      setVocabularyFolder(res)
+      setListVocabularies(res.vocabularies);
+    });
+  }, []);
 
-  const [listData, setListData] = useState([
-    {
-      id: 1,
-      text: "情報技術",
-      meaning: "Công nghệ thông tin",
-      pronunciation: "じょうほうぎじゅつ",
-      spelling: "jo／–ho–‾gi＼jutsu", 
-      audio: "", 
-      example: "情報技術の基礎知識を審査",
-    },
-    {
-      id: 2,
-      text: "合格",
-      mean: "Đỗ",
-      image: "",
-    },
-    {
-      id: 3,
-      text: "情報",
-      mean: "TÌNH BÁO",
-      image: "",
-    },
-    {
-      id: 4,
-      text: "裏",
-      mean: "LÍ",
-      image: "",
-    }
-  ]);
-
-  
+  const renderCard = () => {
+    return listVocabularies.map((item, index) => {
+      return (
+        <div key={index} className={cx("item")}>
+          <VocabularyCard props={item} />
+        </div>
+      );
+    });
+  };
   const onChange = (currentCard) => {
     setCurrentFlashcard(currentCard);
   };
 
   const [currentFlashcard, setCurrentFlashcard] = useState(0);
 
-  // from https://react-slick.neostack.com/docs/example/custom-arrows
   const SampleNextArrow = ({ className, style, onClick }) => {
     return (
       <div
@@ -56,7 +48,7 @@ function Vocabulary() {
           color: 'black',
           fontSize: '35px',
           lineHeight: '2',
-          margin: ' -25px 0px 0px -10px'
+          margin: ' -40px 0px 0px -15px'
         }}
         onClick={onClick}
       >
@@ -64,7 +56,7 @@ function Vocabulary() {
     )
   }
 
-  const SamplePrevArrow = ({ className, style, onClick  }) => {
+  const SamplePrevArrow = ({ className, style, onClick }) => {
     return (
       <div
         className={className}
@@ -73,7 +65,7 @@ function Vocabulary() {
           color: 'black',
           fontSize: '35px',
           lineHeight: '2',
-          margin: ' -25px 0px 0px -10px'
+          margin: ' -40px 0px 0px -15px'
         }}
         onClick={onClick}
       >
@@ -81,26 +73,31 @@ function Vocabulary() {
     )
   }
   const settings = {
-    
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    nextArrow: <SampleNextArrow onClick={() => setIndexVocabulary(indexVocabulary + 1)} />,
+    prevArrow: <SamplePrevArrow onClick={() => setIndexVocabulary(indexVocabulary - 1)} />
   }
 
-  const renderCard = () => {
-    return listData.map((item, index) => {
-      return (
-        <div key={index} className={cx("item")}>
-          <VocabularyCard props={item} />
-        </div>
-      );
-    });
+  //xu ly am thanh
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+  const handleSoundClick = () => {
+    console.log(listVocabularies[0]?.audio);
+    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
   };
 
   return (
     <div>
       <div className={cx("vocabulary")}>
         <div className={cx("vocabulary__title")}>
-          2000Tango N5 Chapter 5 Section 1
+          {vocabularyFolder?.title
+            ? vocabularyFolder?.title
+            : "2000Tango N5 Chapter 1 Section 1"}
         </div>
         <div className={cx("vocabulary__description")}>
           <img
@@ -108,8 +105,17 @@ function Vocabulary() {
             className={cx("vocabulary__image")}
             alt="Vocabulary"
           />
-          <div className={cx("vocabulary__description-title")}>18 Vocabularies</div>
+          <div className={cx("vocabulary__description-title")}>{vocabularyFolder?.count} Vocabularies</div>
         </div>
+        <div className={cx("vocabulary__sound")} onClick={handleSoundClick}>
+          <FontAwesomeIcon icon={faVolumeHigh} className={cx("icon-sound")} />
+          <audio ref={audioRef}>
+            <source
+              src={listVocabularies[indexVocabulary]?.audio}
+            />
+          </audio>
+        </div>
+
         <div className={cx("vocabulary__content")}>
           <div className={cx("vocabulary__content__vocabulary-card")}>
             <Carousel
@@ -120,26 +126,26 @@ function Vocabulary() {
               {renderCard()}
             </Carousel>
           </div>
+        </div>
+        <div className={cx("vocabulary__container")}>
+          <div className={cx("vocabulary-slide")}>
+            {currentFlashcard + 1} / {listVocabularies.length}
           </div>
-          <div className={cx("vocabulary__container")}>
-            <div className={cx("vocabulary-slide")}>
-              {currentFlashcard + 1} / {listData.length}
-            </div>
-          </div>
-          <div className={cx("list-vocabulary-folder")}>
+        </div>
+        <div className={cx("list-vocabulary-folder")}>
 
-            <div className={cx("list-vocabulary-folder__card")}>
-              <div className={cx("list-vocabulary-folder__card1")}>
-                <VocabularyFolderCard />
-                <VocabularyFolderCard />
-              </div>
-              <div className={cx("list-vocabulary-folder__card2")}>
-                <VocabularyFolderCard />
-                <VocabularyFolderCard />
-              </div>
+          <div className={cx("list-vocabulary-folder__card")}>
+            <div className={cx("list-vocabulary-folder__card1")}>
+              <VocabularyFolderCard />
+              <VocabularyFolderCard />
+            </div>
+            <div className={cx("list-vocabulary-folder__card2")}>
+              <VocabularyFolderCard />
+              <VocabularyFolderCard />
             </div>
           </div>
         </div>
+      </div>
 
 
     </div>

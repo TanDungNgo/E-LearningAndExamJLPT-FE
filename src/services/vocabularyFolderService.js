@@ -12,7 +12,7 @@ function vocabularyFolderService() {
   };
   const getVocabularyFolderById = async (id) => {
     try {
-      const res = await request.get(`/vocabularyFolder/${id}`);
+      const res = await request.get(`/vocabularyFolders/${id}`);
       return res.data.data;
     } catch (error) {
       console.log(error);

@@ -22,9 +22,9 @@
 .card-kanji-body {
   display: flex;
   flex-direction: column;
-  font-size: 25px;
+  font-size: 24px;
   align-items: flex-start;
-  padding: 120px;
+  padding: 70px;
   
 
 }
@@ -50,4 +50,12 @@
 
 .flip-card-back {
   transform: rotateX(180deg);
+}
+.paragraph{
+  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  // margin-bottom: 2%;
 }

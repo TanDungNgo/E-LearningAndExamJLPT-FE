@@ -11,7 +11,7 @@ const routes = {
   overview: "/overview",
   notFound: "*",
   lesson: "/lesson/:id",
-  vocabulary: "/vocabulary",
+  vocabulary: "/vocabulary/:id",
   vocabularyFolder: "/vocabularyfolder",
   articlesFolder: "/articlesFolder",
   article: "/article/:id",

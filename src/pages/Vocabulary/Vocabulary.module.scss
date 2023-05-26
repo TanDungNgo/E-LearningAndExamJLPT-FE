@@ -69,17 +69,11 @@
       justify-content: center;
     }
   }
-  .ant-carousel {
-    .slick-next {
-      &::before {
-        content: '';
-      }
-    }
-    .slick-prev { 
-      &::before {
-        content: '';
-      }
-    }
+  .icon-sound{
+    font-size: 18px;
+    margin-left: 73.8%;
+    position: absolute;
+    margin-top: 40px;
+    cursor: pointer;
   }
-
   
