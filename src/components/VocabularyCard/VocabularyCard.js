@@ -27,6 +27,11 @@ function VocabularyCard({ props }) {
   const flipCardStyle = {
     transform: isFlipped ? "rotateX(180deg)" : "none",
   };
+
+  const splitString = (str) => {
+    const parts = str.split(";");
+    return parts.map((part, index) => <div className={cx("paragraph")} key={index}>{part}</div>);
+  };
   return (
     <div className={cx("flip-card")} onClick={handleChange}>
       <div className={cx(`flip-card-inner ${props.id}`)} style={flipCardStyle}>
@@ -34,12 +39,12 @@ function VocabularyCard({ props }) {
           <div className={cx("title")}>{props.text}</div>
         </div>
         <div className={cx("flip-card-back")}>
-          <div className={cx("card-kanji-body")}>
+          < div className={cx("card-kanji-body")}>
             <div className={cx("mean")}> Nghĩa: {props.meaning}</div>
-            <div className={cx("mean")}>Phiên âm: {props.pronunciation}</div>
-            <div className={cx("mean")}>Cách đọc: {props.spelling}</div>
-            <div className={cx("mean")}>{props.audio}</div>
-            <div className={cx("mean")}>Ví dụ: {props.example}</div>
+            <div className={cx("pronunciation")}>Phiên âm: {props.pronunciation}</div>
+            <div className={cx("spelling")}>Cách đọc: {props.spelling}</div>
+            <div className={cx("example")}>Ví dụ: </div>
+            <div> {splitString(props.example)} </div> 
 
           </div>
         </div>

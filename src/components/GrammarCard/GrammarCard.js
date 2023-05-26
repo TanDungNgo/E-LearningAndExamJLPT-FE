@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./GrammarCard.module.scss";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 const cx = classNames.bind(styles);
 function GrammarCard(props) {
@@ -18,17 +18,19 @@ function GrammarCard(props) {
         <div className={cx("card__info")}>
           <div className={cx("card__topic")}>#GRAMMAR</div>
           <div className={cx("card__title")}>
-            [Grammar {props?.grammar?.level ? props?.grammar?.level : "N3"}] 
+            [Grammar {props?.grammar?.level ? props?.grammar?.level : "N3"}]
             {props?.grammar?.text ? props?.grammar?.text : "～あいだ、あいだに"}
           </div>
           <div className={cx("card__more")}>
             <div className={cx("card__date")}>
-              <FontAwesomeIcon icon={faCalendarDays} className={cx("card__date-icon")}/>
+              <FontAwesomeIcon
+                icon={faCalendarDays}
+                className={cx("card__date-icon")}
+              />
               <div className={cx("card__date-text")}>
                 {props?.grammar?.createdDate
                   ? moment(props?.grammar?.createdDate).format("MMMM DD, YYYY")
-                  : "OCTOBER 25, 2023"
-                }
+                  : "OCTOBER 25, 2023"}
               </div>
             </div>
           </div>

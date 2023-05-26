@@ -1,15 +1,21 @@
 import classNames from "classnames/bind";
 import styles from "./ListQuestion.module.scss";
-import { useState } from "react";
 import Button from "../Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { ExamData } from "~/pages/Exam/ExamData";
 import Swal from "sweetalert2";
+import examService from "~/services/examService";
+import { useNavigate, useParams } from "react-router-dom";
+import routes from "~/configs/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { addAnswer } from "~/redux/examSlice";
 const cx = classNames.bind(styles);
 
 function ListQuestion(props) {
-  const [questions, setQuestions] = useState(ExamData);
+  const { level } = useParams();
+  const { type } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAllDone = props.statusAnswers.every((status) => status === "done");
   const renderQuestion = () => {
     return props.quizzes.map((question, index) => {
@@ -65,7 +71,6 @@ function ListQuestion(props) {
     });
   };
   const onSubmmit = () => {
-    console.log(props.quizzes);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -76,7 +81,28 @@ function ListQuestion(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Submited!", "You submited the exam", "success");
+        if (type === "languageKnowledge") {
+          Swal.fire("Submitted!", "you have completed the language knowledge", "success").then(
+            () => {
+              dispatch(addAnswer(props.quizzes));
+              navigate(`/exam/${level}/reading`);
+            }
+          );
+        } else if (type === "reading") {
+          Swal.fire("Submitted!", "You have completed the reading", "success").then(
+            () => {
+              dispatch(addAnswer(props.quizzes));
+              navigate(`/exam/${level}/listening`);
+            }
+          );
+        } else {
+          Swal.fire("Submitted!", "You submitted the exam", "success").then(
+            () => {
+              dispatch(addAnswer(props.quizzes));
+              navigate(routes.examResult);
+            }
+          );
+        }
       }
     });
   };

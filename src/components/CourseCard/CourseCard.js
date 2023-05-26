@@ -2,8 +2,14 @@ import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./CourseCard.module.scss";
 import routes from "~/configs/routes";
+import { Link, useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 function CourseCard(props) {
+  const navigate = useNavigate();
+
+  const handleViewDetail = () => {
+    navigate(`/coursedetail/${props.course.id}`);
+  }
   return (
     <div className={cx("card")}>
       <div className={cx("card__header")}>
@@ -36,7 +42,7 @@ function CourseCard(props) {
         <Button
           primary
           className={cx("card__button")}
-          to={`/coursedetail/${props.course.id}`}
+          onClick={handleViewDetail}
         >
           View details
         </Button>
