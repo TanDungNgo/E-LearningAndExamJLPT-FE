@@ -13,7 +13,7 @@ const podcastData = [
     title: "Podcast Episode 1",
     description: "Description of Episode 1",
     thumbnail:
-      "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
+      "/images/podcast.png",
     audioUrl:
       "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
   },
@@ -21,7 +21,7 @@ const podcastData = [
     title: "Podcast Episode 2",
     description: "Description of Episode 2",
     thumbnail:
-      "https://i1.sndcdn.com/artworks-WJKqePjOtppen2ZD-KUnzbg-t500x500.jpg",
+      "/images/podcast.png",
     audioUrl:
       "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
   },
@@ -44,7 +44,7 @@ function Podcast() {
         <div className={cx("card-img")}>
           <img
             className={cx("card-img__detail")}
-            src="https://files.tofugu.com/articles/japanese/2022-09-06-japanese-language-learning-podcasts-for-beginners/header-2560x.jpg"
+            src="/images/brg-podcast.png"
           ></img>
         </div>
         <div className={cx("title")}>
