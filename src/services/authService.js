@@ -1,7 +1,6 @@
 import { notification } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import routes from "~/configs/routes";
 import { loginFailed, loginSuccess } from "~/redux/authSlice";
 import RequestHttp from "~/utils/request";
