@@ -10,14 +10,17 @@ import Button from "~/components/Button/Button";
 import ListQuestion from "~/components/ListQuestion/ListQuestion";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
-import examService from "~/services/examService";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { addAnswer } from "~/redux/examSlice";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function ExamPage() {
   const { level } = useParams();
   const { type } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const exam = useSelector((state) => state.exam);
   const answers = useSelector((state) => state.exam.answer);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -25,7 +28,7 @@ function ExamPage() {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [statusAnswers, setStatusAnswers] = useState([]);
   const [isCounting, setIsCounting] = useState(true);
-  const [time, setTime] = useState(180);
+  const [time, setTime] = useState();
 
   const handleAnswerSelect = (answer) => {
     const updatedAnswers = [...selectedAnswers];
@@ -70,8 +73,18 @@ function ExamPage() {
     }
   };
   useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+    scrollToTop();
+  }, []);
+  useEffect(() => {
     const fetchExam = () => {
       if (type === "languageKnowledge") {
+        setTime(20);
         setQuestions(exam.languageKnowledgeQuestions);
         setSelectedAnswers(
           Array(exam.languageKnowledgeQuestions.length).fill("")
@@ -82,6 +95,7 @@ function ExamPage() {
           )
         );
       } else if (type === "reading") {
+        setTime(20);
         setQuestions(exam.readingQuestions);
         setSelectedAnswers(Array(exam.readingQuestions.length).fill(""));
         setStatusAnswers(
@@ -90,6 +104,7 @@ function ExamPage() {
           )
         );
       } else {
+        setTime(20);
         setQuestions(exam.listeningQuestions);
         setSelectedAnswers(Array(exam.listeningQuestions.length).fill(""));
         setStatusAnswers(
@@ -115,7 +130,20 @@ function ExamPage() {
   useEffect(() => {
     if (time === 0) {
       setIsCounting(false);
-      Swal.fire("Time out!", "You submited the exam!", "warning");
+      Swal.fire("Time out!", "You submitted!", "warning").then(() => {
+        if (type === "languageKnowledge") {
+          dispatch(addAnswer(selectedAnswers));
+          setIsCounting(true);
+          navigate(`/exam/${level}/reading`);
+        } else if (type === "reading") {
+          dispatch(addAnswer(selectedAnswers));
+          setIsCounting(true);
+          navigate(`/exam/${level}/listening`);
+        } else {
+          dispatch(addAnswer(selectedAnswers));
+          navigate(routes.examResult);
+        }
+      });
     }
   }, [time]);
 
@@ -127,26 +155,6 @@ function ExamPage() {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
-  // const renderAnswers = () => {
-  //   return questions[currentQuestion].answers.map((answer, index) => {
-  //     return (
-  //       <label htmlFor={`answer${index + 1}`} key={index}>
-  //         <div className={cx("answer")}>
-  //           <input
-  //             type="radio"
-  //             name="question1"
-  //             id={`answer${index + 1}`}
-  //             checked={selectedAnswers[currentQuestion] === index + 1}
-  //             onChange={() => handleAnswerSelect(index + 1)}
-  //           />
-  //           <div className={cx("answer__content")}>
-  //             {index + 1}.<span>{answer}</span>
-  //           </div>
-  //         </div>
-  //       </label>
-  //     );
-  //   });
-  // };
   return (
     <div className={cx("exam")}>
       <div className={cx("exam__header")}>
@@ -154,7 +162,6 @@ function ExamPage() {
           <div className={cx("couter-time")}>{formatTime(time)}</div>
         </div>
         <div className={cx("exam__title")}>
-          {/* JLPTハフ模試　N3*/}
           {exam?.name}
         </div>
         <div className={cx("exam__header--right")}></div>
