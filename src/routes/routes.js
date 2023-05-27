@@ -39,15 +39,12 @@ import AddExamForm from "~/pages/Admin/pages/ExamManagement/AddExamForm";
 import Lesson from "~/pages/Lesson/Lesson";
 import Vocabulary from "~/pages/Vocabulary/Vocabulary";
 import VocabularyFolder from "~/pages/VocavularyFolder/VocavularyFolder";
-import ArticleFolder from  "~/pages/ArticleFolder/ArticleFolder";
+import ArticleFolder from "~/pages/ArticleFolder/ArticleFolder";
 import Article from "~/pages/Article/Article";
 import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
 import Grammar from "~/pages/Grammar/Grammar";
 import Podcast from "~/pages/Podcast/Podcast";
 import CreateLesson from "~/pages/CreateLesson/CreateLesson";
-// import ListArticle from "~/components/ListArticle/ListArticle";
-
-
 
 // Public routes
 const publicRoutes = [
@@ -57,7 +54,6 @@ const publicRoutes = [
     path: config.routes.coursedetail,
     component: CourseDetail,
     layout: DefaultLayout,
-    protected: true,
   },
   { path: config.routes.home, component: Home, layout: DefaultLayout },
   {
@@ -66,23 +62,48 @@ const publicRoutes = [
     layout: DefaultLayout,
   },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
-  { path: config.routes.exam, component: ExamPage },
-  { path: config.routes.examFolder, component: ExamFolder, layout: DefaultLayout},
-  { path: config.routes.examResult, component: ExamResult },
+  { path: config.routes.exam, component: ExamPage, protected: true },
+  {
+    path: config.routes.examFolder,
+    component: ExamFolder,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.examResult, component: ExamResult, protected: true },
   { path: config.routes.notFound, component: NotFound },
-  { path: config.routes.lesson, component: Lesson, layout: DefaultLayout },
+  {
+    path: config.routes.lesson,
+    component: Lesson,
+    layout: DefaultLayout,
+    protected: true,
+  },
   {
     path: config.routes.vocabulary,
     component: Vocabulary,
     layout: DefaultLayout,
   },
-  { path: config.routes.vocabularyFolder, component: VocabularyFolder, layout: DefaultLayout},
-  { path: config.routes.articlesFolder, component: ArticleFolder, layout: DefaultLayout},
-  { path: config.routes.article, component: Article, layout: DefaultLayout},
-  { path: config.routes.grammarsFolder, component: GrammarsFolder, layout: DefaultLayout},
-  { path: config.routes.grammar, component: Grammar, layout: DefaultLayout},
-  { path: config.routes.podcast, component: Podcast, layout: DefaultLayout},
-  {path: config.routes.profileUser, component: ProfileUser, layout: ProfileUser},
+  {
+    path: config.routes.vocabularyFolder,
+    component: VocabularyFolder,
+    layout: DefaultLayout,
+  },
+  {
+    path: config.routes.articlesFolder,
+    component: ArticleFolder,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.article, component: Article, layout: DefaultLayout },
+  {
+    path: config.routes.grammarsFolder,
+    component: GrammarsFolder,
+    layout: DefaultLayout,
+  },
+  { path: config.routes.grammar, component: Grammar, layout: DefaultLayout },
+  { path: config.routes.podcast, component: Podcast, layout: DefaultLayout },
+  {
+    path: config.routes.profileUser,
+    component: ProfileUser,
+    layout: ProfileUser,
+  },
   {
     path: config.routes.publicProfile,
     component: PublicProfile,
@@ -141,7 +162,7 @@ const privateRoutes = [
   {
     path: config.routes.vocabularyManagement,
     component: VocabularyManagement,
-    layout: Admin
+    layout: Admin,
   },
   {
     path: config.routes.examManagement,
@@ -184,4 +205,3 @@ const privateRoutes = [
 ];
 
 export { publicRoutes, privateRoutes };
-

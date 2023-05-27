@@ -76,7 +76,7 @@ function ExamPage() {
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     };
     scrollToTop();
@@ -84,7 +84,7 @@ function ExamPage() {
   useEffect(() => {
     const fetchExam = () => {
       if (type === "languageKnowledge") {
-        setTime(20);
+        setTime(exam.durationLanguageKnowledge);
         setQuestions(exam.languageKnowledgeQuestions);
         setSelectedAnswers(
           Array(exam.languageKnowledgeQuestions.length).fill("")
@@ -95,7 +95,7 @@ function ExamPage() {
           )
         );
       } else if (type === "reading") {
-        setTime(20);
+        setTime(exam.durationReading);
         setQuestions(exam.readingQuestions);
         setSelectedAnswers(Array(exam.readingQuestions.length).fill(""));
         setStatusAnswers(
@@ -104,7 +104,7 @@ function ExamPage() {
           )
         );
       } else {
-        setTime(20);
+        setTime(exam.durationListening);
         setQuestions(exam.listeningQuestions);
         setSelectedAnswers(Array(exam.listeningQuestions.length).fill(""));
         setStatusAnswers(
@@ -161,9 +161,7 @@ function ExamPage() {
         <div className={cx("exam__header--left")}>
           <div className={cx("couter-time")}>{formatTime(time)}</div>
         </div>
-        <div className={cx("exam__title")}>
-          {exam?.name}
-        </div>
+        <div className={cx("exam__title")}>{exam?.name}</div>
         <div className={cx("exam__header--right")}></div>
       </div>
       <div className={cx("exam__content")}>

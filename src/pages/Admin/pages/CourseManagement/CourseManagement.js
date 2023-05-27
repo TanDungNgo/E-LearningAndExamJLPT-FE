@@ -1,9 +1,7 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-// import courseData from "~/data/courseData";
-import { useEffect, useState } from "react";
-import { Option } from "antd/es/mentions";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -118,6 +116,10 @@ function CourseManagement() {
       (filterPrice ? course.price <= filterPrice : true)
     );
   });
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -133,9 +135,9 @@ function CourseManagement() {
           onChange={handleFilterTypeChange}
           style={{ width: 120, marginRight: 16 }}
         >
-          <Option value="">All</Option>
-          <Option value="JLPT">JLPT</Option>
-          <Option value="Kaiwa">Kaiwa</Option>
+          <Select.Option value="">All</Select.Option>
+          <Select.Option value="JLPT">JLPT</Select.Option>
+          <Select.Option value="Kaiwa">Kaiwa</Select.Option>
         </Select>
         <Select
           placeholder="Filter by level"
@@ -143,12 +145,12 @@ function CourseManagement() {
           onChange={handleFilterLevelChange}
           style={{ width: 120, marginRight: 16 }}
         >
-          <Option value="">All</Option>
-          <Option value="N1"> N1</Option>
-          <Option value="N2">N2</Option>
-          <Option value="N3">N3</Option>
-          <Option value="N4">N4</Option>
-          <Option value="N5">N5</Option>
+          <Select.Option value="">All</Select.Option>
+          <Select.Option value="N1"> N1</Select.Option>
+          <Select.Option value="N2">N2</Select.Option>
+          <Select.Option value="N3">N3</Select.Option>
+          <Select.Option value="N4">N4</Select.Option>
+          <Select.Option value="N5">N5</Select.Option>
         </Select>
         <Select
           placeholder="Filter by price"
@@ -156,10 +158,10 @@ function CourseManagement() {
           onChange={handleFilterPriceChange}
           style={{ width: 150, marginRight: 16 }}
         >
-          <Option value="">All</Option>
-          <Option value="50">Less than $20</Option>
-          <Option value="100">Less than $50</Option>
-          <Option value="200">Less than $100</Option>
+          <Select.Option value="">All</Select.Option>
+          <Select.Option value="50">Less than $20</Select.Option>
+          <Select.Option value="100">Less than $50</Select.Option>
+          <Select.Option value="200">Less than $100</Select.Option>
         </Select>
         <Button
           type="primary"
@@ -180,11 +182,14 @@ function CourseManagement() {
           </Button>
         </Link>
       </div>
-      <Table
-        columns={columns}
-        dataSource={filteredCourses}
-        pagination={{ pageSize: 4 }}
-      />
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filteredCourses}
+          pagination={{ pageSize: 4, onChange: handlePageChange }}
+          rowKey={(record) => record.id}
+        />
+      </div>
     </div>
   );
 }

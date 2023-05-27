@@ -43,7 +43,13 @@ function AuthService() {
             });
             dispatch(loginSuccess(res.data.data));
             setToken(res.data.data.token);
-            navigate(routes.home);
+            const roles = res.data.data.roles;
+            console.log(roles[0].authority);
+            if (roles[0].authority === "ADMIN") {
+              navigate(routes.admin);
+            } else {
+              navigate(routes.home);
+            }
           }
         });
     } catch (err) {
@@ -60,6 +66,7 @@ function AuthService() {
     localStorage.removeItem("token");
     dispatch(loginFailed());
     navigate(routes.home);
+    window.location.reload();
   };
 
   const getCurrentUser = async () => {
@@ -93,38 +100,13 @@ function AuthService() {
       });
     }
   };
-  const checkLogin = async () => {
-    try {
-      const res = await request.get(`/auth/info`);
-      if (res.data.data) {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  return {
+    register,
+    login,
+    logout,
+    getCurrentUser,
+    changePassword,
   };
-  const checkAdmin = async () => {
-    try {
-      const res = await request.get(`/auth/info`);
-      if (res.data.data.role === "admin") {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const checkTeacher = async () => {
-    try {
-      const res = await request.get(`/auth/info`);
-      if (res.data.data.role === "teacher") {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return { register, login, logout, getCurrentUser, changePassword };
 }
 
 export default AuthService;
