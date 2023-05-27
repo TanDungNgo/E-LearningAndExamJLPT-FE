@@ -31,6 +31,11 @@ import AddVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManagem
 import VocabularyFolderManagement from "~/pages/Admin/pages/VocabularyFolderManagement/VocabularyFolderManagement";
 import AddArticlesForm from "~/pages/Admin/pages/ArticlesManagement/AddArticlesForm";
 import ArticlesManagement from "~/pages/Admin/pages/ArticlesManagement/ArticlesManagement";
+import ExamManagement from "~/pages/Admin/pages/ExamManagement/ExamManagement";
+import QuestionManagement from "~/pages/Admin/pages/QuestionManagement/QuestionManagement";
+import AddQuestionForm from "~/pages/Admin/pages/QuestionManagement/AddQuestionForm";
+
+import AddExamForm from "~/pages/Admin/pages/ExamManagement/AddExamForm";
 import Lesson from "~/pages/Lesson/Lesson";
 import Vocabulary from "~/pages/Vocabulary/Vocabulary";
 import VocabularyFolder from "~/pages/VocavularyFolder/VocavularyFolder";
@@ -40,7 +45,8 @@ import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
 import Grammar from "~/pages/Grammar/Grammar";
 import Podcast from "~/pages/Podcast/Podcast";
 import CreateLesson from "~/pages/CreateLesson/CreateLesson";
-import ListArticle from "~/components/ListArticle/ListArticle";
+// import ListArticle from "~/components/ListArticle/ListArticle";
+
 
 
 // Public routes
@@ -137,6 +143,16 @@ const privateRoutes = [
     component: VocabularyManagement,
     layout: Admin
   },
+  {
+    path: config.routes.examManagement,
+    component: ExamManagement,
+    layout: Admin
+  },
+  {
+    path: config.routes.questionManagement,
+    component: QuestionManagement,
+    layout: Admin
+  },
   { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
   { path: config.routes.addLesson, component: AddLessonForm, layout: Admin },
   { path: config.routes.addGrammar, component: AddGrammarForm, layout: Admin },
@@ -155,6 +171,16 @@ const privateRoutes = [
     component: AddVocabularyForm,
     layout: Admin,
   },
+  {
+    path: config.routes.addExam,
+    component: AddExamForm,
+    layout: Admin,
+  },
+  {
+    path: config.routes.addQuestion,
+    component: AddQuestionForm,
+    layout: Admin,
+  }
 ];
 
 export { publicRoutes, privateRoutes };

@@ -42,7 +42,7 @@ function ExamFolder() {
       <div className={cx("card-img")}>
         <img
           className={cx("card-img__detail")}
-          src="https://files.tofugu.com/articles/japan/2022-06-28-secondhand-shopping-books-guide/header-2560x.jpg"
+          src="/images/bgr-exam.png"
         ></img>
       </div>
       <div className={cx("exam-folder__header")}>
@@ -124,19 +124,19 @@ function ExamFolder() {
           <div className={cx("exam-folder__honors__container-list")}>
             <div className={cx("exam-folder__honors__list-student1")}>
               <img
-                src="https://riki.edu.vn/online/design-jlpt/images/jlpt102022/1.png"
+                src="/images/1.png"
                 className={cx("exam-folder__honors__img1")}
               ></img>
             </div>
             <div className={cx("exam-folder__honors__list-student2")}>
               <img
-                src="https://riki.edu.vn/online/design-jlpt/images/jlpt102022/2.png"
+                src="/images/2.png"
                 className={cx("exam-folder__honors__img2")}
               ></img>
             </div>
             <div className={cx("exam-folder__honors__list-student3")}>
               <img
-                src="https://riki.edu.vn/online/design-jlpt/images/jlpt102022/3.png"
+                src="/images/3.png"
                 className={cx("exam-folder__honors__img3")}
               ></img>
             </div>

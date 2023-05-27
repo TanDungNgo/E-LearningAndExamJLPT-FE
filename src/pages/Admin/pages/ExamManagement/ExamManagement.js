@@ -1,13 +1,14 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import grammarData from "~/data/grammarData";
 import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import grammarService from "~/services/grammarService";
+import examData from "~/data/examData";
+import examService from "~/services/examService";
+
 const columns = [
   {
     title: "ID",
@@ -15,25 +16,10 @@ const columns = [
     key: "id",
   },
   {
-    title: "Text",
-    dataIndex: "text",
-    key: "text",
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
     render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Explanation ",
-    dataIndex: "explanation",
-    key: "explanation ",
-  },
-  {
-    title: "Example",
-    dataIndex: "example",
-    key: "example",
-  },
-  {
-    title: "Means",
-    dataIndex: "means",
-    key: "means",
   },
   {
     title: "Level",
@@ -59,14 +45,23 @@ const columns = [
     ),
   },
 ];
-function GrammarManagement() {
+function ExamManagement() {
+
+  const {getAllExam} = examService();
+  const [examData, setExamData] = useState([]);
+
+  useEffect(() => {
+    getAllExam().then((res) =>{
+      setExamData(res);
+    });
+  }, []);
   const [searchText, setSearchText] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
-  const { getAllGrammars } = grammarService();
-  const [grammarData, setGrammarData] = useState([]);
+
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
   };
+
   const handleFilterLevelChange = (value) => {
     setFilterLevel(value);
   };
@@ -75,18 +70,12 @@ function GrammarManagement() {
     setFilterLevel("");
   };
 
-  const filteredGrammar = grammarData.filter((grammar) => {
+  const filterdExam = examData.filter((exam) => {
     return (
-      grammar.text.toLowerCase().includes(searchText.toLowerCase()) &&
-      (filterLevel ? grammar.level === filterLevel : true)
+      exam.name.toLowerCase().includes(searchText.toLowerCase()) &&
+      (filterLevel ? exam.level === filterLevel : true)
     );
   });
-
-  useEffect(() => {
-    getAllGrammars().then((res) => {
-      setGrammarData(res);
-    });
-  }, []);
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -122,19 +111,20 @@ function GrammarManagement() {
         >
           Reset Filters
         </Button>
-        <Link to="/admin/grammar/add">
+        <Link to="/admin/exam/add">
           <Button type="primary" icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
       </div>
+      <Link to = "/admin/question">
       <Table
         columns={columns}
-        dataSource={filteredGrammar}
-        pagination={{ pageSize: 6 }}
+        dataSource={filterdExam}
+        pagination={{ pageSize: 10}}
       />
+      </Link>
     </div>
   );
 }
-
-export default GrammarManagement;
+export default ExamManagement;

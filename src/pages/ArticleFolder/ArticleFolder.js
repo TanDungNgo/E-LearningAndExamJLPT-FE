@@ -9,22 +9,7 @@ import articlesService from "~/services/articlesService";
 const cx = classNames.bind(styles);
 
 function ArticleFolder() {
-  // const [listArticleFolder, setListArticleFolder] = useState([
-  //   "1",
-  //   "2",
-  //   "3",
-  //   "4",
 
-  // ]);
-  // const renderCard = () => {
-  //   return listArticleFolder.map((item, index) => {
-  //     return (
-  //       <div key={index}>
-  //         <ArticleCard/>
-  //       </div>
-  //     );
-  //   });
-  // };
 
   const { id } = useParams();
   const { getAllArticles } = articlesService();
@@ -49,7 +34,7 @@ function ArticleFolder() {
       <div className={cx("card-img")}>
         <img
           className={cx("card-img__detail")}
-          src="https://files.tofugu.com/articles/japanese/2022-11-22-katakanization/header-2560x.jpg"
+          src="/images/brg-article.png"
         >
         </img>
       </div>
