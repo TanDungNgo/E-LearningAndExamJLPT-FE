@@ -7,20 +7,21 @@ import {
   Progress,
   Switch,
 } from "antd";
-import grammarService from "~/services/grammarService";
+
 const { Option } = Select;
 
-const AddGrammarForm = () => {
+const AddVocabularyFolderForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-  const { createGrammar } = grammarService();
 
   const onFinish = async (values) => {
     const data = {
       ...values,
     }
+
     console.log(data);
-    // createGrammar(data);
+    // createVocabularyFolder(data);
+    
     setProgress(100);
   };
 
@@ -31,58 +32,62 @@ const AddGrammarForm = () => {
   return (
     <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
       <Form.Item
+        label="Title"
+        name="title"
+        rules={[{ required: true, message: "Please input a title!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
         label="Text"
         name="text"
-        rules={[{ required: true, message: "Please input a name!" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Means"
-        name="means"
-        rules={[
-          { required: true, message: "Please input a means!" },
-        ]}
+        rules={[{ required: true, message: "Please input a text!" }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
-        label="Explanation"
-        name="explanation"
-        rules={[
-          { required: true, message: "Please input a explanations!" },
-          {
-            max: 100,
-            message: "Explanations should be less than 100 characters!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Example"
-        name="example"
-        rules={[
-          { required: true, message: "Please input a example!" },
-        ]}
+        label="Image"
+        name="image"
+        rules={[{ required: true, message: "Please input a image!" }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
-        label="Level"
-        name="level"
-        rules={[{ required: true, message: "Please select a level!" }]}
+        label="Audio File"
+        name="audioFile"
+        rules={[{ required: true, message: "Please input a audioFile!" }]}
       >
-        <Select>
-          <Option value="N1">N1</Option>
-          <Option value="N2">N2</Option>
-          <Option value="N3">N3</Option>
-          <Option value="N4">N4</Option>
-          <Option value="N5">N5</Option>
-        </Select>
+        <Input />
       </Form.Item>
+      <Form.Item
+        label="Option1"
+        name="option1"
+        rules={[{ required: true, message: "Please input a option1!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Option2"
+        name="option2"
+        rules={[{ required: true, message: "Please input a option2!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Option3"
+        name="option3"
+        rules={[{ required: true, message: "Please input a option3!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Option4"
+        name="option4"
+        rules={[{ required: true, message: "Please input a option4!" }]}
+      >
+        <Input />
+      </Form.Item>
+      
       <Form.Item
         label="Status"
         valuePropName="checked"
@@ -92,7 +97,7 @@ const AddGrammarForm = () => {
       </Form.Item>
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Button type="primary" htmlType="onsubmit">
+          <Button type="primary" htmlType="submit">
             Submit
           </Button>
           {isSubmitting && (
@@ -103,4 +108,5 @@ const AddGrammarForm = () => {
     </Form>
   );
 };
-export default AddGrammarForm;
+
+export default AddVocabularyFolderForm;

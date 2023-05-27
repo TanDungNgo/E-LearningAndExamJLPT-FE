@@ -1,13 +1,13 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import courseData from "~/data/courseData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import vocabularyFolderData from "~/data/vocabularyFolderData";
+import vocabularyFolderService from "~/services/vocabularyFolderService";
 const columns = [
   {
     title: "ID",
@@ -50,6 +50,15 @@ const columns = [
   },
 ];
 function VocabularyFolderManagement() {
+
+  const {getAllVocabularyFolder} = vocabularyFolderService();
+  const [vocabularyFolderData, setVocabularyFolderData] = useState([]);
+
+  useEffect(() => {
+    getAllVocabularyFolder().then((res) =>{
+      setVocabularyFolderData(res);
+    });
+  }, []);
   const [searchText, setSearchText] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
 
@@ -116,7 +125,7 @@ function VocabularyFolderManagement() {
       <Table
         columns={columns}
         dataSource={filteredvocabularyFolder}
-        pagination={{ pageSize: 8}}
+        pagination={{ pageSize: 15}}
       />
       </Link>
     </div>

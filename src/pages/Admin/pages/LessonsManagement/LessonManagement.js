@@ -2,9 +2,10 @@ import { Button, Rate, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import lessonData from "~/data/lessonData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
+import lessonService from "~/services/lessonService";
 const columns = [
   {
     title: "ID",
@@ -23,9 +24,9 @@ const columns = [
     key: "description",
   },
   {
-    title: "Link Video",
-    dataIndex: "linkvideo",
-    key: "linkvideo",
+    title: "URL Video",
+    dataIndex: "urlVideo",
+    key: "urlVideo",
   },
   {
     title: "Rate",
@@ -61,6 +62,14 @@ const columns = [
   },
 ];
 function LessonManagement() {
+  const {getAllLesson} = lessonService();
+  const [lessonData, setLessonData] = useState([]);
+
+  useEffect(() => {
+    getAllLesson().then((res) =>{
+      setLessonData(res);
+    });
+  }, []);
   const [searchText, setSearchText] = useState("");
 
   const handleSearchTextChange = (event) => {

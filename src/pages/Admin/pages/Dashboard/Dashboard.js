@@ -5,7 +5,7 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Space} from "antd";
+import { Space } from "antd";
 import DashboardChart from "../../components/DashboardChart/DashboardChart";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import NoticeCalendar from "../../components/NoticeCalendar/NoticeCalendar";
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function Dashboard() {
   return (
     <Space size={20} direction="horizontal">
-      <Space direction="vertical">
+      <Space direction="vertical" style={{width:"600px"}}>
         <Space direction="horizontal">
           <DashboardCard
             icon={
@@ -84,7 +84,9 @@ function Dashboard() {
         </Space>
         <DashboardChart />
       </Space>
-      <NoticeCalendar />
+      <Space>
+        <NoticeCalendar />
+      </Space>
     </Space>
   );
 }

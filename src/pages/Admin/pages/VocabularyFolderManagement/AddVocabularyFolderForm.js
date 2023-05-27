@@ -4,32 +4,31 @@ import {
   Input,
   Select,
   Button,
-  Upload,
-  Image,
   Progress,
-  InputNumber,
   Switch,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import vocabularyFolderService from "~/services/vocabularyFolderService";
 
 const { Option } = Select;
 
-const AddVocabularyFolderForm = ({ onSubmit }) => {
-  const [file, setFile] = useState(null);
+const AddVocabularyFolderForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-  const onFinish = (values) => {
-    // setIsSubmitting(true);
+  const { createVocabularyFolder } = vocabularyFolderService();
+
+  const onFinish = async (values) => {
+    const data = {
+      ...values,
+    }
+
+    console.log(data);
+    // createVocabularyFolder(data);
+    
     setProgress(100);
-    onSubmit(values);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-  const handleBeforeUpload = (file) => {
-    setFile(file);
-    return false;
   };
 
   return (
@@ -53,21 +52,6 @@ const AddVocabularyFolderForm = ({ onSubmit }) => {
           <Option value="N4">N4</Option>
           <Option value="N5">N5</Option>
         </Select>
-      </Form.Item>
-      <Form.Item
-        label="Count"
-        name="count"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            message: "Please input a count!",
-          },
-        ]}
-      >
-        <InputNumber
-          style={{ width: "20%" }}
-        />
       </Form.Item>
       <Form.Item
         label="Status"

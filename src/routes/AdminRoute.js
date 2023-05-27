@@ -1,11 +1,12 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import routes from "~/configs/routes";
 import AuthService from "~/services/authService";
-function UserRoute() {
+function AdminRoute() {
+  const user = useSelector((state) => state.auth.login.currentUser);
   const token = JSON.parse(localStorage.getItem("token"));
-
   if (token !== null) {
     return <Outlet />;
   }
@@ -16,4 +17,4 @@ function UserRoute() {
   return <Navigate to={routes.signin} />;
 }
 
-export default UserRoute;
+export default AdminRoute;

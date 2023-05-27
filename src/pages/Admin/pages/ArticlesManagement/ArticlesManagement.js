@@ -2,9 +2,10 @@ import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import articlesData from "~/data/articlesData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
+import articlesService from "~/services/articlesService";
 const columns = [
   {
     title: "ID",
@@ -12,11 +13,11 @@ const columns = [
     key: "id",
   },
   {
-    title: "Banner",
-    dataIndex: "banner",
-    key: "banner",
-    render: (banner) => (
-      <img src={banner} alt="Articles Banner" style={{ width: 120 }} />
+    title: "Image",
+    dataIndex: "image",
+    key: "image",
+    render: (image) => (
+      <img src={image} alt="Articles Banner" style={{ width: 120 }} />
     ),
   },
   {
@@ -26,10 +27,18 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+    render: (text) => <a>{text}</a>,
+  },
+  
+  {
     title: "Content",
     dataIndex: "content",
     key: "content",
   },
+
   {
     title: "Date Submitted",
     dataIndex: "date_submitted",
@@ -56,6 +65,7 @@ const columns = [
 ];
 function ArticlesManagement() {
   const [searchText, setSearchText] = useState("");
+  const [articlesData, setArticleData] = useState([]);
 
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
@@ -64,6 +74,15 @@ function ArticlesManagement() {
   const handleResetFilters = () => {
     setSearchText("");
   };
+  const {getAllArticles} = articlesService();
+
+  useEffect(() => {
+    getAllArticles().then((res) => {
+      setArticleData(res);
+
+    });
+
+  }, []);
 
   const filteredArticles = articlesData.filter((articles) => {
     return (

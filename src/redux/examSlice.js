@@ -6,6 +6,9 @@ const examSlice = createSlice({
     languageKnowledgeQuestions: [],
     readingQuestions: [],
     listeningQuestions: [],
+    durationLanguageKnowledge: 0,
+    durationReading: 0,
+    durationListening: 0,
     answer: [],
   },
   reducers: {
@@ -15,6 +18,9 @@ const examSlice = createSlice({
         action.payload.languageKnowledgeQuestions;
       state.readingQuestions = action.payload.readingQuestions;
       state.listeningQuestions = action.payload.listeningQuestions;
+      state.durationLanguageKnowledge = action.payload.durationLanguageKnowledge;
+      state.durationReading = action.payload.durationReading;
+      state.durationListening = action.payload.durationListening;
     },
     addAnswer: (state, action) => {
       state.answer = [...state.answer, ...action.payload];
