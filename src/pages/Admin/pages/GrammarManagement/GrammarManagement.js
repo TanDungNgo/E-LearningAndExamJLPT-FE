@@ -2,11 +2,12 @@ import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import grammarData from "~/data/grammarData";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import grammarService from "~/services/grammarService";
 const columns = [
   {
     title: "ID",
@@ -14,7 +15,7 @@ const columns = [
     key: "id",
   },
   {
-    title: "Name",
+    title: "Text",
     dataIndex: "text",
     key: "text",
     render: (text) => <a>{text}</a>,
@@ -58,20 +59,17 @@ const columns = [
     ),
   },
 ];
-function CourseManagement() {
+function GrammarManagement() {
   const [searchText, setSearchText] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
-
+  const { getAllGrammars } = grammarService();
+  const [grammarData, setGrammarData] = useState([]);
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
   };
-
-
   const handleFilterLevelChange = (value) => {
     setFilterLevel(value);
   };
-
-
   const handleResetFilters = () => {
     setSearchText("");
     setFilterLevel("");
@@ -83,6 +81,16 @@ function CourseManagement() {
       (filterLevel ? grammar.level === filterLevel : true)
     );
   });
+
+  useEffect(() => {
+    getAllGrammars().then((res) => {
+      setGrammarData(res);
+    });
+  }, []);
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -118,19 +126,21 @@ function CourseManagement() {
         >
           Reset Filters
         </Button>
-        <Link to="/admin/course/add">
+        <Link to="/admin/grammar/add">
           <Button type="primary" icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
       </div>
-      <Table
-        columns={columns}
-        dataSource={filteredGrammar}
-        pagination={{ pageSize: 6 }}
-      />
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filteredGrammar}
+          pagination={{ pageSize: 6, onChange: handlePageChange }}
+        />
+      </div>
     </div>
   );
 }
 
-export default CourseManagement;
+export default GrammarManagement;

@@ -5,13 +5,27 @@ import styles from "./Slider.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Button/Button";
+import AuthService from "~/services/authService";
+import routes from "~/configs/routes";
+import { useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideLength = SliderData.length;
-
+  const { getCurrentUser, logout } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, []);
   const autoScroll = true;
   let slideInterval;
   let intervalTime = 7000;
@@ -53,7 +67,7 @@ const Slider = () => {
         return (
           <div
             className={
-              index === currentSlide ? cx("slide","current") : cx("slide")
+              index === currentSlide ? cx("slide", "current") : cx("slide")
             }
             key={index}
           >
@@ -64,7 +78,16 @@ const Slider = () => {
                   <h2>{slide.heading}</h2>
                   <p>{slide.desc}</p>
                   <hr />
-                  <Button primary>Get Started</Button>
+                  {user && (
+                    <Button primary to={routes.allCourse}>
+                      Get Started
+                    </Button>
+                  )}
+                  {!user && (
+                    <Button primary to={routes.signup}>
+                      Get Started
+                    </Button>
+                  )}
                 </div>
               </div>
             )}

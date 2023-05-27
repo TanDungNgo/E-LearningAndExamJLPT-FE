@@ -11,25 +11,62 @@ import {
   Switch,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storageFirebase from "~/configs/firebaseConfig";
+import courseService from "~/services/courseService";
 const { Option } = Select;
 
 const AddCourseForm = ({ onSubmit }) => {
-  const [file, setFile] = useState(null);
+  const [imgSrc, setImgSrc] = useState("");
+  const [fileImage, setFileImage] = useState("");
+  const { createCourse } = courseService();
   const [progress, setProgress] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(true);
-  const onFinish = (values) => {
-    // setIsSubmitting(true);
-    setProgress(100);
-    onSubmit(values);
+  const [file, setFile] = useState(null);
+  const handleChangeFile = (e) => {
+    //Lấy file ra từ e
+    let file = e.target.files[0];
+    setFileImage(file);
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png"
+    ) {
+      //Tạo đối tượng để đọc file
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        // console.log(e.target.result);
+        setImgSrc(e.target.result);
+      };
+    }
+  };
+  const onFinish = async (values) => {
+    const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, fileImage);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        const data = {
+          ...values,
+          banner: url,
+        };
+        console.log(data);
+        // createCourse(data);
+      }
+    );
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-  const handleBeforeUpload = (file) => {
-    setFile(file);
-    return false;
   };
 
   return (
@@ -47,7 +84,7 @@ const AddCourseForm = ({ onSubmit }) => {
         rules={[
           { required: true, message: "Please input a description!" },
           {
-            max: 100,
+            max: 500,
             message: "Description should be less than 100 characters!",
           },
         ]}
@@ -86,10 +123,6 @@ const AddCourseForm = ({ onSubmit }) => {
             type: "number",
             message: "Please input a duration!",
           },
-          //   {
-          //     min: 0,
-          //     message: "Duration should be greater than 0!",
-          //   },
         ]}
       >
         <InputNumber
@@ -106,10 +139,6 @@ const AddCourseForm = ({ onSubmit }) => {
             type: "number",
             message: "Please input a price!",
           },
-          //   {
-          //     min: 0,
-          //     message: "Price should be greater than 0!",
-          //   },
         ]}
       >
         <InputNumber
@@ -120,41 +149,42 @@ const AddCourseForm = ({ onSubmit }) => {
       <Form.Item
         label="Status"
         valuePropName="checked"
+        style={{ marginBottom: "15px" }}
         rules={[{ required: true, message: "Please select a status!" }]}
       >
         <Switch />
       </Form.Item>
       <Form.Item
-        label="Banner"
         name="banner"
         // rules={[{ required: true, message: "Please upload a banner!" }]}
       >
-        <Upload
-          name="banner"
-          accept="image/*"
-          beforeUpload={handleBeforeUpload}
-          listType="picture"
-          showUploadList={false}
-        >
-          {file ? (
-            <Image
-              src={URL.createObjectURL(file)}
-              style={{ maxWidth: "100%", marginTop: 10 }}
+        <div>
+          <img src={imgSrc} />
+          <div>
+            <label htmlFor="file" style={{ color: "##b79032", cursor: "pointer", fontSize: "16px" }}>
+              <UploadOutlined />
+              Upload Image
+
+            </label>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              onChange={handleChangeFile}
+              accept="image/*"
+              style={{ with: "0.1px", height: "0.1px", opacity: "0", overflow: "hidden", position: "absolute" }}
             />
-          ) : (
-            <Button icon={<UploadOutlined />}>Upload</Button>
-          )}
-        </Upload>
-        <Form.ErrorList />
+          </div>
+
+        </div>
+
       </Form.Item>
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-          {isSubmitting && (
             <Progress percent={progress} style={{ marginLeft: "10px" }} />
-          )}
         </div>
       </Form.Item>
     </Form>

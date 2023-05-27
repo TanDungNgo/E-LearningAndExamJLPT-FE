@@ -34,12 +34,19 @@ const routes = {
   vocabularyManagement: "/admin/vocabulary",
   articlesManagement: "admin/articles",
   userManagement: "/admin/user",
+  examManagement: "/admin/exam",
+  questionManagement: "/admin/question",
+
+
   addCourse: "/admin/course/add",
   addLesson: "/admin/lesson/add",
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyfolder/add",
   addArticles: "/admin/articles/add",
   addVocabulary: "/admin/vocabulary/add",
+  addExam: "/admin/exam/add",
+  addQuestion: "/admin/question/add",
+
 };
 
 export default routes;
