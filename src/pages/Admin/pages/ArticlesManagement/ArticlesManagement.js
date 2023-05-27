@@ -2,7 +2,7 @@ import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import articlesData from "~/data/articlesData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
 import articlesService from "~/services/articlesService";
@@ -32,7 +32,7 @@ const columns = [
     key: "description",
     render: (text) => <a>{text}</a>,
   },
-  
+
   {
     title: "Content",
     dataIndex: "content",
@@ -40,9 +40,9 @@ const columns = [
   },
 
   {
-    title: "Date Submitted",
-    dataIndex: "date_submitted",
-    key: "date_submitted",
+    title: "Created Date",
+    dataIndex: "createdDate",
+    key: "createdDate",
   },
   {
     title: "Action",
@@ -74,21 +74,22 @@ function ArticlesManagement() {
   const handleResetFilters = () => {
     setSearchText("");
   };
-  const {getAllArticles} = articlesService();
+  const { getAllArticles } = articlesService();
 
   useEffect(() => {
     getAllArticles().then((res) => {
       setArticleData(res);
-
+      console.log(res);
     });
-
   }, []);
 
   const filteredArticles = articlesData.filter((articles) => {
-    return (
-      articles.title.toLowerCase().includes(searchText.toLowerCase())
-    );
+    return articles.title.toLowerCase().includes(searchText.toLowerCase());
   });
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -104,11 +105,13 @@ function ArticlesManagement() {
           </Button>
         </Link>
       </div>
-      <Table
-        columns={columns}
-        dataSource={filteredArticles}
-        pagination={{ pageSize: 4 }}
-      />
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filteredArticles}
+          pagination={{ pageSize: 2, onChange: handlePageChange }}
+        />
+      </div>
     </div>
   );
 }

@@ -149,13 +149,13 @@ const Header = () => {
       <div className={cx("actions")}>
         {currentUser ? (
           <>
-            <Tippy content="Notification" placement="bottom">
-              <Badge count={2}>
+            <Badge count={2}>
+              <Tippy content="Notification" placement="bottom">
                 <button className={cx("action__btn")}>
                   <FontAwesomeIcon icon={faBell} className={cx("icon")} />
                 </button>
-              </Badge>
-            </Tippy>
+              </Tippy>
+            </Badge>
             <AvatarWithDropdown user={currentUser} logout={handleLogout} />
           </>
         ) : (
