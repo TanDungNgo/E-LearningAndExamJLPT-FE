@@ -3,7 +3,6 @@ import Button from "../Button/Button";
 import styles from "./UpdateCourseCard.module.scss";
 import { Modal } from "antd";
 import { useState } from "react";
-import FormUpdate from "./FormUpdate";
 import { InputNumber} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Form, Input, Select } from "antd";

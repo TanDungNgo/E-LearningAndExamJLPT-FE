@@ -5,7 +5,6 @@ import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
 import { Space, Spin } from "antd";
 import UpdateCourseCard from "../UpdateCourseCard/UpdateCourseCard";
-import FormUpdate from "../UpdateCourseCard/FormUpdate";
 
 const cx = classNames.bind(styles);
 
