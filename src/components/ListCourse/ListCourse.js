@@ -37,7 +37,7 @@ function ListCourse() {
       <div className={cx("list-course__header")}>
         <h1 className={cx("list-course__title")}>
           Popular
-          <span className={cx("list-course__title--primary")}>Courses</span>
+          <span className={cx("list-course__title--primary")}> Courses</span>
         </h1>
         {/* <div className={cx("list-course__action")}>
           <button

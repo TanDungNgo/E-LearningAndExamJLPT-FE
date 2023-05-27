@@ -39,12 +39,21 @@ function examService() {
       console.log(error);
     }
   };
+  const getExamById = async (id) => {
+    try {
+      const res = await request.get(`/exams/${id}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     getAllExam,
     getExam,
     submitExam,
     getRandomExamByLevel,
+    getExamById,
   };
 }
 

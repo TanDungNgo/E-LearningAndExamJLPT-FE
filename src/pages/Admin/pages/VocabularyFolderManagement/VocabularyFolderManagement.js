@@ -6,7 +6,6 @@ import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import vocabularyFolderData from "~/data/vocabularyFolderData";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
 const columns = [
   {
@@ -18,7 +17,7 @@ const columns = [
     title: "Title",
     dataIndex: "title",
     key: "title",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link to = "/admin/vocabulary">{text}</Link>,
   },
   {
     title: "Level",
@@ -121,13 +120,11 @@ function VocabularyFolderManagement() {
           </Button>
         </Link>
       </div>
-      <Link to = "/admin/vocabulary">
       <Table
         columns={columns}
         dataSource={filteredvocabularyFolder}
         pagination={{ pageSize: 15}}
       />
-      </Link>
     </div>
   );
 }

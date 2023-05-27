@@ -25,7 +25,7 @@ function EnrollCard(props) {
         />
       </div>
       <div className={cx("card__body")}>
-        <Link to = {`/lesson/${props?.lesson?.id}`}>
+        <Link to = {`/lesson/${props?.course?.id}`}>
           <Button outline className={cx("card__button")}>
             Enroll
           </Button>
