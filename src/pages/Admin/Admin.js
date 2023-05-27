@@ -9,55 +9,33 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Row, Col, Layout, theme } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import config from "~/configs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import Footer from "~/layouts/components/Footer/Footer";
 import AvatarWithDropdown from "~/components/AvatarWithDropdown/AvatarWithDropdown";
-import {
-  faCircleQuestion,
-  faGear,
-  faListCheck,
-  faSignOut,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import Menu from "~/components/Popper/Menu/Menu";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
 
-const userMenu = [
-  {
-    icon: <FontAwesomeIcon icon={faUser} />,
-    title: "View profile",
-    to: "/@trang",
-  },
-  {
-    icon: <FontAwesomeIcon icon={faGear} />,
-    title: "Settings",
-    to: "/settings",
-  },
-  {
-    icon: <FontAwesomeIcon icon={faCircleQuestion} />,
-    title: "Feedback and help",
-    to: "/feedback",
-  },
-  {
-    icon: <FontAwesomeIcon icon={faListCheck} />,
-    title: "System Management",
-    to: "/admin/user",
-  },
-  {
-    icon: <FontAwesomeIcon icon={faSignOut} />,
-    title: "Log out",
-    to: "/logout",
-    separate: true,
-  },
-];
 function Admin({ children }) {
   const [comments, setComments] = useState(["Hello"]);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const { getCurrentUser, logout } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, []);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -76,12 +54,15 @@ function Admin({ children }) {
       </Breadcrumb.Item>
     );
   });
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <Layout>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className={cx("admin__logo")}>
-            <Link to={config.routes.admin}>
+            <Link to={config.routes.home}>
               <img
                 className={cx("admin__logo-image")}
                 src="/images/logo2.png"
@@ -108,14 +89,11 @@ function Admin({ children }) {
                   }
                 )}
                 <Breadcrumb style={{ margin: "0 20px" }}>
-                  {/* <Breadcrumb.Item>
-                    <Link to="/">Home</Link>
-                  </Breadcrumb.Item> */}
                   {breadcrumbItems}
                 </Breadcrumb>
               </Col>
               <Col md={6} className={cx("admin__header-right")}>
-                <Space>
+                <Space style={{ display: "flex" }}>
                   <Badge dot>
                     <FontAwesomeIcon
                       className={cx("admin__icon")}
@@ -131,19 +109,25 @@ function Admin({ children }) {
                       }}
                     />
                   </Badge>
-                  <Badge>
-                    <Menu items={userMenu}>
-                      {/* <FontAwesomeIcon icon={faUser} /> */}
-                      <img
-                        src="https://i.pinimg.com/originals/51/90/10/519010d9ee8167bfe445e616f260f758.png"
-                        className={cx("user-avt")}
-                        alt="admin"
+                  <Space
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 10px",
+                      marginTop: "-10px",
+                    }}
+                  >
+                    <Badge>
+                      <AvatarWithDropdown
+                        user={currentUser}
+                        logout={handleLogout}
                       />
-                    </Menu>
-                  </Badge>
+                    </Badge>
+                  </Space>
                 </Space>
                 <Drawer
-                  title="Comments"
+                  title="Notifications"
                   open={commentsOpen}
                   onClose={() => {
                     setCommentsOpen(false);

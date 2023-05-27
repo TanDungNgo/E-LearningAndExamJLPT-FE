@@ -1,9 +1,20 @@
 import React from "react";
-import { Avatar, Menu, Dropdown, message, Button, Space } from "antd";
+import {
+  Avatar,
+  Menu,
+  Dropdown,
+  message,
+  Button,
+  Space,
+  notification,
+} from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleQuestion,
+  faCog,
   faGear,
+  faGripHorizontal,
+  faListCheck,
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,10 +31,21 @@ const AvatarWithDropdown = (props) => {
         navigate(routes.publicProfile);
         break;
       case "settings":
-        navigate("/settings");
+        notification.info({
+          message: "Coming soon",
+          description: "This feature is coming soon",
+        });
+        // navigate("/settings");
         break;
       case "feedback":
-        navigate("/feedback");
+        notification.info({
+          message: "Coming soon",
+          description: "This feature is coming soon",
+        });
+        // navigate("/feedback");
+        break;
+      case "management":
+        navigate(routes.admin);
         break;
       case "logout":
         props.logout();
@@ -55,6 +77,16 @@ const AvatarWithDropdown = (props) => {
       danger: true,
     },
   ];
+  if (
+    props?.user?.roles[0].name === "ADMIN" ||
+    props?.user?.roles[0].authority === "ADMIN"
+  ) {
+    items.splice(3, 0, {
+      label: "Management",
+      key: "management",
+      icon: <FontAwesomeIcon icon={faListCheck} />,
+    });
+  }
   const menuProps = {
     items,
     onClick: handleMenuClick,

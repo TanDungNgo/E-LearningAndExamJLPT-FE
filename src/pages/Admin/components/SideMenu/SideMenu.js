@@ -5,6 +5,8 @@ import {
   faGripHorizontal,
   faLineChart,
   faNewspaper,
+  faPenSquare,
+  faPenToSquare,
   faUser,
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
@@ -73,6 +75,11 @@ function SideMenu() {
               label: "Vocabulary",
               icon: <FontAwesomeIcon icon={faFont} />,
               key: "/admin/vocabularyFolder",
+            },
+            {
+              label: "Exam",
+              icon: <FontAwesomeIcon icon={faPenToSquare} />,
+              key: "/admin/exam",
             },
           ],
         },

@@ -1,5 +1,5 @@
 import RequestHttp from "~/utils/request";
-
+import Swal from "sweetalert2";
 function grammarService() {
   const { request } = RequestHttp();
   const getAllGrammars = async () => {
@@ -20,9 +20,29 @@ function grammarService() {
     }
   };
 
+  const createGrammar = async (grammar) => {
+    try {
+      await request.post("/grammars", grammar).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getAllGrammars,
     getGrammarById,
+    createGrammar,
   };
 }
 

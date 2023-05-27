@@ -39,7 +39,7 @@ function CourseDetail() {
     });
   }, []);
   const renderCard = () => {
-    return suggestCourses.map((item, index) => {
+    return suggestCourses?.map((item, index) => {
       return (
         <div key={index}>
           <CourseCard course={item} />

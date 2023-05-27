@@ -4,14 +4,14 @@ import Button from "~/components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import routes from "~/configs/routes";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
 import AvatarWithDropdown from "~/components/AvatarWithDropdown/AvatarWithDropdown";
-import { Dropdown, Menu } from "antd";
+import { Badge, Dropdown, Menu } from "antd";
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
@@ -88,7 +88,6 @@ const Header = () => {
     }
   };
   const handleLogout = () => {
-    window.location.reload();
     logout();
   };
   const renderMenu = () => {
@@ -141,18 +140,22 @@ const Header = () => {
 
   return (
     <div className={cx("navbar")}>
-      <div className={cx("logo")}>
-        <img width="80" src="/images/Logo1.png" />
-      </div>
+      <Link to={routes.home}>
+        <div className={cx("logo")}>
+          <img width="80" src="/images/Logo1.png" />
+        </div>
+      </Link>
       <div className={cx("links")}>{renderMenu()}</div>
       <div className={cx("actions")}>
         {currentUser ? (
           <>
-            <Tippy content="Notification" placement="bottom">
-              <button className={cx("action__btn")}>
-                <FontAwesomeIcon icon={faBell} className={cx("icon")} />
-              </button>
-            </Tippy>
+            <Badge count={2}>
+              <Tippy content="Notification" placement="bottom">
+                <button className={cx("action__btn")}>
+                  <FontAwesomeIcon icon={faBell} className={cx("icon")} />
+                </button>
+              </Tippy>
+            </Badge>
             <AvatarWithDropdown user={currentUser} logout={handleLogout} />
           </>
         ) : (

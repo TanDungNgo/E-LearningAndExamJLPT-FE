@@ -1,12 +1,14 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import vocabularyFolderService from "~/services/vocabularyFolderService";
+import examData from "~/data/examData";
+import examService from "~/services/examService";
+
 const columns = [
   {
     title: "ID",
@@ -14,20 +16,15 @@ const columns = [
     key: "id",
   },
   {
-    title: "Title",
-    dataIndex: "title",
-    key: "title",
-    render: (text) => <Link to = "/admin/vocabulary">{text}</Link>,
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => <Link to="/admin/question">{text}</Link>,
   },
   {
     title: "Level",
     dataIndex: "level",
     key: "level",
-  },
-  {
-    title: "Count",
-    dataIndex: "count",
-    key: "count",
   },
   {
     title: "Action",
@@ -48,14 +45,13 @@ const columns = [
     ),
   },
 ];
-function VocabularyFolderManagement() {
-
-  const {getAllVocabularyFolder} = vocabularyFolderService();
-  const [vocabularyFolderData, setVocabularyFolderData] = useState([]);
+function ExamManagement() {
+  const { getAllExam } = examService();
+  const [examData, setExamData] = useState([]);
 
   useEffect(() => {
-    getAllVocabularyFolder().then((res) =>{
-      setVocabularyFolderData(res);
+    getAllExam().then((res) => {
+      setExamData(res);
     });
   }, []);
   const [searchText, setSearchText] = useState("");
@@ -73,17 +69,21 @@ function VocabularyFolderManagement() {
     setFilterLevel("");
   };
 
-  const filteredvocabularyFolder = vocabularyFolderData.filter((vocabularyFolder) => {
+  const filterdExam = examData.filter((exam) => {
     return (
-      vocabularyFolder.title.toLowerCase().includes(searchText.toLowerCase()) &&
-      (filterLevel ? vocabularyFolder.level === filterLevel : true)
+      exam.name.toLowerCase().includes(searchText.toLowerCase()) &&
+      (filterLevel ? exam.level === filterLevel : true)
     );
   });
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
         <Input
-          placeholder="Search by title"
+          placeholder="Search by name"
           value={searchText}
           onChange={handleSearchTextChange}
           style={{ width: 200, marginRight: 16 }}
@@ -114,18 +114,20 @@ function VocabularyFolderManagement() {
         >
           Reset Filters
         </Button>
-        <Link to="/admin/vocabularyFolder/add">
+        <Link to="/admin/exam/add">
           <Button type="primary" icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
       </div>
-      <Table
-        columns={columns}
-        dataSource={filteredvocabularyFolder}
-        pagination={{ pageSize: 15}}
-      />
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filterdExam}
+          pagination={{ pageSize: 10, onChange: handlePageChange }}
+        />
+      </div>
     </div>
   );
 }
-export default VocabularyFolderManagement;
+export default ExamManagement;
