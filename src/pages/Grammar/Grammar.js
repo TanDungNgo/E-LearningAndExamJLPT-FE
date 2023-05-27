@@ -32,7 +32,7 @@ function Grammar() {
       </div>
       <div className={cx("card-grammar")}>
         <div className={cx("card-grammar__title")}>
-            <h1>[Ngữ pháp {grammar ? grammar?.level: "N3"}] {grammar ? grammar?.text : "～ あいだ、～ あいだに"}</h1>
+            <h1>[Ngữ pháp {grammar ? grammar?.level: ""}] {grammar ? grammar?.text : ""}</h1>
         </div>
         <div className={cx("card-grammar__content")}>
             <span>Ý nghĩa:</span><br/>
@@ -41,9 +41,6 @@ function Grammar() {
                 splitString(grammar?.means)
               ) : (
                 <>
-                  「あいだ」nghĩa là trong suốt một khoảng thời gian nào đó, sự việc hay hành động gì diễn ra liên tục từ đầu đến cuối giai đoạn.
-                  「あいだに」nghĩa là trong giới hạn một khoảng thời gian nào đó (nhưng trước khi thời gian đó kết thúc), có một sự việc, hay hành 
-                  động gì đó mang tính khoảnh khắc xảy ra, không phải là hành động diễn ra liên tục.
                 </>
               )}
             </div>
@@ -54,14 +51,6 @@ function Grammar() {
                 splitString(grammar?.explanation)
               ) : (
                 <>
-                  Vている + あいだ
-                  Tính từ -i/ Tính từ-na な + あいだ
-                  Danh từ + の + あいだ
-              
-                  Cấu trúc 2:
-                  Vる/ Vている/ Vない + あいだに
-                  Tính từ -i/ Tính từ-na な + あいだに
-                  Danh từ + の + あいだに
                 </>
               )}
             </div>
@@ -72,10 +61,6 @@ function Grammar() {
                 splitString(grammar?.example)
               ) : (
                 <>
-                  夏休みのあいだ、弟（おとうと）は毎日プールで泳いでいた。
-                  Trong suốt thời gian nghỉ hè, em trai tôi ngày nào cũng đi bơi ở bể bơi.
-                  お風呂(おふろ) に入っているあいだに、地震(じしん)があった。
-                  Trong khi đang tắm thì có động đất.
                 </>
               )}
             </div>

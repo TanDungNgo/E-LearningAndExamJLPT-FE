@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes/routes";
 import { ConfigProvider } from "antd";
 import ScrollToTop from "./utils/ScrollToTop";
 import UserRoute from "./routes/UserRoute";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   return (
@@ -55,15 +56,16 @@ function App() {
               let Layout = route.layout;
               const Page = route.component;
               return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    <Layout>
-                      <Page />
-                    </Layout>
-                  }
-                ></Route>
+                <Route key={index} element={<AdminRoute />}>
+                  <Route
+                    path={route.path}
+                    element={
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    }
+                  ></Route>
+                </Route>
               );
             })}
           </Routes>

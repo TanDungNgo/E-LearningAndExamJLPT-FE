@@ -39,7 +39,7 @@ function ListCourse() {
           Popular
           <span className={cx("list-course__title--primary")}>Courses</span>
         </h1>
-        <div className={cx("list-course__action")}>
+        {/* <div className={cx("list-course__action")}>
           <button
             className={cx("list-course__button", {
               "list-course__button--active": activeButton === "JLPT",
@@ -58,7 +58,7 @@ function ListCourse() {
           >
             Kaiwa
           </button>
-        </div>
+        </div> */}
       </div>
       <div className={cx("list-course")}>
         {listCourse ? (

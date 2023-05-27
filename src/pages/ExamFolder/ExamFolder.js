@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ExamFolder.module.scss";
 import React, { useState } from "react";
 import Button from "~/components/Button/Button";
-import { Select, Modal } from "antd";
+import { Select, Modal, notification } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -26,10 +26,18 @@ function ExamFolder() {
 
   // Handle click out boundary of modal
   const handleClickStart = async () => {
-    const res = await getExam(examLevel);
-    console.log(res);
-    dispatch(setExam(res));
-    navigate(`/exam/${examLevel}/languageKnowledge`);
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token === null) {
+      notification.error({
+        message: "Unauthorized",
+        description: "You are not authorized to access this page!",
+      });
+      setOpenModal(false);
+    } else {
+      const res = await getExam(examLevel);
+      dispatch(setExam(res));
+      navigate(`/exam/${examLevel}/languageKnowledge`);
+    }
   };
 
   // Handle click button "X" of modal
