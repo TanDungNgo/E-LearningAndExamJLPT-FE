@@ -1,7 +1,7 @@
 const courseData = [
     {
       id: 1,
-      banner:
+      image:
         "https://s35691.pcdn.co/wp-content/uploads/2018/03/elearning-success-id697888606.jpg",
       content: "Online learning through video lectures, test system. With a personalized route and a lecture system with thousands of videos/tests, the course is committed to providing full knowledge at each level.",
       title: "Learn japanese online",
@@ -9,7 +9,7 @@ const courseData = [
     },
     {
         id: 2,
-        banner:
+        image:
           "https://q8v3g6g4.rocketcdn.me/wp-content/uploads/2021/03/best-online-japanese-courses-1536x864.webp",
         content: "Live learning with teachers via Zoom, Livestream. As a form of learning that combines an online course, with live sessions with teachers via Zoom, Livestream, the course closely follows the learning process of students, ensuring outputs.",
         title: "Learn japanese online vip",
@@ -17,7 +17,7 @@ const courseData = [
       },
       {
         id: 3,
-        banner:
+        image:
           "https://dungmori.com/cdn/ckeditor/files/4%20%C4%91i%E1%BB%81u%20c%E1%BA%A7n%20bi%E1%BA%BFt/seo.png",
         content: "Stage 1: Learn the alphabet (1 week). Stage 2: Learn the first 25 lessons in the Minna no Nihongo curriculum (2 - 3 months).",
         title: "Roadmap to learn Japanese for beginners",
@@ -25,7 +25,7 @@ const courseData = [
       },
       {
         id: 4,
-        banner: 
+        image: 
           "http://vietluc.vn/uploads/news/2016_09/24052016-hoc-tieng-nhat_1.jpg",
         content: "Plan and set clear goals, watch teaching videos of native speakers, learn vocabulary and grammar continuously, practice speaking and writing, ....",
         title: "The Secret to Learning Japanese Online Effectively",

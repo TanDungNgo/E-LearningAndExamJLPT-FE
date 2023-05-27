@@ -7,20 +7,22 @@ import {
   Progress,
   Switch,
 } from "antd";
-import grammarService from "~/services/grammarService";
+
 const { Option } = Select;
 
-const AddGrammarForm = () => {
+const AddExamForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-  const { createGrammar } = grammarService();
+//   const { createVocabularyFolder } = vocabularyFolderService();
 
   const onFinish = async (values) => {
     const data = {
       ...values,
     }
+
     console.log(data);
-    // createGrammar(data);
+    // createVocabularyFolder(data);
+    
     setProgress(100);
   };
 
@@ -31,42 +33,9 @@ const AddGrammarForm = () => {
   return (
     <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
       <Form.Item
-        label="Text"
-        name="text"
+        label="Name"
+        name="name"
         rules={[{ required: true, message: "Please input a name!" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Means"
-        name="means"
-        rules={[
-          { required: true, message: "Please input a means!" },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Explanation"
-        name="explanation"
-        rules={[
-          { required: true, message: "Please input a explanations!" },
-          {
-            max: 100,
-            message: "Explanations should be less than 100 characters!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Example"
-        name="example"
-        rules={[
-          { required: true, message: "Please input a example!" },
-        ]}
       >
         <Input />
       </Form.Item>
@@ -92,7 +61,7 @@ const AddGrammarForm = () => {
       </Form.Item>
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Button type="primary" htmlType="onsubmit">
+          <Button type="primary" htmlType="submit">
             Submit
           </Button>
           {isSubmitting && (
@@ -103,4 +72,5 @@ const AddGrammarForm = () => {
     </Form>
   );
 };
-export default AddGrammarForm;
+
+export default AddExamForm;

@@ -55,7 +55,7 @@ const CreateCourse = () => {
           banner: url,
         };
         console.log(data);
-        createCourse(data);
+        // createCourse(data);
       }
     );
   };

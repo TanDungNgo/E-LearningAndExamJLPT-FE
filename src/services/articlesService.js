@@ -1,5 +1,5 @@
 import RequestHttp from "~/utils/request";
-
+import Swal from "sweetalert2";
 function articlesService() {
   const { request } = RequestHttp();
   const getAllArticles = async () => {
@@ -20,9 +20,31 @@ function articlesService() {
     }
   };
 
+  const createArticle = async (article) => {
+    try {
+      await request.post("/articles", article).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
   return {
     getAllArticles,
     getArticleById,
+    createArticle,
   };
 }
 
