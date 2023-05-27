@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
-import { faAdd, faFolderPlus } from "@fortawesome/free-solid-svg-icons";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faCheckCircle, faFolderClosed, faPenToSquare, faPlusSquare, faUser } from "@fortawesome/free-regular-svg-icons";
 import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
@@ -40,13 +40,28 @@ function SideMenu() {
           },
           {
             label: "Create Course",
-            icon: <FontAwesomeIcon icon={faFolderPlus} />,
+            icon: <FontAwesomeIcon icon={faPlusSquare} />,
             key: `${routes.createCourse}`,
           },
           {
             label: "Create Lesson",
             icon: <FontAwesomeIcon icon={faAdd} />,
             key: `${routes.createLesson}`,
+          },
+          {
+            label: "Courses Created",
+            icon: <FontAwesomeIcon icon={faFolderClosed} />,
+            key: `${routes.courseCreated}`,
+          },
+          {
+            label: "Completed Courses",
+            icon: <FontAwesomeIcon icon={faCheckCircle} />,
+            key: `${routes.completedCourse}`,
+          },
+          {
+            label: "Update Course",
+            icon: <FontAwesomeIcon icon={faPenToSquare} />,
+            key: `${routes.updateCourse}`,
           },
         ]}
       ></Menu>

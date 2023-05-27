@@ -8,6 +8,9 @@ const routes = {
   exam: "/exam/:level/:type",
   examResult: "/exam/result",
   createCourse: "/profileUser/createCourse",
+  courseCreated: "/profileUser/courseCreated",
+  completedCourse: "/profileUser/completedCourse",
+  updateCourse: "/profileUser/updateCourse",
   overview: "/overview",
   notFound: "*",
   lesson: "/lesson/:id",
@@ -21,6 +24,7 @@ const routes = {
   changePassword: "/profileUser/changePassword",
   podcast: "/podcast",
   createLesson: "/profileUser/createLesson",
+  formUpdate: "/profileUser/updateCourse/formUpdate",
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
