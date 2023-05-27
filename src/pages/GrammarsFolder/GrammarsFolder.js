@@ -31,7 +31,7 @@ function GrammarsFolder() {
       <div className={cx("card-img")}>
         <img
           className={cx("card-img__detail")}
-          src="https://files.tofugu.com/articles/japanese/2017-04-07-japanese-learning-resources-march-2017/header-5120x.jpg"
+          src="/images/bgr-grammar.png"
         >
         </img>
       </div>

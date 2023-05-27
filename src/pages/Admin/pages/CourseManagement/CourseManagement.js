@@ -12,7 +12,7 @@ const columns = [
     dataIndex: "id",
     key: "id",
   },
-  {
+  { 
     title: "Banner",
     dataIndex: "banner",
     key: "banner",

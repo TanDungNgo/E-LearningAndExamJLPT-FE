@@ -10,26 +10,25 @@ import {
   InputNumber,
   Switch,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
-
-const AddVocabularyForm = ({ onSubmit }) => {
-  const [file, setFile] = useState(null);
+import vocabularyFolderService from "~/services/vocabularyFolderService";
+const AddVocabularyForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-  const onFinish = (values) => {
-    // setIsSubmitting(true);
+  const {createVocabulary} = vocabularyFolderService();
+
+  const onFinish = async (values) => {
+    const data = {
+      ...values,
+    }
+
+    console.log(data);
+    // createVocabulary(data);
     setProgress(100);
-    onSubmit(values);
+
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-  const handleBeforeUpload = (file) => {
-    setFile(file);
-    return false;
   };
 
   return (
@@ -87,7 +86,7 @@ const AddVocabularyForm = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="onsubmit">
             Submit
           </Button>
           {isSubmitting && (

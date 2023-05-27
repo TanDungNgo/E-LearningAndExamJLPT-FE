@@ -1,13 +1,10 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import vocabularyData from "~/data/vocabularyData";
 import { useEffect, useState } from "react";
-import { Option } from "antd/es/mentions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import courseService from "~/services/courseService";
+import { Link, useParams } from "react-router-dom";
+import vocabularyFolderService from "~/services/vocabularyFolderService";
+
 const columns = [
   {
     title: "ID",
@@ -64,40 +61,56 @@ const columns = [
     ),
   },
 ];
-function VocabularyManagement() {
-    const [searchText, setSearchText] = useState("");
-  
-    const handleSearchTextChange = (event) => {
-      setSearchText(event.target.value);
-    };
 
-    const filteredVocabulary = vocabularyData.filter((vocabulary) => {
-      return (
-        vocabulary.meaning.toLowerCase().includes(searchText.toLowerCase())
-      );
+function VocabularyManagement() {
+  const { id } = useParams();
+  const { getVocabularyFolderById } = vocabularyFolderService();
+  const [listVocabularies, setListVocabularies] = useState([]);
+  const [vocabularyFolder, setVocabularyFolder] = useState([]);
+
+  useEffect(() => {
+    getVocabularyFolderById(id).then((res) => {
+      setVocabularyFolder(res);
+      if (res && res.vocabularies) {
+        setListVocabularies(res.vocabularies);
+      } else {
+        setListVocabularies([]);
+      }
     });
-    return (
-      <div>
-        <div style={{ marginBottom: 16 }}>
-          <Input
-            placeholder="Search by meaning"
-            value={searchText}
-            onChange={handleSearchTextChange}
-            style={{ width: 200, marginRight: 16 }}
-          />
-          <Link to="/admin/vocabulary/add">
-            <Button type="primary" icon={<PlusOutlined />}>
-              Insert
-            </Button>
-          </Link>
-        </div>
-        <Table
-          columns={columns}
-          dataSource={filteredVocabulary}
-          pagination={{ pageSize: 6 }}
+  }, []);
+
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchTextChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const filteredVocabulary = listVocabularies.filter((vocabulary) => {
+    return vocabulary.meaning.toLowerCase().includes(searchText.toLowerCase());
+  });
+
+  return (
+    <div>
+      <div style={{ marginBottom: 16 }}>
+        <Input
+          placeholder="Search by meaning"
+          value={searchText}
+          onChange={handleSearchTextChange}
+          style={{ width: 200, marginRight: 16 }}
         />
+        <Link to="/admin/vocabulary/add">
+          <Button type="primary" icon={<PlusOutlined />}>
+            Insert
+          </Button>
+        </Link>
       </div>
-    );
-  }
-  
-  export default VocabularyManagement;
+      <Table
+        columns={columns}
+        dataSource={filteredVocabulary}
+        pagination={{ pageSize: 6 }}
+      />
+    </div>
+  );
+}
+
+export default VocabularyManagement;

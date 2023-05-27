@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Lesson.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,9 @@ import CommentItem from "~/components/Comment/CommentItem";
 import { Badge, Button, Drawer, Input, Progress } from "antd";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
+import { useParams } from "react-router-dom";
+import lessonService from "~/services/lessonService";
+import moment from "moment";
 const cx = classNames.bind(styles);
 const lessons = [
   {
@@ -24,6 +27,26 @@ const lessons = [
   { title: "Học từ vựng cấp tốc", videoUrl: "" },
 ];
 function Lesson() {
+
+  const { id } = useParams();
+  const { getLessonById, getAllLesson } = lessonService();
+  const [listLesson, setListLesson] = useState ([]);
+  useEffect (() => {
+    getAllLesson().then((res) =>{
+      setListLesson(res);
+      console.log(res);
+    })
+  }, []);
+  //  const renderCard = () => {
+  //   return listLesson.map((item, index) => {
+  //     return (
+  //       <div key={index} className={cx("item")}>
+  //         <listLesson props = {item}/>
+  //       </div>
+  //     )
+  //   })
+  //  }
+
   const [currentLesson, setCurrentLesson] = useState(0);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -105,17 +128,27 @@ function Lesson() {
                 </div>
               </div>
             ))}
+            <div className={cx("list-content")}>
+              {/* {renderCard()}; */}
+            </div>
           </div>
         </div>
       </div>
       <div className={cx("footer")}>
         <div className={cx("footer__left")}>
           <div className={cx("title")}>
-            Giới thiệu lộ trình học tập cho người mới bắt đầu
+          {lessons?.name
+            ? lessons?.name
+            : "Giới thiệu lộ trình cho người mới bắt đầu"}
+            
           </div>
           <div className={cx("date")}>
             <FontAwesomeIcon icon={faCalendarDays} />
-            <span>May 11, 2023</span>
+            <span>
+            {lessons?.createdDate
+                  ? moment(lessons?.createdDate).format("MMMM DD, YYYY")
+                  : "May 11, 2023"}
+              </span>
           </div>
           <div className={cx("comment")}>
             <div className={cx("comment__title")}>
