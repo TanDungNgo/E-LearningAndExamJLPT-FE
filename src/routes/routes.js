@@ -46,6 +46,11 @@ import Grammar from "~/pages/Grammar/Grammar";
 import Podcast from "~/pages/Podcast/Podcast";
 import CreateLesson from "~/pages/CreateLesson/CreateLesson";
 
+import CompletedCourse from "~/components/CompletedCourse/CompletedCourse";
+import CourseCreated from "~/components/CourseCreated/CourseCreated";
+import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
+import FormUpdate from "~/components/UpdateCourseCard/FormUpdate";
+
 // Public routes
 const publicRoutes = [
   { path: config.routes.signin, component: Signin },
@@ -61,6 +66,10 @@ const publicRoutes = [
     component: AllCourse,
     layout: DefaultLayout,
   },
+  { path: config.routes.courseCreated, component: CourseCreated, layout: ProfileUser },
+  { path: config.routes.completedCourse, component: CompletedCourse, layout: ProfileUser },
+  { path: config.routes.updateCourse, component: UpdateCourse, layout: ProfileUser },
+  { path: config.routes.formUpdate, component: FormUpdate, layout: ProfileUser },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage, protected: true },
   {
