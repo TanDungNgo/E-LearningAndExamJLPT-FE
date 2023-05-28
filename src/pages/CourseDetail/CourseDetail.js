@@ -172,7 +172,7 @@ function CourseDetail() {
           <h2 className={cx("lesson-list__title")}>{course.name}</h2>
           <ul className={cx("lesson-list__items")}>
             {listLesson.map((lesson, index) => (
-              <Link key={lesson.id} to={`/lesson/${lesson.id}`}>
+              <Link key={lesson.id} to={`/course/${id}/lesson/${lesson.id}`}>
                 <li className={cx("lesson-item")}>
                   <div className={cx("lesson-item__title")}>
                     <span>{index + 1}</span>

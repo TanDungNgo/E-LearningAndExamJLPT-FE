@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import RequestHttp from "~/utils/request";
 
 function lessonService() {
