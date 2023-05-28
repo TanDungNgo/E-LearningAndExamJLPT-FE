@@ -35,15 +35,14 @@ function Lesson() {
       setCourse(res);
       setLessons(res.lessons);
     });
-  }, []);
+  }, [courseId]);
   useEffect(() => {
     getLessonById(id).then((res) => {
       setLesson(res);
     });
-  }, []);
+  }, [id]);
   const handleLessonClick = (id) => {
     navigate(`/course/${courseId}/lesson/${id}`);
-    window.location.reload();  
   };
   return (
     <div className={cx("lesson-container")}>
