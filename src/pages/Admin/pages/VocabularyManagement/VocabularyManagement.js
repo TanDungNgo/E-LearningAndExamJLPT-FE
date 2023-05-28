@@ -66,16 +66,13 @@ function VocabularyManagement() {
   const { id } = useParams();
   const { getVocabularyFolderById } = vocabularyFolderService();
   const [listVocabularies, setListVocabularies] = useState([]);
-  const [vocabularyFolder, setVocabularyFolder] = useState([]);
-
+  const [vocabularyFolder, setVocabularyFolder] = useState();
   useEffect(() => {
     getVocabularyFolderById(id).then((res) => {
-      setVocabularyFolder(res);
-      if (res && res.vocabularies) {
-        setListVocabularies(res.vocabularies);
-      } else {
-        setListVocabularies([]);
-      }
+      console.log(res);
+      setVocabularyFolder(res)
+      // setListVocabularies(res.vocabularies);
+      
     });
   }, []);
 

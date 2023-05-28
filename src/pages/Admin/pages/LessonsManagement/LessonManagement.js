@@ -23,11 +23,11 @@ const columns = [
     dataIndex: "description",
     key: "description",
   },
-  {
-    title: "URL Video",
-    dataIndex: "urlVideo",
-    key: "urlVideo",
-  },
+  // {
+  //   title: "URL Video",
+  //   dataIndex: "urlVideo",
+  //   key: "urlVideo",
+  // },
   {
     title: "Rate",
     dataIndex: "rate",
