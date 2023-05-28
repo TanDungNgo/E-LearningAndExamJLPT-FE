@@ -13,7 +13,7 @@ const routes = {
   updateCourse: "/profileUser/updateCourse",
   overview: "/overview",
   notFound: "*",
-  lesson: "/lesson/:id",
+  lesson: "/course/:courseId/lesson/:id",
   vocabulary: "/vocabulary/:id",
   vocabularyFolder: "/vocabularyfolder",
   articlesFolder: "/articlesFolder",
