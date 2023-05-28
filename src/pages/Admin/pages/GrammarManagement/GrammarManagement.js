@@ -2,7 +2,7 @@ import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import grammarData from "~/data/grammarData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
@@ -87,6 +87,10 @@ function GrammarManagement() {
       setGrammarData(res);
     });
   }, []);
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -128,11 +132,13 @@ function GrammarManagement() {
           </Button>
         </Link>
       </div>
-      <Table
-        columns={columns}
-        dataSource={filteredGrammar}
-        pagination={{ pageSize: 6 }}
-      />
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filteredGrammar}
+          pagination={{ pageSize: 6, onChange: handlePageChange }}
+        />
+      </div>
     </div>
   );
 }

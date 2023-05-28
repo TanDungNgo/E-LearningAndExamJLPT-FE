@@ -1,7 +1,7 @@
 import { Button, Select, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link to="/admin/question">{text}</Link>,
   },
   {
     title: "Level",
@@ -46,12 +46,11 @@ const columns = [
   },
 ];
 function ExamManagement() {
-
-  const {getAllExam} = examService();
+  const { getAllExam } = examService();
   const [examData, setExamData] = useState([]);
 
   useEffect(() => {
-    getAllExam().then((res) =>{
+    getAllExam().then((res) => {
       setExamData(res);
     });
   }, []);
@@ -76,6 +75,10 @@ function ExamManagement() {
       (filterLevel ? exam.level === filterLevel : true)
     );
   });
+  const tableRef = useRef(null);
+  const handlePageChange = (pageNumber) => {
+    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -117,13 +120,13 @@ function ExamManagement() {
           </Button>
         </Link>
       </div>
-      <Link to = "/admin/question">
-      <Table
-        columns={columns}
-        dataSource={filterdExam}
-        pagination={{ pageSize: 10}}
-      />
-      </Link>
+      <div ref={tableRef}>
+        <Table
+          columns={columns}
+          dataSource={filterdExam}
+          pagination={{ pageSize: 10, onChange: handlePageChange }}
+        />
+      </div>
     </div>
   );
 }

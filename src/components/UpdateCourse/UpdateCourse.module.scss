@@ -1,0 +1,21 @@
+.list-course {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 20rem));
+    gap: 10rem;
+    justify-content: center;
+    justify-items: center;
+    padding: 10px;
+    min-height: 540px;
+    margin-bottom: 50px;
+  }
+  .list-course__header {
+    display: flex;
+    align-items: center;
+    padding: 25px 70px 10px 70px;
+    justify-content: space-between;
+  }
+  .list-course__title--primary {
+    color: var(--primary);
+  }
+
+  

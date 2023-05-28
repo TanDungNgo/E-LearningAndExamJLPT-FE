@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNode } from "@fortawesome/free-brands-svg-icons";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 function EnrollCard(props) {
   return (
@@ -25,13 +25,19 @@ function EnrollCard(props) {
         />
       </div>
       <div className={cx("card__body")}>
-        <Link to = {`/lesson/${props?.lesson?.id}`}>
-          <Button outline className={cx("card__button")}>
+        {props.checkEnroll === true ? (
+          <Button outline className={cx("card__button")} disabled>
+            Enrolled
+          </Button>
+        ) : (
+          <Button
+            outline
+            className={cx("card__button")}
+            onClick={props.enrollCourse}
+          >
             Enroll
           </Button>
-
-        </Link>
-        
+        )}
       </div>
       <div className={cx("card__footer")}>
         <div className={cx("card__title")}>Information of course</div>

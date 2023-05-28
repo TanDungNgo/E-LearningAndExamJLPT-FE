@@ -5,41 +5,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faPlayCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import EnrollCard from "~/components/EnrollCard/EnrollCard";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import courseService from "~/services/courseService";
 import routes from "~/configs/routes";
 import { getSuggestedQuery } from "@testing-library/react";
+import { notification } from "antd";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 function CourseDetail() {
-  const { getCourseById, getSuggestedCourses } = courseService();
+  const { getCourseById, getSuggestedCourses, checkEnroll, enrollCourse } =
+    courseService();
   const { id } = useParams();
-  const [isEnroll, setIsEnroll] = useState(false);
   const [course, setCourse] = useState();
   const navigate = useNavigate();
-  const [listCourse, setListCourse] = useState([]);
   const [suggestCourses, setSuggestCourse] = useState([]);
+  const [isEnroll, setIsEnroll] = useState(false);
+  const [listLesson, setListLesson] = useState([]);
+  const { getCurrentUser } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, [id]);
   useEffect(() => {
     getCourseById(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       setCourse(res);
+      setListLesson(res.lessons);
     });
   }, [id]);
   if (course === null) {
-    console.log("null");
     navigate(routes.notFound);
   }
   useEffect(() => {
+    checkEnroll(id).then((res) => {
+      if (res === true) {
+        setIsEnroll(true);
+      } else {
+        setIsEnroll(false);
+      }
+    });
+  }, [id]);
+  useEffect(() => {
     getSuggestedCourses().then((res) => {
-      console.log(res);
+      // console.log(res);
       setSuggestCourse(res);
     });
   }, []);
   const renderCard = () => {
-    return suggestCourses.map((item, index) => {
+    return suggestCourses?.map((item, index) => {
       return (
         <div key={index}>
           <CourseCard course={item} />
@@ -50,6 +76,16 @@ function CourseDetail() {
   const splitString = (str) => {
     const parts = str.split(";");
     return parts.map((part, index) => <li key={index}>{part}</li>);
+  };
+  const enrollCourseHandle = () => {
+    if(!currentUser) {
+      notification.error({
+        message: "Error!",
+        description: "Please login to enroll!",
+      });
+      return;
+    }
+    enrollCourse(id);
   };
   return (
     <div className={cx("container")}>
@@ -104,7 +140,11 @@ function CourseDetail() {
           </svg>
         </div>
         <div className={cx("enroll-card")}>
-          <EnrollCard course={course} />
+          <EnrollCard
+            course={course}
+            checkEnroll={isEnroll}
+            enrollCourse={enrollCourseHandle}
+          />
         </div>
       </div>
       <div className={cx("card__intro")}>
@@ -127,20 +167,50 @@ function CourseDetail() {
         <li>Full access for life.</li>
         <li>Certificate of course completion.</li>
       </div>
-      <div className={cx("card__relatedcourse")}>
-        <div className={cx("card__relatedcourse-title")}>Related Course</div>
-        <div className={cx("card__relatedcourse-detail")}>
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className={cx("icon__left")}
-          ></FontAwesomeIcon>
-          {renderCard()}
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className={cx("icon__right")}
-          ></FontAwesomeIcon>
+      {isEnroll ? (
+        <div className={cx("lesson-list")}>
+          <h2 className={cx("lesson-list__title")}>{course.name}</h2>
+          <ul className={cx("lesson-list__items")}>
+            {listLesson.map((lesson, index) => (
+              <Link key={lesson.id} to={`/lesson/${lesson.id}`}>
+                <li className={cx("lesson-item")}>
+                  <div className={cx("lesson-item__title")}>
+                    <span>{index + 1}</span>
+                    {lesson.name}
+                  </div>
+                  <div className={cx("lesson-item__time")}>
+                    <FontAwesomeIcon
+                      icon={faPlayCircle}
+                      className={cx("icon-play")}
+                    />
+                    <span>10:00</span>
+                  </div>
+                </li>
+              </Link>
+            ))}
+          </ul>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
+      {currentUser ? (
+        <div className={cx("card__relatedcourse")}>
+          <div className={cx("card__relatedcourse-title")}>Related Course</div>
+          <div className={cx("card__relatedcourse-detail")}>
+            {/* <FontAwesomeIcon
+              icon={faChevronLeft}
+              className={cx("icon__left")}
+            ></FontAwesomeIcon> */}
+            {renderCard()}
+            {/* <FontAwesomeIcon
+              icon={faChevronRight}
+              className={cx("icon__right")}
+            ></FontAwesomeIcon> */}
+          </div>
+        </div>
+      ) : (
+        <> </>
+      )}
     </div>
   );
 }

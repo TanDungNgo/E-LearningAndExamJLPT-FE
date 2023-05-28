@@ -77,12 +77,13 @@ const columns = [
 ];
 function ExamManagement() {
 
-    const { getRandomExamByLevel } = examService();
+    const { getExamById } = examService();
     const [questionData, setQuestionData] = useState([]);
 
     useEffect(() => {
-        getRandomExamByLevel().then((res) => {
-            setQuestionData(res);
+        getExamById(1).then((res) => {
+            setQuestionData(res.languageKnowledgeQuestions);
+            console.log(res.languageKnowledgeQuestions);
         });
     }, []);
     const [searchText, setSearchText] = useState("");
@@ -91,9 +92,9 @@ function ExamManagement() {
         setSearchText(event.target.value);
     };
 
-    const filterdExam = examData.filter((exam) => {
+    const filterdExam = questionData.filter((question) => {
         return (
-            exam.text.toLowerCase().includes(searchText.toLowerCase())
+            question.text.toLowerCase().includes(searchText.toLowerCase())
 
         );
     });

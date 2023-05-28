@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import Swal from "sweetalert2";
 import RequestHttp from "~/utils/request";
 
@@ -84,6 +85,39 @@ function courseService() {
     }
   };
 
+  const checkEnroll = async (id) => {
+    try {
+      const res = await request.get(`/enroll/check/${id}`);
+      if (res.data.message === "Enrolled!") {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const enrollCourse = async (id) => {
+    try {
+      await request.post(`/enroll/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          notification.success({
+            message: "Success!",
+            description: res.data.message,
+          });
+          window.location.reload();
+        } else {
+          notification.error({
+            message: "Error!",
+            description: "Failed to enroll!",
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     createCourse,
     getAllCourse,
@@ -91,6 +125,8 @@ function courseService() {
     updateCourse,
     deleteCourse,
     getSuggestedCourses,
+    checkEnroll,
+    enrollCourse,
   };
 }
 

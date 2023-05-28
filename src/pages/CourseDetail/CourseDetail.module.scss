@@ -56,6 +56,51 @@
   font-size: 30px;
   margin-bottom: 10px;
 }
+.lesson-list {
+  margin: 0 120px 40px 120px;
+  box-shadow: 0 15px 37px -6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 20px 10px 20px;
+  }
+
+  &__items {
+    list-style-type: none;
+    padding: 0 20px 40px 20px;
+  }
+  .lesson-item {
+    padding: 10px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    &__title {
+      font-size: 15px;
+      font-weight: 400;
+      span {
+        margin-right: 5px;
+      }
+      span::after {
+        content: ".";
+      }
+    }
+    &__time {
+      font-size: 10px;
+      color: #999;
+      .icon-play {
+        margin-right: 5px;
+        color: #ebba16;
+        font-size: 10px;
+      }
+    }
+  }
+}
+
 .card__relatedcourse {
   background-color: #f2f2f2;
   height: 490px;
@@ -95,6 +140,6 @@
 }
 .enroll-card {
   position: absolute;
-  left: 850px;
-  top: 350px;
+  left: 65%;
+  top: 50%;
 }

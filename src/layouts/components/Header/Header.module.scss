@@ -25,6 +25,9 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   position: fixed;
   z-index: 10;
+  .logo{
+    cursor: pointer;
+  }
 }
 .navbar .links {
   display: flex;
@@ -40,7 +43,6 @@
   background-color: transparent;
   font-size: 24px;
   color: #0a2640;
-  padding: 4px 12px;
   cursor: pointer;
 
 
