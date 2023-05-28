@@ -74,7 +74,7 @@ function VocabularyManagement() {
       if (res && res.vocabularies) {
         setListVocabularies(res.vocabularies);
       } else {
-        setListVocabularies([]);
+        // setListVocabularies([]);
       }
     });
   }, []);

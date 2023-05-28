@@ -2,7 +2,14 @@ import { Button, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import userData from "~/data/userData";
+import usersService from "~/services/usersService";
+import { useEffect, useState } from "react";
 const { Search } = Input;
+const roleColors = {
+  ADMIN: "green",
+  STUDENT: "volcano",
+  USER: "geekblue",
+};
 const columns = [
   {
     title: "ID",
@@ -10,41 +17,51 @@ const columns = [
     key: "id",
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <a>{text}</a>,
+    title: "First Name",
+    dataIndex: "firstname",
+    key: "firstname",
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: "Last Name",
+    dataIndex: "lastname",
+    key: "lastname",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "User Name",
+    dataIndex: "username",
+    key: "username",
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
+    title: "Gender",
+    dataIndex: "gender",
+    key: "gender",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+
+  // {
+  //   title: "Avatar",
+  //   dataIndex: "avatar",
+  //   key: "avatar",
+  // },
+  {
+    title: "Roles",
+    key: "roles",
+    dataIndex: "roles",
+    render: (_, { roles }) => (
+      
       <>
-        {tags.map((tag) => {
-          let color = "geekblue";
-          if (tag === "student") {
-            color = "volcano";
-          }
-          if (tag === "admin") {
-            color = "green";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
+        {roles.map((role, index) => {
+        const color = roleColors[role.name.toUpperCase()] || "geekblue";
+        return (
+          <Tag color={color} key={index}>
+            {role.name}
+          </Tag>
+        );
+      })}
       </>
     ),
   },
@@ -69,6 +86,16 @@ const columns = [
 ];
 function UserManagement() {
   const onSearch = (value) => console.log(value);
+  const {getAllUser} = usersService();
+  const [userData, setUserData] = useState([]);
+  
+
+  useEffect(() => {
+    getAllUser().then((res) => {
+      console.log(res);
+      setUserData(res);
+    })
+  }, [])
   return (
     <div>
       <div
