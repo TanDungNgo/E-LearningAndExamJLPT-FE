@@ -14,61 +14,44 @@ import CommentItem from "~/components/Comment/CommentItem";
 import { Badge, Button, Drawer, Input, Progress } from "antd";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import lessonService from "~/services/lessonService";
 import moment from "moment";
+import courseService from "~/services/courseService";
 const cx = classNames.bind(styles);
-const lessons = [
-  {
-    title: "Giới thiệu lộ trình học tập cho người mới bắt đầu",
-    videoUrl:
-      "https://firebasestorage.googleapis.com/v0/b/fir-react-upload-bad49.appspot.com/o/files%2F20%20C%C3%82U%20TI%E1%BA%BENG%20NH%E1%BA%ACT%20NG%E1%BA%AEN%20TH%C3%94NG%20D%E1%BB%A4NG.mp4?alt=media&token=9fba790b-ee9d-4320-b3c9-06b73e10da12",
-  },
-  { title: "Học từ vựng cấp tốc", videoUrl: "" },
-];
 function Lesson() {
-
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { getLessonById, getAllLesson } = lessonService();
-  const [listLesson, setListLesson] = useState ([]);
-  useEffect (() => {
-    getAllLesson().then((res) =>{
-      setListLesson(res);
-      console.log(res);
-    })
-  }, []);
-  //  const renderCard = () => {
-  //   return listLesson.map((item, index) => {
-  //     return (
-  //       <div key={index} className={cx("item")}>
-  //         <listLesson props = {item}/>
-  //       </div>
-  //     )
-  //   })
-  //  }
-
-  const [currentLesson, setCurrentLesson] = useState(0);
+  const { courseId } = useParams();
+  const { getLessonById} = lessonService();
+  const { getCourseById } = courseService();
+  const [course, setCourse] = useState();
+  const [lessons, setLessons] = useState([]);
+  const [lesson, setLesson] = useState();
   const [commentsOpen, setCommentsOpen] = useState(false);
-  const editor = useMemo(() => withReact(createEditor()), []);
-  const [value, setValue] = useState([
-    {
-      type: 'paragraph',
-      children: [{ text: 'Hello, Slate!' }],
-    },
-  ]);
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  useEffect(() => {
+    getCourseById(courseId).then((res) => {
+      setCourse(res);
+      setLessons(res.lessons);
+    });
+  }, []);
+  useEffect(() => {
+    getLessonById(id).then((res) => {
+      setLesson(res);
+    });
+  }, []);
+  const handleLessonClick = (id) => {
+    navigate(`/course/${courseId}/lesson/${id}`);
+    window.location.reload();  
   };
-  const handleLessonClick = () => {};
   return (
     <div className={cx("lesson-container")}>
       <div className={cx("header")}>
         <div className={cx("title")}>
           <FontAwesomeIcon icon={faPlayCircle} className={cx("icon-play")} />
           <span>
-            Lộ trình học tiếng Nhật cho người mới bắt đầu | Học tiếng Nhật cấp
-            tốc
+            {course?.name} | {lesson?.name}
           </span>
         </div>
         <div className={cx("tool")}>
@@ -80,7 +63,7 @@ function Lesson() {
               size={35}
             />
             <div className={cx("total-lesson")}>
-              1/<span>2</span>lesson
+              1/<span>{course?.lessons.length}</span>lessons
             </div>
           </div>
           <div className={cx("note")}>
@@ -99,7 +82,7 @@ function Lesson() {
       <div className={cx("content")}>
         <div className={cx("content__left")}>
           <div className={cx("video")}>
-            <video src={lessons[currentLesson].videoUrl} controls></video>
+            <video src={lesson?.urlVideo} controls></video>
           </div>
         </div>
         <div className={cx("content__right")}>
@@ -108,16 +91,16 @@ function Lesson() {
             {lessons.map((lesson, index) => (
               <div
                 className={
-                  index === currentLesson
+                  id === lesson.id.toString()
                     ? cx("lesson-item", "active")
                     : cx("lesson-item")
                 }
                 key={index}
-                onClick={() => handleLessonClick(lesson.videoUrl)}
+                onClick={() => handleLessonClick(lesson?.id)}
               >
                 <div className={cx("lesson-item__title")}>
                   <span>{index + 1}</span>
-                  {lesson.title}
+                  {lesson?.name}
                 </div>
                 <div className={cx("lesson-item__time")}>
                   <FontAwesomeIcon
@@ -128,27 +111,16 @@ function Lesson() {
                 </div>
               </div>
             ))}
-            <div className={cx("list-content")}>
-              {/* {renderCard()}; */}
-            </div>
+            <div className={cx("list-content")}>{/* {renderCard()}; */}</div>
           </div>
         </div>
       </div>
       <div className={cx("footer")}>
         <div className={cx("footer__left")}>
-          <div className={cx("title")}>
-          {lessons?.name
-            ? lessons?.name
-            : "Giới thiệu lộ trình cho người mới bắt đầu"}
-            
-          </div>
+          <div className={cx("title")}>{lesson?.name}</div>
           <div className={cx("date")}>
             <FontAwesomeIcon icon={faCalendarDays} />
-            <span>
-            {lessons?.createdDate
-                  ? moment(lessons?.createdDate).format("MMMM DD, YYYY")
-                  : "May 11, 2023"}
-              </span>
+            <span>{moment(lesson?.createdDate).format("MMMM DD, YYYY")}</span>
           </div>
           <div className={cx("comment")}>
             <div className={cx("comment__title")}>
