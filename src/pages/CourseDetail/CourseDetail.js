@@ -77,16 +77,20 @@ function CourseDetail() {
     const parts = str.split(";");
     return parts.map((part, index) => <li key={index}>{part}</li>);
   };
-  const enrollCourseHandle = () => {
-    if(!currentUser) {
+  const enrollCourseHandle = async () => {
+    if (!currentUser) {
       notification.error({
         message: "Error!",
         description: "Please login to enroll!",
       });
       return;
     }
-    enrollCourse(id);
+    const isSuccess = await enrollCourse(id);
+    if (isSuccess) {
+      setIsEnroll(true);
+    }
   };
+
   return (
     <div className={cx("container")}>
       <div className={cx("poster__course")}>
