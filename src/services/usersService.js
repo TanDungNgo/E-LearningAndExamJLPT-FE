@@ -19,9 +19,19 @@ function usersService() {
       return null;
     }
   };
+  const getUserByTeacher = async () => {
+    try {
+      const res = await request.get(`/users/teacher`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
   return {
     getAllUser,
     getUserById,
+    getUserByTeacher,
   };
 }
 
