@@ -24,6 +24,23 @@
 .card__rating-star-detail {
   margin-left: 20px;
 }
+.student__review {
+  display: flex;
+  align-items: center;
+  margin: 5px 200px;
+  &-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #c7923e;
+  }
+  &-content {
+    margin-left: 40px;
+    span{
+      margin-left: 10px;
+      color: #c7923e;
+    }
+  }
+}
 .card__intro {
   color: black;
   border: 2px solid #9f9f9f;

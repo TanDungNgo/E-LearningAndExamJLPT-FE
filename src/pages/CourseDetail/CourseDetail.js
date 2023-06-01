@@ -13,7 +13,7 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import courseService from "~/services/courseService";
 import routes from "~/configs/routes";
 import { getSuggestedQuery } from "@testing-library/react";
-import { notification } from "antd";
+import { Rate, notification } from "antd";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
@@ -30,6 +30,8 @@ function CourseDetail() {
   const { getCurrentUser } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
+  const desc = ["terrible", "bad", "normal", "good", "wonderful"];
+  const [value, setValue] = useState(3);
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -151,6 +153,22 @@ function CourseDetail() {
           />
         </div>
       </div>
+      <div className={cx("student__review")}>
+        <div className={cx("student__review-title")}>Student Feedback:</div>
+        {isEnroll ? (
+          <div className={cx("student__review-content")}>
+            <Rate
+              character="好"
+              tooltips={desc}
+              onChange={setValue}
+              value={value}
+            />
+            {value ? <span>{desc[value - 1]}</span> : ""}
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <div className={cx("card__intro")}>
         <div className={cx("card__intro-title")}>Course Introduction</div>
         {course?.description ? (
@@ -174,25 +192,32 @@ function CourseDetail() {
       {isEnroll ? (
         <div className={cx("lesson-list")}>
           <h2 className={cx("lesson-list__title")}>{course?.name}</h2>
-          <ul className={cx("lesson-list__items")}>
-            {listLesson.map((lesson, index) => (
-              <Link key={lesson?.id} to={`/course/${id}/lesson/${lesson?.id}`}>
-                <li className={cx("lesson-item")}>
-                  <div className={cx("lesson-item__title")}>
-                    <span>{index + 1}</span>
-                    {lesson?.name}
-                  </div>
-                  <div className={cx("lesson-item__time")}>
-                    <FontAwesomeIcon
-                      icon={faPlayCircle}
-                      className={cx("icon-play")}
-                    />
-                    <span>10:00</span>
-                  </div>
-                </li>
-              </Link>
-            ))}
-          </ul>
+          {course?.lessons ? (
+            <ul className={cx("lesson-list__items")}>
+              {listLesson.map((lesson, index) => (
+                <Link
+                  key={lesson?.id}
+                  to={`/course/${id}/lesson/${lesson?.id}`}
+                >
+                  <li className={cx("lesson-item")}>
+                    <div className={cx("lesson-item__title")}>
+                      <span>{index + 1}</span>
+                      {lesson?.name}
+                    </div>
+                    <div className={cx("lesson-item__time")}>
+                      <FontAwesomeIcon
+                        icon={faPlayCircle}
+                        className={cx("icon-play")}
+                      />
+                      <span>10:00</span>
+                    </div>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          ) : (
+            <></>
+          )}
         </div>
       ) : (
         <></>
