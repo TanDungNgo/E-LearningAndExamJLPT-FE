@@ -173,14 +173,14 @@ function CourseDetail() {
       </div>
       {isEnroll ? (
         <div className={cx("lesson-list")}>
-          <h2 className={cx("lesson-list__title")}>{course.name}</h2>
+          <h2 className={cx("lesson-list__title")}>{course?.name}</h2>
           <ul className={cx("lesson-list__items")}>
             {listLesson.map((lesson, index) => (
-              <Link key={lesson.id} to={`/course/${id}/lesson/${lesson.id}`}>
+              <Link key={lesson?.id} to={`/course/${id}/lesson/${lesson?.id}`}>
                 <li className={cx("lesson-item")}>
                   <div className={cx("lesson-item__title")}>
                     <span>{index + 1}</span>
-                    {lesson.name}
+                    {lesson?.name}
                   </div>
                   <div className={cx("lesson-item__time")}>
                     <FontAwesomeIcon
