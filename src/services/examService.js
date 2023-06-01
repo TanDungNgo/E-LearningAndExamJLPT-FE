@@ -23,7 +23,7 @@ function examService() {
     console.log(answers);
     try {
       const res = await request.post(`/exams/submit/${examId}`, answers);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       return res.data.data;
     } catch (error) {
       console.log(error);

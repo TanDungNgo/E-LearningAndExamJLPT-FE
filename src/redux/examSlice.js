@@ -3,6 +3,7 @@ const examSlice = createSlice({
   name: "exam",
   initialState: {
     id: null,
+    level: null,
     languageKnowledgeQuestions: [],
     readingQuestions: [],
     listeningQuestions: [],
@@ -14,11 +15,13 @@ const examSlice = createSlice({
   reducers: {
     setExam: (state, action) => {
       state.id = action.payload.id;
+      state.level = action.payload.level;
       state.languageKnowledgeQuestions =
         action.payload.languageKnowledgeQuestions;
       state.readingQuestions = action.payload.readingQuestions;
       state.listeningQuestions = action.payload.listeningQuestions;
-      state.durationLanguageKnowledge = action.payload.durationLanguageKnowledge;
+      state.durationLanguageKnowledge =
+        action.payload.durationLanguageKnowledge;
       state.durationReading = action.payload.durationReading;
       state.durationListening = action.payload.durationListening;
     },

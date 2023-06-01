@@ -43,7 +43,7 @@ function EnrollCard(props) {
         <div className={cx("card__title")}>Information of course</div>
         <div className={cx("card__info")}>
           <div className={cx("card__info-details")}>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ display: "flex", gap: 12, width: "150px" }}>
               <FontAwesomeIcon icon={faUserTie} className={cx("icon__info")} />
               <p>Teacher: </p>
             </div>
@@ -54,7 +54,7 @@ function EnrollCard(props) {
             </div>
           </div>
           <div className={cx("card__info-details")}>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div style={{ display: "flex", gap: 10, width: "150px" }}>
               <FontAwesomeIcon icon={faClock} className={cx("icon__info")} />
               <p>Duration: </p>
             </div>
@@ -63,7 +63,7 @@ function EnrollCard(props) {
             </div>
           </div>
           <div className={cx("card__info-details")}>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div style={{ display: "flex", gap: 10, width: "150px" }}>
               <FontAwesomeIcon
                 icon={faNotesMedical}
                 className={cx("icon__info")}
@@ -74,18 +74,18 @@ function EnrollCard(props) {
               JLPT {props.course?.level}
             </div>
           </div>
-          {/* <div className={cx("card__info-details")}>
-            <div style={{ display: "flex", gap: 7 }}>
+          <div className={cx("card__info-details")}>
+            <div style={{ display: "flex", gap: 10, width: "150px" }}>
               <FontAwesomeIcon
                 icon={faGraduationCap}
                 className={cx("icon__info")}
               />
-              <p>Object: </p>
+              <p>No.of students: </p>
             </div>
-            <div className={cx("card__detail-study")}>
-              Busy peoples, students...
+            <div className={cx("card__detail-des")}>
+              {props.course?.numberOfStudent} students
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

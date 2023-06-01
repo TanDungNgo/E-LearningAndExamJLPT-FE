@@ -91,6 +91,28 @@ function Vocabulary() {
     }
   };
 
+  const [listVocabularyFolder, setListVocabularyFolder] = useState();
+  const {getAllVocabularyFolder} = vocabularyFolderService();
+
+  useEffect(() => {
+    getAllVocabularyFolder().then((res) => {
+      console.log(res);
+      setListVocabularyFolder(res);
+    });
+
+  }, []);
+
+  const renderCardFolder = () => {
+    return listVocabularyFolder?.map((item, index) => {
+      return(
+        <div key={index}>
+          <VocabularyFolderCard vocabularyFolder={item}/>
+        </div>
+      )
+    })
+  }
+
+
   return (
     <div>
       <div className={cx("vocabulary")}>

@@ -1,8 +1,10 @@
 import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import RequestHttp from "~/utils/request";
 
-function courseService() {
+function CourseService() {
+  const navigate = useNavigate();
   const { request } = RequestHttp();
   const createCourse = async (course) => {
     try {
@@ -99,22 +101,27 @@ function courseService() {
 
   const enrollCourse = async (id) => {
     try {
-      await request.post(`/enroll/${id}`).then((res) => {
-        if (res.data.status === "ok") {
-          notification.success({
-            message: "Success!",
-            description: res.data.message,
-          });
-          window.location.reload();
-        } else {
-          notification.error({
-            message: "Error!",
-            description: "Failed to enroll!",
-          });
-        }
-      });
+      const res = await request.post(`/enroll/${id}`);
+      if (res.data.status === "ok") {
+        notification.success({
+          message: "Success!",
+          description: res.data.message,
+        });
+        return true;
+      } else {
+        notification.error({
+          message: "Error!",
+          description: "Failed to enroll!",
+        });
+        return false;
+      }
     } catch (error) {
       console.log(error);
+      notification.error({
+        message: "Error!",
+        description: "Failed to enroll!",
+      });
+      return false;
     }
   };
 
@@ -130,4 +137,4 @@ function courseService() {
   };
 }
 
-export default courseService;
+export default CourseService;

@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "~/components/Button/Button";
 import ListQuestion from "~/components/ListQuestion/ListQuestion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,13 +22,17 @@ function ExamPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const exam = useSelector((state) => state.exam);
-  const answers = useSelector((state) => state.exam.answer);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [statusAnswers, setStatusAnswers] = useState([]);
   const [isCounting, setIsCounting] = useState(true);
   const [time, setTime] = useState();
+  const [playlist, setPlaylist] = useState([]);
+  const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+
+  // Ref để truy cập đến thành phần <audio>
+  const audioRef = useRef(null);
 
   const handleAnswerSelect = (answer) => {
     const updatedAnswers = [...selectedAnswers];
@@ -106,6 +110,9 @@ function ExamPage() {
       } else {
         setTime(exam.durationListening);
         setQuestions(exam.listeningQuestions);
+        setPlaylist(
+          exam.listeningQuestions.map((question) => question.audioFile)
+        );
         setSelectedAnswers(Array(exam.listeningQuestions.length).fill(""));
         setStatusAnswers(
           exam.listeningQuestions.map((_, index) =>
@@ -155,6 +162,13 @@ function ExamPage() {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
+
+  const handleAudioEnded = () => {
+    audioRef.current.src = playlist[currentAudioIndex+1];
+    audioRef.current.play();
+    setCurrentAudioIndex((prevIndex) => prevIndex + 1);
+  };
+
   return (
     <div className={cx("exam")}>
       <div className={cx("exam__header")}>
@@ -178,11 +192,14 @@ function ExamPage() {
             </div>
             {questions[currentQuestion]?.audioFile ? (
               <div className={cx("question__audio")}>
-                <audio controls autoPlay>
-                  <source
-                    src={questions[currentQuestion]?.audioFile}
-                    type="audio/ogg"
-                  />
+                <audio
+                  ref={audioRef}
+                  controls
+                  autoPlay
+                  onEnded={handleAudioEnded}
+                  hidden
+                >
+                  <source src={playlist[currentAudioIndex]} type="audio/ogg" />
                 </audio>
               </div>
             ) : (
@@ -192,9 +209,6 @@ function ExamPage() {
           <div className={cx("question__title")}>
             {questions[currentQuestion]?.title}
           </div>
-          <div className={cx("question__content")}>
-            {questions[currentQuestion]?.text}
-          </div>
           <div className={cx("question__image")}>
             {questions[currentQuestion]?.image ? (
               <img src={questions[currentQuestion]?.image} width={700} alt="" />
@@ -202,8 +216,10 @@ function ExamPage() {
               <></>
             )}
           </div>
+          <div className={cx("question__content")}>
+            {questions[currentQuestion]?.text}
+          </div>
           <div className={cx("list-answer")}>
-            {/* {renderAnswers()} */}
             {questions[currentQuestion]?.option1 ? (
               <label htmlFor={`answer${1}`}>
                 <div className={cx("answer")}>
