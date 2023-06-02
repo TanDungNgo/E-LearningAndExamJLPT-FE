@@ -153,9 +153,9 @@ function CourseDetail() {
           />
         </div>
       </div>
-      <div className={cx("student__review")}>
-        <div className={cx("student__review-title")}>Student Feedback:</div>
-        {isEnroll ? (
+      {isEnroll ? (
+        <div className={cx("student__review")}>
+          <div className={cx("student__review-title")}>Student Feedback:</div>
           <div className={cx("student__review-content")}>
             <Rate
               character="好"
@@ -165,10 +165,10 @@ function CourseDetail() {
             />
             {value ? <span>{desc[value - 1]}</span> : ""}
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className={cx("card__intro")}>
         <div className={cx("card__intro-title")}>Course Introduction</div>
         {course?.description ? (
