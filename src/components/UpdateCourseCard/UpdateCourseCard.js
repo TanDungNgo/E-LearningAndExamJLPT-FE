@@ -2,11 +2,13 @@ import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./UpdateCourseCard.module.scss";
 import { Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputNumber} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Form, Input, Select } from "antd";
 import { Option } from "antd/es/mentions";
+import { useNavigate, useParams } from "react-router-dom";
+import CourseService from "~/services/courseService";
 const cx = classNames.bind(styles);
 
 function UpdateCourseCard(props) {
@@ -14,6 +16,12 @@ function UpdateCourseCard(props) {
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
   const [fileImage, setFileImage] = useState("");
+  const { getCourseById, getSuggestedCourses, checkEnroll, enrollCourse } =
+    CourseService();
+  const { id } = useParams();
+  const [course, setCourse] = useState();
+  const navigate = useNavigate();
+  const [suggestCourses, setSuggestCourse] = useState([]);
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
@@ -124,7 +132,9 @@ function UpdateCourseCard(props) {
                 name="name"
                 rules={[{ required: true, message: "Please input a name!" }]}
               >
-                <Input placeholder="Name" />
+                <Input 
+                  placeholder="Name" 
+                />
               </Form.Item>
               <Form.Item
                 name="description"
