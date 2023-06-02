@@ -1,6 +1,7 @@
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import routes from "~/configs/routes";
 import RequestHttp from "~/utils/request";
 
 function CourseService() {
@@ -15,7 +16,7 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            window.location.reload();
+            navigate(routes.courseManagement);
           });
         } else {
         }
@@ -50,7 +51,7 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            window.location.reload();
+            navigate(routes.courseManagement);
           });
         } else {
         }
@@ -68,7 +69,7 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            window.location.reload();
+            navigate(routes.courseManagement);
           });
         } else {
         }

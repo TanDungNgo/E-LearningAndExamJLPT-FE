@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -14,14 +14,19 @@ import { UploadOutlined } from "@ant-design/icons";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import courseService from "~/services/courseService";
+import { useParams } from "react-router-dom";
 const { Option } = Select;
 
-const AddCourseForm = ({ onSubmit }) => {
+const EditCourseForm = () => {
+  const { id } = useParams();
+  const { getCourseById, updateCourse } = courseService();
+  const [course, setCourse] = useState({});
   const [imgSrc, setImgSrc] = useState("");
   const [fileImage, setFileImage] = useState("");
   const { createCourse } = courseService();
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState(null);
+  const [checkChangeImage, setCheckChangeImage] = useState(false);
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
@@ -37,46 +42,78 @@ const AddCourseForm = ({ onSubmit }) => {
       reader.onload = (e) => {
         // console.log(e.target.result);
         setImgSrc(e.target.result);
+        setCheckChangeImage(true);
       };
     }
   };
   const onFinish = async (values) => {
-    const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, fileImage);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      async () => {
-        const url = await getDownloadURL(uploadTask.snapshot.ref);
-        const data = {
-          ...values,
-          banner: url,
-        };
-        console.log(data);
-        createCourse(data);
-      }
-    );
+    if (checkChangeImage) {
+      const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, fileImage);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          const data = {
+            ...values,
+            banner: url,
+          };
+          console.log(data);
+          updateCourse(1, data);
+        }
+      );
+    } else {
+      const data = {
+        ...values,
+        banner: imgSrc,
+      };
+      console.log(data);
+      updateCourse(1, data);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  const [form] = Form.useForm();
+  useEffect(() => {
+    const getCourse = async () => {
+      const course = await getCourseById(id);
+      setImgSrc(course.banner);
+      form.setFieldsValue({
+        name: course.name,
+        description: course.description,
+        level: course.level,
+        duration: course.duration,
+        price: course.price,
+        type: course.type,
+        isPublic: true,
+      });
+    };
+    getCourse();
+  }, []);
 
   return (
-    <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+    <Form
+      form={form}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      layout="vertical"
+    >
       <Form.Item
         label="Name"
         name="name"
         rules={[{ required: true, message: "Please input a name!" }]}
       >
-        <Input />
+        <Input defaultValue={course.name} />
       </Form.Item>
       <Form.Item
         label="Description"
@@ -89,7 +126,7 @@ const AddCourseForm = ({ onSubmit }) => {
           },
         ]}
       >
-        <Input.TextArea />
+        <Input.TextArea style={{ height: "180px" }} />
       </Form.Item>
       <Form.Item
         label="Level"
@@ -150,6 +187,7 @@ const AddCourseForm = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item
         label="Status"
+        name="isPublic"
         valuePropName="checked"
         style={{ marginBottom: "15px" }}
         rules={[{ required: true, message: "Please select a status!" }]}
@@ -163,10 +201,12 @@ const AddCourseForm = ({ onSubmit }) => {
         <div>
           <img src={imgSrc} />
           <div>
-            <label htmlFor="file" style={{ color: "##b79032", cursor: "pointer", fontSize: "16px" }}>
+            <label
+              htmlFor="file"
+              style={{ color: "##b79032", cursor: "pointer", fontSize: "16px" }}
+            >
               <UploadOutlined />
               Upload Image
-
             </label>
             <input
               type="file"
@@ -174,23 +214,27 @@ const AddCourseForm = ({ onSubmit }) => {
               id="file"
               onChange={handleChangeFile}
               accept="image/*"
-              style={{ with: "0.1px", height: "0.1px", opacity: "0", overflow: "hidden", position: "absolute" }}
+              style={{
+                with: "0.1px",
+                height: "0.1px",
+                opacity: "0",
+                overflow: "hidden",
+                position: "absolute",
+              }}
             />
           </div>
-
         </div>
-
       </Form.Item>
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Update
           </Button>
-            <Progress percent={progress} style={{ marginLeft: "10px" }} />
+          <Progress percent={progress} style={{ marginLeft: "10px" }} />
         </div>
       </Form.Item>
     </Form>
   );
 };
 
-export default AddCourseForm;
+export default EditCourseForm;
