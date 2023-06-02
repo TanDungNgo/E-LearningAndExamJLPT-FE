@@ -1,44 +1,80 @@
 import classNames from "classnames/bind";
 import Button from "~/components/Button/Button";
 import styles from "./PublicProfile.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Image, Input } from "antd";
 import { Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Option } from "antd/es/mentions";
+import usersService from "~/services/usersService";
+import { useParams } from "react-router-dom";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 function PublicProfile() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("");
-  const [email, setEmail] = useState("");
+  const { getCurrentUser } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState(null); // Khởi tạo currentUser với giá trị null
+
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, []);
+
+  console.log("[User] ", currentUser);
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (currentUser) {
+      form.setFieldsValue({
+        firstname: currentUser.firstname,
+        lastname: currentUser.lastname,
+        Gender: currentUser.gender,
+        email: currentUser.email,
+        avatar: currentUser.avatar,
+      });
+    }
+  }, [form, currentUser]);
+
   const [fileImage, setFileImage] = useState("");
-  const [imgSrc, setImgSrc] = useState("/images/Phuong.png");
+  const [imgSrc, setImgSrc] = useState(
+    currentUser ? currentUser.avatar : "/images/Phuong.png"
+  );
+
   const handleChangeFile = (e) => {
-    //Lấy file ra từ e
     let file = e.target.files[0];
     setFileImage(file);
     if (
-      file.type === "image/jpeg" ||
-      file.type === "image/jpg" ||
-      file.type === "image/png"
+      file &&
+      (file.type === "image/jpeg" ||
+        file.type === "image/jpg" ||
+        file.type === "image/png")
     ) {
-      //Tạo đối tượng để đọc file
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        // console.log(e.target.result);
         setImgSrc(e.target.result);
       };
     }
   };
+
+  if (!currentUser) {
+    return null; // Hiển thị null hoặc một giao diện tải dữ liệu nếu currentUser chưa được lấy
+  }
+
   return (
     <div className={cx("card")}>
       <div className={cx("card__title")}>Public profile</div>
       <div className={cx("card__content")}>
         <div className={cx("card__avatar")}>
-          <Image className={cx("card__avatar-img")} src={imgSrc} />
+          <Image className={cx("card__avatar-img")} src={currentUser.avatar} />
           <div className={cx("card__btn")}>
             <div className={cx("card__btn-change")}>
               <Button primary>
@@ -59,7 +95,7 @@ function PublicProfile() {
           </div>
         </div>
         <div className={cx("card__info")}>
-          <Form>
+          <Form form={form}>
             <div className={cx("card__info-name")}>
               <Form.Item
                 name="firstname"
@@ -69,7 +105,7 @@ function PublicProfile() {
               >
                 <Input
                   placeholder="First name"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  defaultValue={currentUser.firstname}
                 />
               </Form.Item>
               <Form.Item
@@ -80,7 +116,7 @@ function PublicProfile() {
               >
                 <Input
                   placeholder="Last name"
-                  onChange={(e) => setLastName(e.target.value)}
+                  defaultValue={currentUser.lastname}
                 />
               </Form.Item>
             </div>
@@ -95,7 +131,7 @@ function PublicProfile() {
                   },
                 ]}
               >
-                <Select placeholder="Gender">
+                <Select placeholder="Gender" defaultValue={currentUser.gender}>
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                 </Select>
@@ -103,17 +139,11 @@ function PublicProfile() {
               <Form.Item
                 name="email"
                 rules={[
-                  { type: "email", message: "The input is not valid E-mail!" },
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
+                  { type: "email", message: "The input is not a valid email!" },
+                  { required: true, message: "Please input your email!" },
                 ]}
               >
-                <Input
-                  placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <Input placeholder="Email" defaultValue={currentUser.email} />
               </Form.Item>
             </div>
             <div className={cx("card__info-btn")}>
