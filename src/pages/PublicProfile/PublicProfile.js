@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function PublicProfile() {
   const { getCurrentUser } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
-  const [currentUser, setCurrentUser] = useState(null); // Khởi tạo currentUser với giá trị null
+  const [currentUser, setCurrentUser] = useState(null); 
 
   useEffect(() => {
     if (user) {
@@ -66,7 +66,7 @@ function PublicProfile() {
   };
 
   if (!currentUser) {
-    return null; // Hiển thị null hoặc một giao diện tải dữ liệu nếu currentUser chưa được lấy
+    return null; 
   }
 
   return (
@@ -104,7 +104,7 @@ function PublicProfile() {
                 ]}
               >
                 <Input
-                  placeholder="First name"
+                  placeholder="First name" readOnly
                   defaultValue={currentUser.firstname}
                 />
               </Form.Item>
@@ -115,7 +115,7 @@ function PublicProfile() {
                 ]}
               >
                 <Input
-                  placeholder="Last name"
+                  placeholder="Last name" readOnly
                   defaultValue={currentUser.lastname}
                 />
               </Form.Item>
@@ -131,19 +131,19 @@ function PublicProfile() {
                   },
                 ]}
               >
-                <Select placeholder="Gender" defaultValue={currentUser.gender}>
+                <Select placeholder="Gender"  disabled defaultValue={currentUser.gender}>
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                 </Select>
               </Form.Item>
               <Form.Item
-                name="email"
+                name="email" 
                 rules={[
                   { type: "email", message: "The input is not a valid email!" },
                   { required: true, message: "Please input your email!" },
                 ]}
               >
-                <Input placeholder="Email" defaultValue={currentUser.email} />
+                <Input placeholder="Email" readOnly defaultValue={currentUser.email} />
               </Form.Item>
             </div>
             <div className={cx("card__info-btn")}>
