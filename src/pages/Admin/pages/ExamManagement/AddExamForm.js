@@ -45,6 +45,7 @@ const AddExamForm = () => {
         rules={[{ required: true, message: "Please select a level!" }]}
       >
         <Select>
+          <Option value=""></Option>
           <Option value="N1">N1</Option>
           <Option value="N2">N2</Option>
           <Option value="N3">N3</Option>

@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function PublicProfile() {
   const { getCurrentUser } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
-  const [currentUser, setCurrentUser] = useState(null); // Khởi tạo currentUser với giá trị null
+  const [currentUser, setCurrentUser] = useState(null); 
 
   useEffect(() => {
     if (user) {
@@ -66,7 +66,7 @@ function PublicProfile() {
   };
 
   if (!currentUser) {
-    return null; // Hiển thị null hoặc một giao diện tải dữ liệu nếu currentUser chưa được lấy
+    return null; 
   }
 
   return (
