@@ -97,6 +97,7 @@ const AddCourseForm = ({ onSubmit }) => {
         rules={[{ required: true, message: "Please select a level!" }]}
       >
         <Select>
+          <Option value=""></Option>
           <Option value="N1">N1</Option>
           <Option value="N2">N2</Option>
           <Option value="N3">N3</Option>
@@ -110,6 +111,7 @@ const AddCourseForm = ({ onSubmit }) => {
         rules={[{ required: true, message: "Please select a type!" }]}
       >
         <Select>
+          <Option value=""></Option>
           <Option value="JLPT">JLPT</Option>
           <Option value="Kaiwa">Kaiwa</Option>
         </Select>
