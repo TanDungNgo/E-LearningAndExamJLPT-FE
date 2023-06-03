@@ -47,6 +47,8 @@ const routes = {
   addExam: "/admin/exam/add",
   addQuestion: "/admin/question/add",
 
+  editCourse: "/admin/course/edit/:id",
+
 };
 
 export default routes;
