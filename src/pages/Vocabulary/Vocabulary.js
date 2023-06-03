@@ -20,6 +20,9 @@ function Vocabulary() {
   const [vocabularyFolder, setVocabularyFolder] = useState();
   const [indexVocabulary, setIndexVocabulary] = useState(0);
   const [listNextVocabularyFolder, setNextListVocabularyFolder] = useState();
+  const [folderTitle, setFolderTitle] = useState("");
+  const [folderVocabCount, setFolderVocabCount] = useState(0);
+
 
   useEffect(() => {
     getNextVocabularyFolders(id).then((res) => {
@@ -32,8 +35,10 @@ function Vocabulary() {
     getVocabularyFolderById(id).then((res) => {
       setVocabularyFolder(res);
       setListVocabularies(res.vocabularies);
-      setPlaylist(res.vocabularies.map((item) => item.audio));
+      setFolderTitle(res.title);
+      setFolderVocabCount(res.count);
     });
+    
   }, []);
 
   const renderCardFolder = () => {
@@ -124,7 +129,7 @@ function Vocabulary() {
   return (
     <div>
       <div className={cx("vocabulary")}>
-        <div className={cx("vocabulary__title")}>{vocabularyFolder?.title}</div>
+        <div className={cx("vocabulary__title")}>{folderTitle ? folderTitle : "2000Tango N5 Chapter 1 Section 1"}</div>
         <div className={cx("vocabulary__description")}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png"
@@ -132,7 +137,7 @@ function Vocabulary() {
             alt="Vocabulary"
           />
           <div className={cx("vocabulary__description-title")}>
-            {vocabularyFolder?.count} Vocabularies
+          {folderVocabCount} Vocabularies
           </div>
         </div>
         <div className={cx("vocabulary__sound")}>

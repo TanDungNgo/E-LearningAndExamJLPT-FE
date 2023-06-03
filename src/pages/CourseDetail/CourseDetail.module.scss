@@ -8,6 +8,7 @@
 }
 .card__rating {
   display: flex;
+  align-items: center;
 }
 .card__rating-title {
   color: black;
@@ -18,12 +19,16 @@
 }
 .card__rating-star {
   fill: gold;
-  margin-top: 18px;
-  margin-left: 20px;
+  margin-top: 16px;
+  margin-left: 40px;
+  display: flex;
+  font-size: 35px;
 }
 .card__rating-star-detail {
-  margin-left: 20px;
+  margin-left: 15px;
+  margin-top: 0px;
 }
+
 .student__review {
   display: flex;
   align-items: center;
@@ -52,10 +57,11 @@
   font-size: 20px;
 }
 .card__intro-title {
-  color: #c7923e;
-  font-weight: 780;
-  font-size: 30px;
-  margin-bottom: 10px;
+  fill: gold;
+  margin-top: 15px;
+  margin-left: 40px;
+  display: flex;
+  font-size: 35px;
 }
 .card__content {
   color: black;
