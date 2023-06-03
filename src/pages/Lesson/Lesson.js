@@ -18,17 +18,33 @@ import { useNavigate, useParams } from "react-router-dom";
 import lessonService from "~/services/lessonService";
 import moment from "moment";
 import courseService from "~/services/courseService";
+import { useSelector } from "react-redux";
+import AuthService from "~/services/authService";
 const cx = classNames.bind(styles);
 function Lesson() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { courseId } = useParams();
-  const { getLessonById} = lessonService();
+  const { getLessonById, getCommentByLessonId, commentLesson } = lessonService();
   const { getCourseById } = courseService();
   const [course, setCourse] = useState();
   const [lessons, setLessons] = useState([]);
   const [lesson, setLesson] = useState();
   const [commentsOpen, setCommentsOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const { getCurrentUser } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     getCourseById(courseId).then((res) => {
@@ -41,9 +57,32 @@ function Lesson() {
       setLesson(res);
     });
   }, [id]);
+  useEffect(() => {
+    getCommentByLessonId(id).then((res) => {
+      setComments(res);
+    });
+  }, [id]);
   const handleLessonClick = (id) => {
     navigate(`/course/${courseId}/lesson/${id}`);
   };
+  const handleComment = () => {
+    const data = {
+      "content": comment,
+      "lessonId": id
+    };
+    commentLesson(data);
+    const newComment = {
+      id: comments.length + 1,
+      content: comment,
+      createdAt: new Date().toISOString(),
+      createdBy: currentUser?.firstname,
+      avatar: currentUser?.avatar,
+      replies: [],
+    };
+
+    setComments([...comments, newComment]);
+    setComment("");
+  }
   return (
     <div className={cx("lesson-container")}>
       <div className={cx("header")}>
@@ -123,19 +162,27 @@ function Lesson() {
           </div>
           <div className={cx("comment")}>
             <div className={cx("comment__title")}>
-              (<span>1</span>)Comment
+              (<span>{lesson?.comments.length}</span>)Comment
             </div>
             <div className={cx("comment__list")}>
-              <CommentItem
-                author="TanDung"
-                content="Great !!"
-                avatarSrc="https://i.pinimg.com/originals/51/90/10/519010d9ee8167bfe445e616f260f758.png"
-                datetime="8 hours ago"
-              />
+              {comments.map((comment, index) => (
+                <CommentItem
+                  key={index}
+                  lessonId={id}
+                  commentId={comment?.id}
+                  author={comment?.createdBy}
+                  content={comment?.content}
+                  avatarSrc={comment?.avatar}
+                  datetime={moment(comment?.createdAt).format(
+                    "MMMM DD, YYYY"
+                  )}
+                  replies={comment?.replies}
+                />
+              ))}
             </div>
             <div className={cx("comment__input")}>
-              <Input.TextArea placeholder="Comment..." />
-              <Button type="primary" style={{ marginTop: "5px" }}>
+              <Input.TextArea value={comment} placeholder="Comment..." onChange={(e)=> setComment(e.target.value)}/>
+              <Button type="primary" style={{ marginTop: "5px" }} onClick={handleComment}>
                 Post
               </Button>
             </div>
