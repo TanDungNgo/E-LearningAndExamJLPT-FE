@@ -87,6 +87,15 @@ function CourseService() {
       console.log(error);
     }
   };
+  const getMyCourse = async () => {
+    try {
+      const res = await request.get("/courses/my-courses");
+      console.log("[Couese]", res.data.data);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const checkEnroll = async (id) => {
     try {
@@ -130,6 +139,7 @@ function CourseService() {
     createCourse,
     getAllCourse,
     getCourseById,
+    getMyCourse,
     updateCourse,
     deleteCourse,
     getSuggestedCourses,
