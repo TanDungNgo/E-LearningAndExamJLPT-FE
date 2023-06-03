@@ -20,6 +20,16 @@ function vocabularyFolderService() {
       return null;
     }
   };
+  const getNextVocabularyFolders = async (id) => {
+    try {
+      const res = await request.get(`/vocabularyFolders/next/${id}`);
+      // console.log("[VocabularyFolder]", res.data)
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
 
   const createVocabularyFolder = async (vocabularyFolders) => {
     try {
@@ -64,6 +74,7 @@ function vocabularyFolderService() {
     getVocabularyFolderById,
     createVocabularyFolder,
     createVocabulary,
+    getNextVocabularyFolders,
   };
 }
 

@@ -7,6 +7,13 @@ import { Select } from "antd";
 import { Option } from "antd/es/mentions";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import storageFirebase from "~/configs/firebaseConfig"; 
+
 const cx = classNames.bind(styles);
 
 function PublicProfile() {
@@ -15,7 +22,10 @@ function PublicProfile() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
-  const [avatar, setAvatar] = useState(null);
+  const [newAvatar, setNewAvatar] = useState(null);
+  const [fileImage, setFileImage] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [deleteAvatar, setDeleteAvatar] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -26,14 +36,81 @@ function PublicProfile() {
       });
     }
   }, []);
+  useEffect(() => {
+    if (currentUser) {
+      form.setFieldsValue({
+        firstname: currentUser.firstname,
+        lastname: currentUser.lastname,
+        Gender: currentUser.gender,
+        email: currentUser.email,
+      });
+      setNewAvatar(currentUser.avatar);
+    }
+  }, [form, currentUser]);
+
+  if (!currentUser) {
+    return null;
+  }
 
   const handleEditProfile = () => {
     setIsModalVisible(true);
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setAvatar(URL.createObjectURL(file));
+  const handleFileChange = (e) => {
+    let file = e.target.files[0];
+    setFileImage(file);
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      setNewAvatar(e.target.result);
+    };
+  };
+
+  const onFinish = async (values) => {
+    if (deleteAvatar) {
+      const data = {
+        ...values,
+        avatar: null,
+      };
+      console.log(data);
+      updateProfile(1, data);
+    } else if (fileImage) {
+      const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, fileImage);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          const data = {
+            ...values,
+            avatar: url,
+          };
+          console.log(data);
+          updateProfile(1, data);
+        }
+      );
+    } else {
+      const data = {
+        ...values,
+        avatar: currentUser.avatar,
+      };
+      console.log(data);
+      updateProfile(1, data);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   const handleSaveProfile = () => {
@@ -46,40 +123,26 @@ function PublicProfile() {
           lastname: values.lastname,
           gender: values.Gender,
           email: values.email,
-          avatar: avatar || currentUser.avatar,
+          avatar: deleteAvatar ? null : newAvatar || currentUser.avatar,
         };
 
         updateProfile(updatedUser);
         console.log(updatedUser);
-        // setIsModalVisible(false);
+        setIsModalVisible(false);
       })
       .catch((error) => {
         console.log("Validation failed:", error);
       });
   };
-
-  useEffect(() => {
-    if (currentUser) {
-      form.setFieldsValue({
-        firstname: currentUser.firstname,
-        lastname: currentUser.lastname,
-        Gender: currentUser.gender,
-        email: currentUser.email,
-      });
-      setAvatar(currentUser.avatar);
-    }
-  }, [form, currentUser]);
-
-  if (!currentUser) {
-    return null;
-  }
-
   return (
     <div className={cx("card")}>
       <div className={cx("card__title")}>Public profile</div>
       <div className={cx("card__content")}>
         <div className={cx("card__avatar")}>
-          <Image className={cx("card__avatar-img")} src={avatar || currentUser.avatar} />
+          <Image
+            className={cx("card__avatar-img")}
+            src={newAvatar || currentUser.avatar}
+          />
           <div className={cx("card__btn")}>
             <div className={cx("card__btn-change")}>
               <Button primary>
@@ -94,13 +157,13 @@ function PublicProfile() {
                 onChange={handleFileChange}
               />
             </div>
-            <Button outline className={cx("card__btn-delete")}>
+            <Button outline className={cx("card__btn-delete")} onClick={() => setDeleteAvatar(true)} >
               Delete picture
             </Button>
           </div>
         </div>
         <div className={cx("card__info")}>
-          <Form form={form}>
+          <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <div className={cx("card__info-name")}>
               <Form.Item name="firstname">
                 <Input
@@ -119,7 +182,11 @@ function PublicProfile() {
             </div>
             <div className={cx("card__info-detail")}>
               <Form.Item name="Gender" hasFeedback>
-                <Select placeholder="Gender" disabled defaultValue={currentUser.gender}></Select>
+                <Select
+                  placeholder="Gender"
+                  disabled
+                  defaultValue={currentUser.gender}
+                ></Select>
               </Form.Item>
               <Form.Item name="email">
                 <Input
@@ -149,7 +216,10 @@ function PublicProfile() {
                     { required: true, message: "Please input your firstname!" },
                   ]}
                 >
-                  <Input placeholder="First name" defaultValue={currentUser.firstname} />
+                  <Input
+                    placeholder="First name"
+                    defaultValue={currentUser.firstname}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="lastname"
@@ -157,7 +227,10 @@ function PublicProfile() {
                     { required: true, message: "Please input your lastname!" },
                   ]}
                 >
-                  <Input placeholder="Last name" defaultValue={currentUser.lastname} />
+                  <Input
+                    placeholder="Last name"
+                    defaultValue={currentUser.lastname}
+                  />
                 </Form.Item>
               </div>
               <div className={cx("card__info-detail")}>
@@ -171,7 +244,10 @@ function PublicProfile() {
                     },
                   ]}
                 >
-                  <Select placeholder="Gender" defaultValue={currentUser.gender}>
+                  <Select
+                    placeholder="Gender"
+                    defaultValue={currentUser.gender}
+                  >
                     <Option value="Male">Male</Option>
                     <Option value="Female">Female</Option>
                   </Select>
@@ -179,7 +255,6 @@ function PublicProfile() {
                 <Form.Item
                   name="email"
                   rules={[
-                    { type: "email", message: "The input is not a valid email!" },
                     { required: true, message: "Please input your email!" },
                   ]}
                 >
@@ -188,7 +263,7 @@ function PublicProfile() {
               </div>
               <div className={cx("card__info-btn")}>
                 <Button primary onClick={handleSaveProfile}>
-                  Save
+                  Save Profile
                 </Button>
               </div>
             </Form>
