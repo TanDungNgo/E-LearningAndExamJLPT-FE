@@ -2,11 +2,13 @@ import classNames from "classnames/bind";
 import Button from "../Button/Button";
 import styles from "./UpdateCourseCard.module.scss";
 import { Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputNumber} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Form, Input, Select } from "antd";
 import { Option } from "antd/es/mentions";
+import { useNavigate, useParams } from "react-router-dom";
+import CourseService from "~/services/courseService";
 const cx = classNames.bind(styles);
 
 function UpdateCourseCard(props) {
@@ -14,6 +16,12 @@ function UpdateCourseCard(props) {
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
   const [fileImage, setFileImage] = useState("");
+  const navigate = useNavigate();
+
+  const handleViewUpdate = () => {
+    navigate(`/coursedetail/${props.course.id}`);
+  }
+
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
@@ -112,6 +120,7 @@ function UpdateCourseCard(props) {
         className={cx("modal")}
         open={open}
         onCancel={handleCancel}
+        onChange={handleViewUpdate}
         footer={[]}
       >
         <div className={cx("modal-header")}>
@@ -124,7 +133,12 @@ function UpdateCourseCard(props) {
                 name="name"
                 rules={[{ required: true, message: "Please input a name!" }]}
               >
-                <Input placeholder="Name" />
+                <Input 
+                  placeholder="Name" 
+                  defaultValue={props.course.name
+                    ? props.course.name
+                    : "Let's conquer JLPT N2 - Grammar & Reading"}
+                />
               </Form.Item>
               <Form.Item
                 name="description"
@@ -136,13 +150,18 @@ function UpdateCourseCard(props) {
                   },
                 ]}
               >
-                <Input.TextArea placeholder="Description" />
+                <Input.TextArea 
+                  placeholder="Description" 
+                  defaultValue={props.course.description
+                    ? props.course.description
+                    : "This is a JLPT N2 (Grammar and Reading) course for Vietnamese."}
+                />
               </Form.Item>
               <Form.Item
                 name="level"
                 rules={[{ required: true, message: "Please select a level!" }]}
               >
-                <Select placeholder="Level">
+                <Select placeholder="Level" defaultValue={props.course.level ? props.course.level : ""}>
                   <Option value="N1">N1</Option>
                   <Option value="N2">N2</Option>
                   <Option value="N3">N3</Option>
@@ -154,7 +173,7 @@ function UpdateCourseCard(props) {
                 name="type"
                 rules={[{ required: true, message: "Please select a type!" }]}
               >
-                <Select placeholder="Type">
+                <Select placeholder="Type" defaultValue={props.course.type ? props.course.type : ""}>
                   <Option value="JLPT">JLPT</Option>
                   <Option value="Kaiwa">Kaiwa</Option>
                 </Select>
@@ -175,6 +194,7 @@ function UpdateCourseCard(props) {
               >
                 <InputNumber
                   placeholder="Duration"
+                  defaultValue={props.course.duration ? props.course.duration : ""}
                   addonAfter={<Form.Item noStyle>Month</Form.Item>}
                   style={{ width: "100%" }}
                 />
@@ -195,13 +215,18 @@ function UpdateCourseCard(props) {
               >
                 <InputNumber
                   placeholder="Price"
+                  defaultValue={props.course.price ? props.course.price : ""}
                   addonAfter={<Form.Item noStyle>$</Form.Item>}
                   style={{ width: "100%" }}
                 />
               </Form.Item>
             </div>
             <div className={cx("modal-body__right")}>
-              <img className={cx("modal-body__banner")} src={imgSrc}/>
+              <img className={cx("modal-body__banner")} 
+                src={props.course.banner
+                ? props.course.banner
+                : "https://nhadepso.com/wp-content/uploads/2023/01/anh-anya_1.jpg"}
+              />
               <div className={cx("modal-body__import-file")}>
                 <label htmlFor="file">
                   <UploadOutlined />

@@ -50,6 +50,8 @@ import CompletedCourse from "~/components/CompletedCourse/CompletedCourse";
 import CourseCreated from "~/components/CourseCreated/CourseCreated";
 import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
 
+import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
+
 // Public routes
 const publicRoutes = [
   { path: config.routes.signin, component: Signin },
@@ -208,7 +210,8 @@ const privateRoutes = [
     path: config.routes.addQuestion,
     component: AddQuestionForm,
     layout: Admin,
-  }
+  },
+  {path: config.routes.editCourse, component: EditCourseForm, layout: Admin},
 ];
 
 export { publicRoutes, privateRoutes };
