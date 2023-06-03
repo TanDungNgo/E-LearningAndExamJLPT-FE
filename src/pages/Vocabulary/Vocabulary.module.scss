@@ -25,10 +25,6 @@
     margin-left: 5%;
   }
 
-  &__content {
-    &__vocabulary-card {
-    }
-  }
 
   &__container {
     display: flex;
@@ -38,6 +34,7 @@
     font-size: 24px;
     gap: 20px;
   }
+
   &__sound {
     display: flex;
     align-items: center;
@@ -46,26 +43,18 @@
   }
 }
 
-.list-vocabulary-folder {
+.list-vocabulary-folder__card {
   width: 100%;
   background-color: #f2f2f2;
   margin-top: 5%;
   height: 420px;
-
-  &__card1 {
-    padding-top: 3%;
-    display: flex;
-    gap: 120px;
-    justify-content: center;
-  }
-
-  &__card2 {
-    padding-top: 2%;
-    display: flex;
-    gap: 120px;
-    justify-content: center;
-  }
+  padding-top: 2.5%;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 130px;
+  justify-content: center;
 }
+
 .icon-sound {
   font-size: 18px;
   cursor: pointer;

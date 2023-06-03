@@ -9,15 +9,25 @@ import vocabularyFolderService from "~/services/vocabularyFolderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { data } from "../Admin/components/DashboardChart/DashboardChart";
 
 const cx = classNames.bind(styles);
 
 function Vocabulary() {
   const { id } = useParams();
-  const { getVocabularyFolderById } = vocabularyFolderService();
+  const { getVocabularyFolderById, getNextVocabularyFolders } = vocabularyFolderService();
   const [listVocabularies, setListVocabularies] = useState([]);
   const [vocabularyFolder, setVocabularyFolder] = useState();
   const [indexVocabulary, setIndexVocabulary] = useState(0);
+  const [listNextVocabularyFolder, setNextListVocabularyFolder] = useState();
+
+  useEffect(() => {
+    getNextVocabularyFolders(id).then((res) => {
+      setVocabularyFolder(res);
+      setNextListVocabularyFolder(res);
+      console.log("[VocabularyFolder2]", res);
+    });
+  }, []);
   useEffect(() => {
     getVocabularyFolderById(id).then((res) => {
       setVocabularyFolder(res);
@@ -26,6 +36,15 @@ function Vocabulary() {
     });
   }, []);
 
+  const renderCardFolder = () => {
+      return listNextVocabularyFolder?.map((item, index) => {
+        return (
+          <div key={index}>
+            <VocabularyFolderCard vocabularyFolder={item} />
+          </div>
+        );
+      });
+    };
   const renderCard = () => {
     return listVocabularies.map((item, index) => {
       return (
@@ -35,6 +54,8 @@ function Vocabulary() {
       );
     });
   };
+   
+
   const onChange = (currentCard) => {
     setIndexVocabulary(currentCard);
   };
@@ -100,25 +121,6 @@ function Vocabulary() {
     audioRef.current.src = playlist[index];
     audioRef.current.play();
   };
-
-  const [listVocabularyFolder, setListVocabularyFolder] = useState();
-  const { getAllVocabularyFolder } = vocabularyFolderService();
-
-  useEffect(() => {
-    getAllVocabularyFolder().then((res) => {
-      setListVocabularyFolder(res);
-    });
-  }, []);
-
-  const renderCardFolder = () => {
-    return listVocabularyFolder?.map((item, index) => {
-      return (
-        <div key={index}>
-          <VocabularyFolderCard vocabularyFolder={item} />
-        </div>
-      );
-    });
-  };
   return (
     <div>
       <div className={cx("vocabulary")}>
@@ -164,14 +166,7 @@ function Vocabulary() {
         </div>
         <div className={cx("list-vocabulary-folder")}>
           <div className={cx("list-vocabulary-folder__card")}>
-            <div className={cx("list-vocabulary-folder__card1")}>
-              <VocabularyFolderCard />
-              <VocabularyFolderCard />
-            </div>
-            <div className={cx("list-vocabulary-folder__card2")}>
-              <VocabularyFolderCard />
-              <VocabularyFolderCard />
-            </div>
+            { renderCardFolder() }
           </div>
         </div>
       </div>
