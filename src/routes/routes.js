@@ -49,6 +49,8 @@ import CreateLesson from "~/pages/CreateLesson/CreateLesson";
 import CompletedCourse from "~/components/CompletedCourse/CompletedCourse";
 import CourseCreated from "~/components/CourseCreated/CourseCreated";
 import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
+import ExamHistoryFolder from "~/pages/ExamHistoryFolder/ExamHistoryFolder";
+import ExamHistory from "~/pages/ExamHistory/ExamHistory";
 
 // Public routes
 const publicRoutes = [
@@ -131,6 +133,16 @@ const publicRoutes = [
     component: CreateLesson,
     layout: ProfileUser,
   },
+  {
+    path: config.routes.examHistoryFolder,
+    component: ExamHistoryFolder,
+    layout: ProfileUser,
+  },
+  {
+    path: config.routes.examHistory,
+    component: ExamHistory,
+    layout: ProfileUser
+  }
 ];
 
 // Private routes
