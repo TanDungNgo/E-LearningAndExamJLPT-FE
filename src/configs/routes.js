@@ -49,6 +49,7 @@ const routes = {
 
   editCourse: "/admin/course/edit/:id",
   editArticle: "/admin/articles/edit/:id",
+  editGrammar: "/admin/grammar/edit/:id"
 
 };
 

@@ -37,6 +37,7 @@ function Vocabulary() {
       setListVocabularies(res.vocabularies);
       setFolderTitle(res.title);
       setFolderVocabCount(res.count);
+      setPlaylist(res.vocabularies.map((item) => item.audio));
     });
     
   }, []);
