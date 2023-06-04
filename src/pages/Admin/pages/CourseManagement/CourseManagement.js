@@ -59,6 +59,7 @@ function CourseManagement() {
     tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const handleDeleteCourse = (id) => {
+    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

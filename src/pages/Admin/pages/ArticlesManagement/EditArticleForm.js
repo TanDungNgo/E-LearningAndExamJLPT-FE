@@ -13,17 +13,16 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
-import courseService from "~/services/courseService";
+import ArticlesService from "~/services/articlesService";
 import { useParams } from "react-router-dom";
 const { Option } = Select;
 
-const EditCourseForm = () => {
+const EditArticleForm = () => {
   const { id } = useParams();
-  const { getCourseById, updateCourse } = courseService();
-  const [course, setCourse] = useState({});
+  const { getArticleById, updateArticle } = ArticlesService();
+  const [article, setArticle] = useState({});
   const [imgSrc, setImgSrc] = useState("");
   const [fileImage, setFileImage] = useState("");
-  const { createCourse } = courseService();
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState(null);
   const [checkChangeImage, setCheckChangeImage] = useState(false);
@@ -64,19 +63,19 @@ const EditCourseForm = () => {
           const url = await getDownloadURL(uploadTask.snapshot.ref);
           const data = {
             ...values,
-            banner: url,
+            image: url,
           };
           console.log(data);
-          updateCourse(id, data);
+          updateArticle(id, data);
         }
       );
     } else {
       const data = {
         ...values,
-        banner: imgSrc,
+        image: imgSrc,
       };
       console.log(data);
-      updateCourse(id, data);
+      updateArticle(id, data);
     }
   };
 
@@ -85,20 +84,16 @@ const EditCourseForm = () => {
   };
   const [form] = Form.useForm();
   useEffect(() => {
-    const getCourse = async () => {
-      const course = await getCourseById(id);
-      setImgSrc(course.banner);
+    const getArticle = async () => {
+      const article = await getArticleById(id);
+      setImgSrc(article.image);
       form.setFieldsValue({
-        name: course.name,
-        description: course.description,
-        level: course.level,
-        duration: course.duration,
-        price: course.price,
-        type: course.type,
-        isPublic: true,
+        title: article.title,
+        description: article.description,
+        content: article.content,
       });
     };
-    getCourse();
+    getArticle();
   }, []);
 
   return (
@@ -109,11 +104,11 @@ const EditCourseForm = () => {
       layout="vertical"
     >
       <Form.Item
-        label="Name"
-        name="name"
-        rules={[{ required: true, message: "Please input a name!" }]}
+        label="Title"
+        name="title"
+        rules={[{ required: true, message: "Please input a title!" }]}
       >
-        <Input defaultValue={course.name} />
+        <Input defaultValue={article.title} />
       </Form.Item>
       <Form.Item
         label="Description"
@@ -126,64 +121,20 @@ const EditCourseForm = () => {
           },
         ]}
       >
+        <Input.TextArea style={{ height: "120px" }} />
+      </Form.Item>
+      <Form.Item
+        label="Content"
+        name="content"
+        rules={[
+          { required: true, message: "Please input a content!" },
+          {
+            max: 5000,
+            message: "Description should be less than 100 characters!",
+          },
+        ]}
+      >
         <Input.TextArea style={{ height: "180px" }} />
-      </Form.Item>
-      <Form.Item
-        label="Level"
-        name="level"
-        rules={[{ required: true, message: "Please select a level!" }]}
-      >
-        <Select>
-          <Option value=""></Option>
-          <Option value="N1">N1</Option>
-          <Option value="N2">N2</Option>
-          <Option value="N3">N3</Option>
-          <Option value="N4">N4</Option>
-          <Option value="N5">N5</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label="Type"
-        name="type"
-        rules={[{ required: true, message: "Please select a type!" }]}
-      >
-        <Select>
-          <Option value=""></Option>
-          <Option value="JLPT">JLPT</Option>
-          <Option value="Kaiwa">Kaiwa</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label="Duration"
-        name="duration"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            message: "Please input a duration!",
-          },
-        ]}
-      >
-        <InputNumber
-          addonAfter={<Form.Item noStyle>Month</Form.Item>}
-          style={{ width: "20%" }}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Price"
-        name="price"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            message: "Please input a price!",
-          },
-        ]}
-      >
-        <InputNumber
-          addonAfter={<Form.Item noStyle>$</Form.Item>}
-          style={{ width: "20%" }}
-        />
       </Form.Item>
       <Form.Item
         label="Status"
@@ -195,7 +146,7 @@ const EditCourseForm = () => {
         <Switch />
       </Form.Item>
       <Form.Item
-        name="banner"
+        name="image"
         // rules={[{ required: true, message: "Please upload a banner!" }]}
       >
         <div>
@@ -237,4 +188,4 @@ const EditCourseForm = () => {
   );
 };
 
-export default EditCourseForm;
+export default EditArticleForm;

@@ -51,6 +51,7 @@ import CourseCreated from "~/components/CourseCreated/CourseCreated";
 import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
 
 import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
+import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
 
 // Public routes
 const publicRoutes = [
@@ -212,6 +213,7 @@ const privateRoutes = [
     layout: Admin,
   },
   {path: config.routes.editCourse, component: EditCourseForm, layout: Admin},
+  {path: config.routes.editArticle, component: EditArticleForm, layout: Admin},
 ];
 
 export { publicRoutes, privateRoutes };
