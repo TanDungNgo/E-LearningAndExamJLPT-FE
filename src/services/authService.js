@@ -42,7 +42,6 @@ function AuthService() {
               message: res.data.message,
               description: `Welcome ${res.data.data.firstname}!`,
             });
-            dispatch(loginSuccess(res.data.data));
             setToken(res.data.data.token);
             const roles = res.data.data.roles;
             console.log(roles[0].authority);
@@ -73,6 +72,7 @@ function AuthService() {
   const getCurrentUser = async () => {
     try {
       const res = await request.get(`/auth/info`);
+      dispatch(loginSuccess(res.data.data));
       return res.data.data;
     } catch (error) {
       console.log(error);
@@ -110,6 +110,7 @@ function AuthService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
+            dispatch(loginSuccess(res.data.data));
             navigate(routes.publicProfile);
           });
         } else {
