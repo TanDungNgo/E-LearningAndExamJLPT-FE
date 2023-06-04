@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "~/configs/routes";
 import { loginFailed, loginSuccess } from "~/redux/authSlice";
 import RequestHttp from "~/utils/request";
+import Swal from "sweetalert2";
 
 function AuthService() {
   const { request, setToken } = RequestHttp();
@@ -41,7 +42,6 @@ function AuthService() {
               message: res.data.message,
               description: `Welcome ${res.data.data.firstname}!`,
             });
-            dispatch(loginSuccess(res.data.data));
             setToken(res.data.data.token);
             const roles = res.data.data.roles;
             console.log(roles[0].authority);
@@ -72,6 +72,7 @@ function AuthService() {
   const getCurrentUser = async () => {
     try {
       const res = await request.get(`/auth/info`);
+      dispatch(loginSuccess(res.data.data));
       return res.data.data;
     } catch (error) {
       console.log(error);
@@ -100,12 +101,32 @@ function AuthService() {
       });
     }
   };
+  const updateProfile = async (userData) => {
+    try {
+      await request.put(`/auth/update`, userData).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            dispatch(loginSuccess(res.data.data));
+            navigate(routes.publicProfile);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return {
     register,
     login,
     logout,
     getCurrentUser,
     changePassword,
+    updateProfile,
   };
 }
 

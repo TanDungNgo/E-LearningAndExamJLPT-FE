@@ -19,9 +19,29 @@ function lessonService() {
       return null;
     }
   };
+  const getCommentByLessonId = async (id) => {
+    try {
+      const res = await request.get(`/comments/lesson/${id}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+  const commentLesson = async (data) => {
+    try {
+      const res = await request.post(`/comments/`, data);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
   return {
     getAllLesson,
     getLessonById,
+    getCommentByLessonId,
+    commentLesson
   };
 }
 

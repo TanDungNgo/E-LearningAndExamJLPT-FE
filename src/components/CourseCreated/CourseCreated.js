@@ -2,28 +2,30 @@ import React, { useEffect, useState } from "react";
 import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
 import styles from "./CourseCreated.module.scss";
-import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
 import { Space, Spin } from "antd";
 
 const cx = classNames.bind(styles);
 
 function CourseCreated() {
-  const [listCourse, setListCourse] = useState();
-  const { getAllCourse } = courseService();
+  const [MyCourse, setListMyCourse] = useState([]);
+  const { getMyCourse } = courseService();
+
   useEffect(() => {
-    getAllCourse().then((res) => {
-      setListCourse(res);
+    getMyCourse().then((res) => {
+      console.log(res);
+      setListMyCourse(res);
     });
   }, []);
+
   const renderCard = () => {
-    return listCourse?.map((item, index) => {
+    return MyCourse?.map((item, index) => {
       return (
         <div key={index}>
-          <CourseCard course={item} />
+          <CourseCard course = {item}/>
         </div>
-      );
-    });
+      )
+    })
   };
 
   return (
@@ -35,13 +37,11 @@ function CourseCreated() {
         </h1>
       </div>
       <div className={cx("list-course")}>
-        {listCourse ? (
+        {MyCourse ? (
           renderCard()
         ) : (
-          <Space>
-            <Spin tip="Loading" size="large">
-              <div className="content" />
-            </Spin>
+          <Space size="large" className={cx("loading-spinner")}>
+            <Spin tip="Loading" size="large" />
           </Space>
         )}
       </div>

@@ -52,6 +52,10 @@ import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
 import ExamHistoryFolder from "~/pages/ExamHistoryFolder/ExamHistoryFolder";
 import ExamHistory from "~/pages/ExamHistory/ExamHistory";
 
+import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
+import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
+import EditGrammarForm from "~/pages/Admin/pages/GrammarManagement/EditGrammarForm";
+
 // Public routes
 const publicRoutes = [
   { path: config.routes.signin, component: Signin },
@@ -220,7 +224,10 @@ const privateRoutes = [
     path: config.routes.addQuestion,
     component: AddQuestionForm,
     layout: Admin,
-  }
+  },
+  {path: config.routes.editCourse, component: EditCourseForm, layout: Admin},
+  {path: config.routes.editArticle, component: EditArticleForm, layout: Admin},
+  {path: config.routes.editGrammar, component: EditGrammarForm, layout: Admin},
 ];
 
 export { publicRoutes, privateRoutes };

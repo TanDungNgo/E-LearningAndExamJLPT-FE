@@ -8,22 +8,49 @@ import { useParams } from "react-router-dom";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { data } from "../Admin/components/DashboardChart/DashboardChart";
 
 const cx = classNames.bind(styles);
 
 function Vocabulary() {
   const { id } = useParams();
-  const { getVocabularyFolderById } = vocabularyFolderService();
+  const { getVocabularyFolderById, getNextVocabularyFolders } = vocabularyFolderService();
   const [listVocabularies, setListVocabularies] = useState([]);
   const [vocabularyFolder, setVocabularyFolder] = useState();
   const [indexVocabulary, setIndexVocabulary] = useState(0);
+  const [listNextVocabularyFolder, setNextListVocabularyFolder] = useState();
+  const [folderTitle, setFolderTitle] = useState("");
+  const [folderVocabCount, setFolderVocabCount] = useState(0);
+
+
   useEffect(() => {
-    getVocabularyFolderById(id).then((res) => {
-      setVocabularyFolder(res)
-      setListVocabularies(res.vocabularies);
+    getNextVocabularyFolders(id).then((res) => {
+      setVocabularyFolder(res);
+      setNextListVocabularyFolder(res);
+      console.log("[VocabularyFolder2]", res);
     });
   }, []);
+  useEffect(() => {
+    getVocabularyFolderById(id).then((res) => {
+      setVocabularyFolder(res);
+      setListVocabularies(res.vocabularies);
+      setFolderTitle(res.title);
+      setFolderVocabCount(res.count);
+      setPlaylist(res.vocabularies.map((item) => item.audio));
+    });
+    
+  }, []);
 
+  const renderCardFolder = () => {
+      return listNextVocabularyFolder?.map((item, index) => {
+        return (
+          <div key={index}>
+            <VocabularyFolderCard vocabularyFolder={item} />
+          </div>
+        );
+      });
+    };
   const renderCard = () => {
     return listVocabularies.map((item, index) => {
       return (
@@ -33,11 +60,11 @@ function Vocabulary() {
       );
     });
   };
-  const onChange = (currentCard) => {
-    setCurrentFlashcard(currentCard);
-  };
+   
 
-  const [currentFlashcard, setCurrentFlashcard] = useState(0);
+  const onChange = (currentCard) => {
+    setIndexVocabulary(currentCard);
+  };
 
   const SampleNextArrow = ({ className, style, onClick }) => {
     return (
@@ -45,16 +72,17 @@ function Vocabulary() {
         className={className}
         style={{
           ...style,
-          color: 'black',
-          fontSize: '35px',
-          lineHeight: '2',
-          margin: ' -40px 0px 0px -15px'
+          color: "white",
+          fontSize: "35px",
+          lineHeight: "2",
+          margin: " -100px 0px 0px -15px",
         }}
         onClick={onClick}
       >
+        <RightOutlined style={{ color: "black" }} />
       </div>
-    )
-  }
+    );
+  };
 
   const SamplePrevArrow = ({ className, style, onClick }) => {
     return (
@@ -62,114 +90,92 @@ function Vocabulary() {
         className={className}
         style={{
           ...style,
-          color: 'black',
-          fontSize: '35px',
-          lineHeight: '2',
-          margin: ' -40px 0px 0px -15px'
+          color: "white",
+          fontSize: "35px",
+          lineHeight: "2",
+          margin: " -100px 0px 0px -15px",
         }}
         onClick={onClick}
       >
+        <LeftOutlined style={{ color: "black" }} />
       </div>
-    )
-  }
+    );
+  };
   const settings = {
-    nextArrow: <SampleNextArrow onClick={() => setIndexVocabulary(indexVocabulary + 1)} />,
-    prevArrow: <SamplePrevArrow onClick={() => setIndexVocabulary(indexVocabulary - 1)} />
-  }
-
-  //xu ly am thanh
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
-  const handleSoundClick = () => {
-    console.log(listVocabularies[0]?.audio);
-    setIsPlaying(!isPlaying);
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
+    nextArrow: (
+      <SampleNextArrow
+        onClick={() => {
+          setIndexVocabulary(indexVocabulary + 1);
+          handleSoundClick(indexVocabulary + 1);
+        }}
+      />
+    ),
+    prevArrow: (
+      <SamplePrevArrow
+        onClick={() => {
+          setIndexVocabulary(indexVocabulary - 1);
+          handleSoundClick(indexVocabulary - 1);
+        }}
+      />
+    ),
   };
 
-  const [listVocabularyFolder, setListVocabularyFolder] = useState();
-  const {getAllVocabularyFolder} = vocabularyFolderService();
-
-  useEffect(() => {
-    getAllVocabularyFolder().then((res) => {
-      console.log(res);
-      setListVocabularyFolder(res);
-    });
-
-  }, []);
-
-  const renderCardFolder = () => {
-    return listVocabularyFolder?.map((item, index) => {
-      return(
-        <div key={index}>
-          <VocabularyFolderCard vocabularyFolder={item}/>
-        </div>
-      )
-    })
-  }
-
-
+  //xu ly am thanh
+  const [playlist, setPlaylist] = useState([]);
+  const audioRef = useRef(null);
+  const handleSoundClick = (index) => {
+    audioRef.current.src = playlist[index];
+    audioRef.current.play();
+  };
   return (
     <div>
       <div className={cx("vocabulary")}>
-        <div className={cx("vocabulary__title")}>
-          {vocabularyFolder?.title
-            ? vocabularyFolder?.title
-            : "2000Tango N5 Chapter 1 Section 1"}
-        </div>
+        <div className={cx("vocabulary__title")}>{folderTitle ? folderTitle : "2000Tango N5 Chapter 1 Section 1"}</div>
         <div className={cx("vocabulary__description")}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png"
             className={cx("vocabulary__image")}
             alt="Vocabulary"
           />
-          <div className={cx("vocabulary__description-title")}>{vocabularyFolder?.count} Vocabularies</div>
+          <div className={cx("vocabulary__description-title")}>
+          {folderVocabCount} Vocabularies
+          </div>
         </div>
-        <div className={cx("vocabulary__sound")} onClick={handleSoundClick}>
-          <FontAwesomeIcon icon={faVolumeHigh} className={cx("icon-sound")} />
-          <audio ref={audioRef}>
-            <source
-              src={listVocabularies[indexVocabulary]?.audio}
-            />
+        <div className={cx("vocabulary__sound")}>
+          <FontAwesomeIcon
+            icon={faVolumeHigh}
+            className={cx("icon-sound")}
+            onClick={() => handleSoundClick(indexVocabulary)}
+          />
+          <audio ref={audioRef} controls hidden>
+            <source type="audio/ogg" />
           </audio>
         </div>
 
         <div className={cx("vocabulary__content")}>
-          <div className={cx("vocabulary__content__vocabulary-card")}>
-            <Carousel
-              arrows
-              {...settings}
-              afterChange={onChange}
-            >
-              {renderCard()}
-            </Carousel>
-          </div>
+          <Carousel
+            style={{
+              width: "680px",
+              margin: "0 auto",
+            }}
+            arrows
+            {...settings}
+            afterChange={onChange}
+          >
+            {renderCard()}
+          </Carousel>
         </div>
         <div className={cx("vocabulary__container")}>
           <div className={cx("vocabulary-slide")}>
-            {currentFlashcard + 1} / {listVocabularies.length}
+            {indexVocabulary + 1} / {listVocabularies.length}
           </div>
         </div>
         <div className={cx("list-vocabulary-folder")}>
-
           <div className={cx("list-vocabulary-folder__card")}>
-            <div className={cx("list-vocabulary-folder__card1")}>
-              <VocabularyFolderCard />
-              <VocabularyFolderCard />
-            </div>
-            <div className={cx("list-vocabulary-folder__card2")}>
-              <VocabularyFolderCard />
-              <VocabularyFolderCard />
-            </div>
+            { renderCardFolder() }
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }

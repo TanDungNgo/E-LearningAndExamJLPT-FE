@@ -1,6 +1,10 @@
 import RequestHttp from "~/utils/request";
 import Swal from "sweetalert2";
-function articlesService() {
+import routes from "~/configs/routes";
+import { useNavigate } from "react-router-dom";
+function ArticlesService() {
+  
+  const navigate = useNavigate();
   const { request } = RequestHttp();
   const getAllArticles = async () => {
     try {
@@ -29,7 +33,45 @@ function articlesService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            window.location.reload();
+            navigate(routes.articlesManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateArticle = async (id, article) => {
+    try {
+      await request.put(`/articles/${id}`, article).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.articlesManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteArticle = async (id) => {
+    try {
+      await request.delete(`/articles/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.articlesManagement);
           });
         } else {
         }
@@ -45,7 +87,9 @@ function articlesService() {
     getAllArticles,
     getArticleById,
     createArticle,
+    updateArticle,
+    deleteArticle,
   };
 }
 
-export default articlesService;
+export default ArticlesService;
