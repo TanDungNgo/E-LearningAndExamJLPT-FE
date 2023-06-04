@@ -6,7 +6,7 @@ import { Menu } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { faCheckCircle, faFolderClosed, faPenToSquare, faPlusSquare, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faCheckCircle, faClock, faFolderClosed, faPenToSquare, faPlusSquare, faUser } from "@fortawesome/free-regular-svg-icons";
 import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
@@ -62,6 +62,11 @@ function SideMenu() {
             label: "Update Course",
             icon: <FontAwesomeIcon icon={faPenToSquare} />,
             key: `${routes.updateCourse}`,
+          },
+          {
+            label: "Exam History",
+            icon: <FontAwesomeIcon icon={faClock} />,
+            key: `${routes.examHistoryFolder}`,
           },
         ]}
       ></Menu>
