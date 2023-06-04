@@ -3,18 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import examResultService from "~/services/examResultService";
 
-function ExamHistoryFolder(props) {
+function ExamHistoryFolder() {
   const columns = [
     {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      render: (id) => <Link to={`/profileUser/examHistoryFolder/examHistory/${id}`}>{id}</Link>,
     },
     {
       title: "Name",
       dataIndex: "examId",
       key: "name",
-      render: (text) => <Link to={`/profileUser/examHistoryFolder/examHistory/${props?.history?.id}`}>{text}</Link>,
     },
     {
       title: "Score",

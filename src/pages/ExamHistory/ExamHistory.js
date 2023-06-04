@@ -21,11 +21,16 @@ function ExamHistory() {
   const { id } = useParams();
   const { getExamResultById } = examResultService();
   const [history, setHistory] = useState();
+  const [languageKnowledge, setLanguageKnowledge] = useState();
+  const [readingComprehension, setReadingComprehension] = useState();
+  const [listening, setListening] = useState();
   useEffect(() => {
     const getExamResult = async () => {
-      const res = await getExamResultById(3);
+      const res = await getExamResultById(id);
       setHistory(res);
-      console.log(res);
+      setLanguageKnowledge(res.languageKnowledgeQuestions);
+      setReadingComprehension(res.readingQuestions);
+      setListening(res.listeningQuestions);
     };
     getExamResult();
   }, []);
@@ -49,7 +54,7 @@ function ExamHistory() {
             <img src={`/images/${examLevel}.png`} alt="exam" />
           </div> */}
           <div className={cx("exam-info")}>
-            <h2 className={cx("exam-info__title")}>{history?.id}</h2>
+            <h2 className={cx("exam-info__title")}>{history?.examName}</h2>
             <div className={cx("exam-info__test-date")}>
               <FontAwesomeIcon icon={faCalendarDays} />
               <p>
@@ -60,7 +65,7 @@ function ExamHistory() {
           </div>
         </div>
         <div>
-          <Link to={routes.examFolder}>
+          <Link to={routes.examHistoryFolder}>
             <Button type="primary" icon={<RollbackOutlined />}>
               Back
             </Button>
@@ -134,7 +139,7 @@ function ExamHistory() {
         </table>
       </div>
       <div className={cx("exam-result__table")}>
-        {/* <h4>- Language knowledge(Characters / Vocabulary / Grammar)</h4>
+        <h4>- Language knowledge(Characters / Vocabulary / Grammar)</h4>
         <table>
           <tbody>
             <tr>
@@ -199,8 +204,8 @@ function ExamHistory() {
               </tr>
             ))}
           </tbody>
-        </table> */}
-      {/* </div>
+        </table>
+      </div>
       <div className={cx("exam-result__table")}>
         <h4>- Listening</h4>
         <table>
@@ -233,7 +238,7 @@ function ExamHistory() {
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
       </div>
       <Modal
         title="Answer Detail"
