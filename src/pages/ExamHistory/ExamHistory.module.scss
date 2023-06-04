@@ -1,0 +1,135 @@
+.exam-result {
+    margin: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #e8edf6;
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      height: 130px;
+      &--right {
+        display: flex;
+        width: 50%;
+      }
+      .exam-image img {
+        height: 100%;
+        width: 200px;
+      }
+      .exam-info {
+        padding: 20px;
+        &__test-date {
+          color: #b0bac9;
+          margin-top: 20px;
+          display: flex;
+          align-items: center;
+          p {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+    &__table {
+      margin-top: 20px;
+      h4 {
+        margin: 10px 0;
+      }
+      table {
+        width: 100%;
+        background-color: #fff;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+      }
+  
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+      .status {
+        font-weight: 700;
+      }
+      .pass {
+        color: #04c40d;
+      }
+      .fail {
+        color: #e12b1c;
+      }
+      .info {
+        display: flex;
+        font-size: 13px;
+        color: #b0bac9;
+        justify-content: center;
+        svg {
+          margin-top: 3px;
+        }
+        p {
+          margin-left: 5px;
+        }
+      }
+    }
+    &__row {
+      cursor: pointer;
+    }
+  }
+  .question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__title {
+      margin: 10px 0;
+      font-size: 20px;
+    }
+    &__content {
+      margin: 10px 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    &__image {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    &__audio {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .list-answer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    .answer {
+      padding: 10px;
+      border: 0.1rem solid #dededc;
+      background-color: var(--white);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      &__content {
+        margin-left: 10px;
+        span {
+          font-weight: 500;
+          margin-left: 5px;
+        }
+        .correct {
+          color: #04c40d;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+  .answer-explanation{
+    &__title{
+      font-size: 15px;
+      font-weight: 700;
+      margin: 10px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    &__content{
+      font-size: 15px;
+      font-weight: 500;
+      margin: 10px 0;
+    }
+  }
+  

@@ -25,6 +25,9 @@ const routes = {
   podcast: "/podcast",
   createLesson: "/profileUser/createLesson",
   formUpdate: "/profileUser/updateCourse/formUpdate",
+  examHistoryFolder: "/profileUser/examHistoryFolder",
+  examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
+
   // Admin routes
   admin: "/admin",
   courseManagement: "/admin/course",
