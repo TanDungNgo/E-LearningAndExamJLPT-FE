@@ -9,8 +9,6 @@ import articlesService from "~/services/articlesService";
 const cx = classNames.bind(styles);
 
 function ArticleFolder() {
-
-
   const { id } = useParams();
   const { getAllArticles } = articlesService();
   const [listArticle, setListArticle] = useState();
