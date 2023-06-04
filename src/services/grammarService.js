@@ -1,7 +1,10 @@
 import RequestHttp from "~/utils/request";
 import Swal from "sweetalert2";
-function grammarService() {
+import routes from "~/configs/routes";
+import { useNavigate } from "react-router-dom";
+function GrammarService() {
   const { request } = RequestHttp();
+  const navigate = useNavigate();
   const getAllGrammars = async () => {
     try {
       const res = await request.get("/grammars/all");
@@ -39,11 +42,51 @@ function grammarService() {
     }
   };
 
+  const updateGrammar = async (id, grammar) => {
+    try {
+      await request.put(`/grammars/${id}`, grammar).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.grammarManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteGrammar = async (id) => {
+    try {
+      await request.delete(`/grammars/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.grammarManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getAllGrammars,
     getGrammarById,
     createGrammar,
+    updateGrammar,
+    deleteGrammar,
   };
 }
 
-export default grammarService;
+export default GrammarService;

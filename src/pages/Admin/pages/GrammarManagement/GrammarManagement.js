@@ -8,61 +8,65 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import grammarService from "~/services/grammarService";
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Text",
-    dataIndex: "text",
-    key: "text",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Explanation ",
-    dataIndex: "explanation",
-    key: "explanation ",
-  },
-  {
-    title: "Example",
-    dataIndex: "example",
-    key: "example",
-  },
-  {
-    title: "Means",
-    dataIndex: "means",
-    key: "means",
-  },
-  {
-    title: "Level",
-    dataIndex: "level",
-    key: "level",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>
-          <EditOutlined
-            style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
-          />
-        </a>
-        <a>
+import Swal from "sweetalert2";
+
+function GrammarManagement() {
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Text",
+      dataIndex: "text",
+      key: "text",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Explanation ",
+      dataIndex: "explanation",
+      key: "explanation ",
+    },
+    {
+      title: "Example",
+      dataIndex: "example",
+      key: "example",
+    },
+    {
+      title: "Means",
+      dataIndex: "means",
+      key: "means",
+    },
+    {
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => (
+        <Space size="middle">
+          <Link to={`/admin/grammar/edit/${id}`}>
+            <EditOutlined
+              style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
+            />
+          </Link>
           <DeleteOutlined
+            onClick={() => handleDeleteGrammar(id)}
             style={{ fontSize: "20px", marginLeft: "10px", color: "#f40808" }}
           />
-        </a>
-      </Space>
-    ),
-  },
-];
-function GrammarManagement() {
+        </Space>
+      ),
+    },
+  ];
+
+
   const [searchText, setSearchText] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
-  const { getAllGrammars } = grammarService();
+  const { getAllGrammars, deleteGrammar } = grammarService();
   const [grammarData, setGrammarData] = useState([]);
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
@@ -90,6 +94,26 @@ function GrammarManagement() {
   const tableRef = useRef(null);
   const handlePageChange = (pageNumber) => {
     tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleDeleteGrammar = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteGrammar(id).then((res) => {
+          getAllGrammars().then((res) => {
+            setGrammarData(res);
+          });
+        });
+      }
+    });
   };
   return (
     <div>
