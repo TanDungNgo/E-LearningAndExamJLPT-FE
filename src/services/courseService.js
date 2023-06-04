@@ -134,6 +134,14 @@ function CourseService() {
       return false;
     }
   };
+  const searchCourse = async (keyword,type,level) => {
+    try {
+      const res = await request.get(`/courses/search?query=${keyword}&type=${type}&level=${level}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     createCourse,
@@ -145,6 +153,7 @@ function CourseService() {
     getSuggestedCourses,
     checkEnroll,
     enrollCourse,
+    searchCourse,
   };
 }
 
