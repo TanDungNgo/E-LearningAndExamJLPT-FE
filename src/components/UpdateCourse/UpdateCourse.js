@@ -10,9 +10,9 @@ const cx = classNames.bind(styles);
 
 function UpdateCourse() {
   const [listCourse, setListCourse] = useState();
-  const { getAllCourse } = courseService();
+  const { getMyCourse } = courseService();
   useEffect(() => {
-    getAllCourse().then((res) => {
+    getMyCourse().then((res) => {
       setListCourse(res);
     });
   }, []);

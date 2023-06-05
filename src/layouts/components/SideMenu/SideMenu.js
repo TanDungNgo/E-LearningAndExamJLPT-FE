@@ -61,7 +61,7 @@ function SideMenu() {
           {
             label: "Update Course",
             icon: <FontAwesomeIcon icon={faPenToSquare} />,
-            key: `${routes.updateCourse}`,
+            key: `${routes.updateCourseFolder}`,
           },
           {
             label: "Exam History",
