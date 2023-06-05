@@ -22,7 +22,7 @@ const AddVocabularyFolderForm = () => {
     }
 
     console.log(data);
-    // createVocabularyFolder(data);
+    createVocabularyFolder(data);
     
     setProgress(100);
   };
