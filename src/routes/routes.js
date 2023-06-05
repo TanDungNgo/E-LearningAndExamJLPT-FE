@@ -55,6 +55,7 @@ import ExamHistory from "~/pages/ExamHistory/ExamHistory";
 import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
 import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
 import EditGrammarForm from "~/pages/Admin/pages/GrammarManagement/EditGrammarForm";
+import UpdateCourseCard from "~/components/UpdateCourseCard/UpdateCourseCard";
 
 // Public routes
 const publicRoutes = [
@@ -73,7 +74,7 @@ const publicRoutes = [
   },
   { path: config.routes.courseCreated, component: CourseCreated, layout: ProfileUser },
   { path: config.routes.completedCourse, component: CompletedCourse, layout: ProfileUser },
-  { path: config.routes.updateCourse, component: UpdateCourse, layout: ProfileUser },
+  { path: config.routes.updateCourseFolder, component: UpdateCourse, layout: ProfileUser },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage, protected: true },
   {
