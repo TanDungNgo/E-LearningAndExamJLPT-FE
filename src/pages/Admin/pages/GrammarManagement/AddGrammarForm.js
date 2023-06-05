@@ -20,7 +20,7 @@ const AddGrammarForm = () => {
       ...values,
     }
     console.log(data);
-    // createGrammar(data);
+    createGrammar(data);
     setProgress(100);
   };
 

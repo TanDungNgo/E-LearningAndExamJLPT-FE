@@ -30,25 +30,25 @@ const columns = [
   //   key: "urlVideo",
   // },
 
-  {
-    title: "URL Video",
-    dataIndex: "urlVideo",
-    key: "urlVideo",
-    render: (text) => <div style={{ wordBreak: "break-all" }}>{text}</div>
-  },
+  // {
+  //   title: "URL Video",
+  //   dataIndex: "urlVideo",
+  //   key: "urlVideo",
+  //   render: (text) => <div style={{ wordBreak: "break-all" }}>{text}</div>
+  // },
   {
     title: "Rate",
     dataIndex: "rate",
     key: "rate",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>
-          <Rate
-            style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
-          />
-        </a>
-      </Space>
-    ),
+    // render: (_, record) => (
+    //   <Space size="middle">
+    //     <a>
+    //       <Rate
+    //         style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
+    //       />
+    //     </a>
+    //   </Space>
+    // ),
   },
   {
     title: "Action",

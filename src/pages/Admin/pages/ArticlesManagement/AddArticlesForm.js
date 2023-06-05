@@ -51,7 +51,7 @@ const AddArticlesForm = ({ onSubmit }) => {
           image: url,
         };
         console.log(data);
-        // createArticle(data);
+        createArticle(data);
       }
     );
   };
