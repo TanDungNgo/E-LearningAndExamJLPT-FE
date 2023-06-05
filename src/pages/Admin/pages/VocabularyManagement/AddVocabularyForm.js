@@ -22,7 +22,7 @@ const AddVocabularyForm = () => {
     }
 
     console.log(data);
-    // createVocabulary(data);
+    createVocabulary(data);
     setProgress(100);
 
   };

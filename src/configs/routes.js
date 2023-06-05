@@ -34,7 +34,7 @@ const routes = {
   lessonManagement: "/admin/lesson",
   grammarManagement: "/admin/grammar",
   vocabularyFolderManagement: "/admin/vocabularyfolder",
-  vocabularyManagement: "/admin/vocabulary",
+  vocabularyManagement: "/admin/vocabulary/:id",
   articlesManagement: "/admin/articles",
   userManagement: "/admin/user",
   examManagement: "/admin/exam",
@@ -52,7 +52,9 @@ const routes = {
 
   editCourse: "/admin/course/edit/:id",
   editArticle: "/admin/articles/edit/:id",
-  editGrammar: "/admin/grammar/edit/:id"
+  editGrammar: "/admin/grammar/edit/:id",
+  editVocabularyFolder: "/admin/vocabularyFolder/edit/:id",
+  editVocabulary: "/admin/vocabulary/edit/:id",
 
 };
 

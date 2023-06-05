@@ -46,13 +46,13 @@
 .list-vocabulary-folder__card {
   width: 100%;
   background-color: #f2f2f2;
-  height: 400px;
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  gap: 15px;
-  margin: 100px 0 80px;
-  justify-items: center;
-  align-items: center;
+  margin-top: 5%;
+  height: 420px;
+  padding-top: 2.5%;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 130px;
+  justify-content: center;
 }
 
 .icon-sound {
