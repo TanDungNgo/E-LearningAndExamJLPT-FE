@@ -4,80 +4,76 @@ import { Input } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
+import Swal from "sweetalert2";
 
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Text",
-    dataIndex: "text",
-    key: "text",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Pronunciation",
-    dataIndex: "pronunciation",
-    key: "pronunciation",
-  },
-  {
-    title: "Spelling",
-    dataIndex: "spelling",
-    key: "spelling",
-  },
-  {
-    title: "Meaning",
-    dataIndex: "meaning",
-    key: "meaning",
-  },
-  {
-    title: "Example",
-    dataIndex: "example",
-    key: "example",
-  },
-  {
-    title: "Audio",
-    dataIndex: "audio",
-    key: "audio",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>
-          <EditOutlined
-            style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
-          />
-        </a>
-        <a>
-          <DeleteOutlined
-            style={{ fontSize: "20px", marginLeft: "10px", color: "#f40808" }}
-          />
-        </a>
-      </Space>
-    ),
-  },
-];
 
 function VocabularyManagement() {
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Text",
+      dataIndex: "text",
+      key: "text",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Pronunciation",
+      dataIndex: "pronunciation",
+      key: "pronunciation",
+    },
+    {
+      title: "Spelling",
+      dataIndex: "spelling",
+      key: "spelling",
+    },
+    {
+      title: "Meaning",
+      dataIndex: "meaning",
+      key: "meaning",
+    },
+    {
+      title: "Example",
+      dataIndex: "example",
+      key: "example",
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => (
+        <Space size="middle">
+          <Link to={`/admin/vocabulary/edit/${id}`}>
+            <EditOutlined
+              style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
+            />
+          </Link>
+          <DeleteOutlined
+            onClick={() => handleDeleteVocabulary(id)}
+            style={{ fontSize: "20px", marginLeft: "10px", color: "#f40808" }}
+          />
+        </Space>
+      ),
+    },
+  ];
   const { id } = useParams();
-  const { getVocabularyFolderById } = vocabularyFolderService();
+  const { getVocabularyFolderById, deleteVocabulary, getAllVocabulary} = vocabularyFolderService();
   const [listVocabularies, setListVocabularies] = useState([]);
-  const [vocabularyFolder, setVocabularyFolder] = useState([]);
+  const [vocabularyFolder, setVocabularyFolder] = useState();
+  const [vocabularyData, setVocabularyData] = useState([]);
 
   useEffect(() => {
-    getVocabularyFolderById(1).then((res) => {
+    getVocabularyFolderById(id).then((res) => {
       setVocabularyFolder(res);
-      if (res && res.vocabularies) {
-        setListVocabularies(res.vocabularies);
-      } else {
-        // setListVocabularies([]);
-      }
+      console.log(res);
+      setListVocabularies(res.vocabularies);
+      console.log(res.vocabularies)
     });
   }, []);
+
 
   const [searchText, setSearchText] = useState("");
 
@@ -88,6 +84,26 @@ function VocabularyManagement() {
   const filteredVocabulary = listVocabularies.filter((vocabulary) => {
     return vocabulary.meaning.toLowerCase().includes(searchText.toLowerCase());
   });
+
+  const handleDeleteVocabulary = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteVocabulary(id).then((res) => {
+            getAllVocabulary().then((res) => {
+            setVocabularyData(res);
+          });
+        });
+      }
+    });
+  };
 
   return (
     <div>

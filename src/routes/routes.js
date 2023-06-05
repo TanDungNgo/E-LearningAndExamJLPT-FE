@@ -55,6 +55,8 @@ import ExamHistory from "~/pages/ExamHistory/ExamHistory";
 import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
 import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
 import EditGrammarForm from "~/pages/Admin/pages/GrammarManagement/EditGrammarForm";
+import EditVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManagement/EditVocabularyFolderForm";
+import EditVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/EditVocabularyForm";
 
 // Public routes
 const publicRoutes = [
@@ -228,6 +230,8 @@ const privateRoutes = [
   {path: config.routes.editCourse, component: EditCourseForm, layout: Admin},
   {path: config.routes.editArticle, component: EditArticleForm, layout: Admin},
   {path: config.routes.editGrammar, component: EditGrammarForm, layout: Admin},
+  {path: config.routes.editVocabularyFolder, component: EditVocabularyFolderForm, layout: Admin},
+  {path: config.routes.editVocabulary, component: EditVocabularyForm, layout: Admin},
 ];
 
 export { publicRoutes, privateRoutes };
