@@ -11,13 +11,57 @@ import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function SideMenu() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(["/profileUser"]);
   useEffect(() => {
     const pathName = location.pathname;
     setSelectedKey(pathName);
   }, [location.pathname]);
-  const navigate = useNavigate();
+
+  const item = [
+    {
+      label: "Public Profile",
+      icon: <FontAwesomeIcon icon={faUser} />,
+      key: `${routes.publicProfile}`,
+    },
+    {
+      label: "Change Password",
+      icon: <SettingOutlined />,
+      key: `${routes.changePassword}`,
+    },
+    {
+      label: "Create Course",
+      icon: <FontAwesomeIcon icon={faPlusSquare} />,
+      key: `${routes.createCourse}`,
+    },
+    {
+      label: "Create Lesson",
+      icon: <FontAwesomeIcon icon={faAdd} />,
+      key: `${routes.createLesson}`,
+    },
+    {
+      label: "Courses Created",
+      icon: <FontAwesomeIcon icon={faFolderClosed} />,
+      key: `${routes.courseCreated}`,
+    },
+    {
+      label: "Completed Courses",
+      icon: <FontAwesomeIcon icon={faCheckCircle} />,
+      key: `${routes.completedCourse}`,
+    },
+    {
+      label: "Update Course",
+      icon: <FontAwesomeIcon icon={faPenToSquare} />,
+      key: `${routes.updateCourse}`,
+    },
+    {
+      label: "Exam History",
+      icon: <FontAwesomeIcon icon={faClock} />,
+      key: `${routes.examHistoryFolder}`,
+    },
+  ]
+
   return (
     <div className={cx("card")}>
       <Menu
@@ -27,48 +71,7 @@ function SideMenu() {
           navigate(item.key);
         }}
         selectedKeys={selectedKey}
-        items={[
-          {
-            label: "Public Profile",
-            icon: <FontAwesomeIcon icon={faUser} />,
-            key: `${routes.publicProfile}`,
-          },
-          {
-            label: "Change Password",
-            icon: <SettingOutlined />,
-            key: `${routes.changePassword}`,
-          },
-          {
-            label: "Create Course",
-            icon: <FontAwesomeIcon icon={faPlusSquare} />,
-            key: `${routes.createCourse}`,
-          },
-          {
-            label: "Create Lesson",
-            icon: <FontAwesomeIcon icon={faAdd} />,
-            key: `${routes.createLesson}`,
-          },
-          {
-            label: "Courses Created",
-            icon: <FontAwesomeIcon icon={faFolderClosed} />,
-            key: `${routes.courseCreated}`,
-          },
-          {
-            label: "Completed Courses",
-            icon: <FontAwesomeIcon icon={faCheckCircle} />,
-            key: `${routes.completedCourse}`,
-          },
-          {
-            label: "Update Course",
-            icon: <FontAwesomeIcon icon={faPenToSquare} />,
-            key: `${routes.updateCourse}`,
-          },
-          {
-            label: "Exam History",
-            icon: <FontAwesomeIcon icon={faClock} />,
-            key: `${routes.examHistoryFolder}`,
-          },
-        ]}
+        items={item}
       ></Menu>
     </div>
   );
