@@ -59,10 +59,17 @@ function GrammarsFolder() {
       </div>
     );
   };
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // }, [currentPage]);
+
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const element = document.getElementById("scroll-target"); // ID của element bạn muốn cuộn đến
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" }); // Cuộn đến vị trí của element
+    }
   }, [currentPage]);
-  
+
 
   return (
     <div className={cx("container")}>
@@ -97,16 +104,17 @@ function GrammarsFolder() {
         <div className={cx("card-title__detail")}>Grammar</div>
       </div> */}
 
+      <div id="scroll-target"></div>
+
       <div className={cx("card-grammar")}>
         {!data ? (
           <Space style={{ marginTop: "100px" }}>
             <Spin tip="Loading" size="large">
-              <div className="content" />
             </Spin>
           </Space>
         ) : (
           <>
-            <div id="scroll-target"></div>
+
             {renderData()}
           </>
         )}
