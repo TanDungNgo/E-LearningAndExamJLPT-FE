@@ -87,7 +87,6 @@ function AllCourse() {
           required
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          onSearch={handleSearch}
         />
         <Button className={cx("btn-search")} onClick={handleSearch}>
           Search

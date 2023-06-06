@@ -112,15 +112,24 @@
         content: ".";
       }
     }
-    &__time {
+    &__icon {
       font-size: 10px;
       color: #999;
+      .icon-lock{
+        margin-right: 5px;
+        color: #949390;
+        font-size: 10px;
+      }
       .icon-play {
         margin-right: 5px;
         color: #ebba16;
         font-size: 10px;
       }
     }
+  }
+  .disabled{
+    color: #949390;
+    cursor: not-allowed;
   }
 }
 

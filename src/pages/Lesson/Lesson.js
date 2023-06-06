@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Lesson.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
   faInfoCircle,
+  faLock,
   faNoteSticky,
   faPlayCircle,
   faPlus,
@@ -25,7 +26,12 @@ function Lesson() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { courseId } = useParams();
-  const { getLessonById, getCommentByLessonId, commentLesson } = lessonService();
+  const {
+    getLessonById,
+    getCommentByLessonId,
+    commentLesson,
+    completedLesson,
+  } = lessonService();
   const { getCourseById } = courseService();
   const [course, setCourse] = useState();
   const [lessons, setLessons] = useState([]);
@@ -36,6 +42,8 @@ function Lesson() {
   const { getCurrentUser } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
+  const [completedLessonCount, setCompletedLessonCount] = useState(0);
+  const [percentComplete, setPercentComplete] = useState(0);
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -50,6 +58,11 @@ function Lesson() {
     getCourseById(courseId).then((res) => {
       setCourse(res);
       setLessons(res.lessons);
+      const completedLessons = res.lessons.filter(
+        (lesson) => lesson.completed === true
+      );
+      setCompletedLessonCount(completedLessons.length);
+      setPercentComplete((completedLessons.length / res.lessons.length) * 100);
     });
   }, [courseId]);
   useEffect(() => {
@@ -67,8 +80,8 @@ function Lesson() {
   };
   const handleComment = () => {
     const data = {
-      "content": comment,
-      "lessonId": id
+      content: comment,
+      lessonId: id,
     };
     commentLesson(data);
     const newComment = {
@@ -82,7 +95,55 @@ function Lesson() {
 
     setComments([...comments, newComment]);
     setComment("");
+  };
+  const videoRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   }
+  const [watchedPercent, setWatchedPercent] = useState(0);
+  const handleTimeUpdate = () => {
+    const videoElement = videoRef.current;
+    setCurrentTime(videoElement.currentTime);
+    const watchedPercent =
+      (videoElement.currentTime / videoElement.duration) * 100;
+    setWatchedPercent(watchedPercent);
+  };
+  // Xử lý sự kiện seeking để ngăn người dùng tua video
+  const handleSeeking = () => {
+    console.log("seeking");
+  };
+  useEffect(() => {
+    if (watchedPercent > 70) {
+      for (const lesson of lessons) {
+        if (!lesson.completed) {
+          const currentLessonId = lesson.id;
+          completedLesson(currentLessonId);
+          const currentLessonIndex = lessons.findIndex(
+            (lesson) => lesson.id === currentLessonId
+          );
+          lessons[currentLessonIndex].completed = true;
+          const completedLessons = lessons.filter(
+            (lesson) => lesson.completed === true
+          );
+          setCompletedLessonCount(completedLessons.length);
+          setPercentComplete(
+            (completedLessons.length / lessons.length) * 100
+          );
+          break;
+        }
+      }
+    }
+  }, [watchedPercent > 70]);
+
   return (
     <div className={cx("lesson-container")}>
       <div className={cx("header")}>
@@ -96,12 +157,13 @@ function Lesson() {
           <div className={cx("progress")}>
             <Progress
               type="circle"
-              percent={50}
+              percent={percentComplete.toFixed(0)}
               className={cx("icon")}
               size={35}
             />
             <div className={cx("total-lesson")}>
-              1/<span>{course?.lessons.length}</span>lessons
+              {completedLessonCount}/<span>{course?.lessons.length}</span>
+              lessons
             </div>
           </div>
           <div className={cx("note")}>
@@ -120,7 +182,13 @@ function Lesson() {
       <div className={cx("content")}>
         <div className={cx("content__left")}>
           <div className={cx("video")}>
-            <video src={lesson?.urlVideo} controls></video>
+            <video
+              src={lesson?.urlVideo}
+              controls
+              ref={videoRef}
+              onTimeUpdate={handleTimeUpdate}
+              onSeeking={handleSeeking}
+            ></video>
           </div>
         </div>
         <div className={cx("content__right")}>
@@ -131,25 +199,40 @@ function Lesson() {
                 className={
                   id === lesson.id.toString()
                     ? cx("lesson-item", "active")
-                    : cx("lesson-item")
+                    : cx("lesson-item", {
+                        disabled: !lesson?.completed,
+                      })
                 }
                 key={index}
-                onClick={() => handleLessonClick(lesson?.id)}
+                onClick={
+                  lesson?.completed
+                    ? () => handleLessonClick(lesson?.id)
+                    : undefined
+                }
               >
-                <div className={cx("lesson-item__title")}>
-                  <span>{index + 1}</span>
-                  {lesson?.name}
+                <div className={cx("lesson-item__content")}>
+                  <div className={cx("lesson-item__title")}>
+                    <span>{index + 1}</span>
+                    {lesson?.name}
+                  </div>
+                  <div className={cx("lesson-item__time")}>
+                    <FontAwesomeIcon
+                      icon={faPlayCircle}
+                      className={cx("icon-play")}
+                    />
+                    <span>10:00</span>
+                  </div>
                 </div>
-                <div className={cx("lesson-item__time")}>
-                  <FontAwesomeIcon
-                    icon={faPlayCircle}
-                    className={cx("icon-play")}
-                  />
-                  <span>10:00</span>
+                <div>
+                  {!lesson?.completed && (
+                    <FontAwesomeIcon
+                      icon={faLock}
+                      className={cx("icon-lock")}
+                    />
+                  )}
                 </div>
               </div>
             ))}
-            <div className={cx("list-content")}>{/* {renderCard()}; */}</div>
           </div>
         </div>
       </div>
@@ -173,16 +256,22 @@ function Lesson() {
                   author={comment?.createdBy}
                   content={comment?.content}
                   avatarSrc={comment?.avatar}
-                  datetime={moment(comment?.createdAt).format(
-                    "MMMM DD, YYYY"
-                  )}
+                  datetime={moment(comment?.createdAt).format("MMMM DD, YYYY")}
                   replies={comment?.replies}
                 />
               ))}
             </div>
             <div className={cx("comment__input")}>
-              <Input.TextArea value={comment} placeholder="Comment..." onChange={(e)=> setComment(e.target.value)}/>
-              <Button type="primary" style={{ marginTop: "5px" }} onClick={handleComment}>
+              <Input.TextArea
+                value={comment}
+                placeholder="Comment..."
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <Button
+                type="primary"
+                style={{ marginTop: "5px" }}
+                onClick={handleComment}
+              >
                 Post
               </Button>
             </div>
@@ -208,7 +297,7 @@ function Lesson() {
           >
             <div className={cx("note-form")}>
               <div className={cx("note-form__title")}>
-                <span>(05:00)</span>
+                <span>({formatTime(currentTime)})</span>
               </div>
               <div className={cx("note-form__content")}>
                 {/* <Slate editor={editor} value={value} onChange={handleChange}>

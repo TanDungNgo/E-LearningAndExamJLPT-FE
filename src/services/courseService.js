@@ -142,7 +142,6 @@ function CourseService() {
       console.log(error);
     }
   };
-
   return {
     createCourse,
     getAllCourse,

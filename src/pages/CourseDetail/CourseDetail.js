@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faLock,
   faPlayCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "~/components/CourseCard/CourseCard";
@@ -43,11 +44,10 @@ function CourseDetail() {
   }, [id]);
   useEffect(() => {
     getCourseById(id).then((res) => {
-      // console.log(res);
       setCourse(res);
       setListLesson(res.lessons);
     });
-  }, [id]);
+  }, [id, isEnroll]);
   if (course === null) {
     navigate(routes.notFound);
   }
@@ -59,10 +59,9 @@ function CourseDetail() {
         setIsEnroll(false);
       }
     });
-  }, [id]);
+  }, [id, isEnroll]);
   useEffect(() => {
     getSuggestedCourses().then((res) => {
-      // console.log(res);
       setSuggestCourse(res);
     });
   }, []);
@@ -92,7 +91,9 @@ function CourseDetail() {
       setIsEnroll(true);
     }
   };
-
+  const handleLessonClick = (lessonId) => {
+    navigate(`/course/${id}/lesson/${lessonId}`);
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("poster__course")}>
@@ -105,23 +106,18 @@ function CourseDetail() {
         <div className={cx("card__rating-title")}>Rating:</div>
         <div className={cx("card__rating-star")}>
           <div className={cx("card__rating-number")}>
-                {course?.rate
-                  ? course?.rate 
-                  : "4.5"}
+            {course?.rate ? course?.rate : "4.5"}
           </div>
           <div className={cx("card_rating-start-detaill")}>
-          <svg
-            className={cx("card__rating-star-detail")}
-            width="32"
-            height="32"
-            viewBox="0 0 940.688 940.688"
-          >
-            <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8 c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601 c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>
-          </svg>
-
+            <svg
+              className={cx("card__rating-star-detail")}
+              width="32"
+              height="32"
+              viewBox="0 0 940.688 940.688"
+            >
+              <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8 c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601 c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z" />
+            </svg>
           </div>
-
-          
         </div>
         <div className={cx("enroll-card")}>
           <EnrollCard
@@ -173,24 +169,35 @@ function CourseDetail() {
           {course?.lessons ? (
             <ul className={cx("lesson-list__items")}>
               {listLesson.map((lesson, index) => (
-                <Link
+                <li
                   key={lesson?.id}
-                  to={`/course/${id}/lesson/${lesson?.id}`}
+                  className={cx("lesson-item", {
+                    "disabled": !lesson?.completed,
+                  })}
+                  onClick={
+                    lesson?.completed
+                      ? () => handleLessonClick(lesson?.id)
+                      : undefined
+                  }
                 >
-                  <li className={cx("lesson-item")}>
-                    <div className={cx("lesson-item__title")}>
-                      <span>{index + 1}</span>
-                      {lesson?.name}
-                    </div>
-                    <div className={cx("lesson-item__time")}>
+                  <div className={cx("lesson-item__title")}>
+                    <span>{index + 1}</span>
+                    {lesson?.name}
+                  </div>
+                  <div className={cx("lesson-item__icon")}>
+                    {!lesson?.completed && (
                       <FontAwesomeIcon
-                        icon={faPlayCircle}
-                        className={cx("icon-play")}
+                        icon={faLock}
+                        className={cx("icon-lock")}
                       />
-                      <span>10:00</span>
-                    </div>
-                  </li>
-                </Link>
+                    )}
+                    <FontAwesomeIcon
+                      icon={faPlayCircle}
+                      className={cx("icon-play")}
+                    />
+                    <span>10:00</span>
+                  </div>
+                </li>
               ))}
             </ul>
           ) : (

@@ -105,8 +105,13 @@
         .lesson-item {
           padding: 10px;
           display: flex;
-          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
           cursor: pointer;
+          &__content{
+            display: flex;
+            flex-direction: column;
+          }
           &__title {
             font-size: 14px;
             font-weight: 500;
@@ -126,6 +131,15 @@
               font-size: 10px;
             }
           }
+          .icon-lock{
+            margin-right: 5px;
+            color: #949390;
+            font-size: 12px;
+          }
+        }
+        .disabled{
+          color: #949390;
+          cursor: not-allowed;
         }
         .lesson-item.active {
           background-color: #f7f5e9;
@@ -141,7 +155,7 @@
   }
   .footer {
     display: flex;
-    padding: 20px;
+    padding: 5px 20px;
     &__left {
       width: 60%;
       .title {
@@ -182,7 +196,7 @@
     }
     &__right {
       width: 40%;
-      padding: 20px 5px;
+      padding: 0 10px;
     }
   }
 }
