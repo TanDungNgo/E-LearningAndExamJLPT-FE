@@ -31,7 +31,9 @@ function CourseDetail() {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
-  const [value, setValue] = useState(3);
+  const [value, setValue] = useState();
+  const {rateCourse} = courseService();
+  const [rating, setRating] = useState(0);
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -60,6 +62,18 @@ function CourseDetail() {
       }
     });
   }, [id]);
+  useEffect(() => {
+    console.log(value);
+
+    rateCourse(value, id);
+    getCourseById(id).then((res) => {
+      // console.log(res);
+      setCourse(res);
+      setListLesson(res.lessons);
+    });
+
+
+  },[value])
   useEffect(() => {
     getSuggestedCourses().then((res) => {
       // console.log(res);

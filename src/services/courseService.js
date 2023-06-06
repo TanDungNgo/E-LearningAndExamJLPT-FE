@@ -97,6 +97,16 @@ function CourseService() {
     }
   };
 
+  const getCompletedCourses = async () => {
+    try {
+      const res = await request.get("/enroll/my-course");
+      console.log("[CompletedCourses]", res.data.data);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const checkEnroll = async (id) => {
     try {
       const res = await request.get(`/enroll/check/${id}`);
@@ -143,17 +153,28 @@ function CourseService() {
     }
   };
 
+  const rateCourse = async (rate, id) => {
+    try {
+      await request.post(`courses/rate/${id}?rate=${rate}`).then((res) => {
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     createCourse,
     getAllCourse,
     getCourseById,
     getMyCourse,
+    getCompletedCourses,
     updateCourse,
     deleteCourse,
     getSuggestedCourses,
     checkEnroll,
     enrollCourse,
     searchCourse,
+    rateCourse,
   };
 }
 
