@@ -84,7 +84,7 @@ function GrammarsFolder() {
         </Button>
       </div>
 
-      <div className={cx("card-level")}>
+      {/* <div className={cx("card-level")}>
         <input type="submit" value="N5" />
         <input type="submit" value="N4" />
         <input type="submit" value="N3" />
@@ -95,7 +95,7 @@ function GrammarsFolder() {
       <div className={cx("card-title")}>
         All
         <div className={cx("card-title__detail")}>Grammar</div>
-      </div>
+      </div> */}
 
       <div className={cx("card-grammar")}>
         {!data ? (

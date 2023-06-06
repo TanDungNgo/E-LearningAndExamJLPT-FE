@@ -85,7 +85,7 @@ function VocabularyManagement() {
     return vocabulary.meaning.toLowerCase().includes(searchText.toLowerCase());
   });
 
-  const handleDeleteVocabulary = (id) => {
+  const handleDeleteVocabulary = (idVocabulary) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -96,9 +96,12 @@ function VocabularyManagement() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteVocabulary(id).then((res) => {
-            getAllVocabulary().then((res) => {
-            setVocabularyData(res);
+        deleteVocabulary(idVocabulary, id).then((res) => {
+          getVocabularyFolderById(id).then((res) => {
+            setVocabularyFolder(res);
+            console.log(res);
+            setListVocabularies(res.vocabularies);
+            console.log(res.vocabularies)
           });
         });
       }

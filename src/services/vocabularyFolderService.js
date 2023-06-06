@@ -144,7 +144,7 @@ function VocabularyFolderService() {
       console.log(error);
     }
   };
-  const deleteVocabulary = async (id) => {
+  const deleteVocabulary = async (id, idFolder) => {
     try {
       await request.delete(`/vocabularies/${id}`).then((res) => {
         if (res.data.status === "ok") {
@@ -153,11 +153,21 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.vocabularyManagement);
+            navigate(`"/admin/vocabulary/${idFolder}"`);
           });
         } else {
         }
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchVocabularyFolder = async (keyword) => {
+    try {
+      const res = await request.get(`/vocabularyFolders/search?query=${keyword}`);
+      console.log(res.data);
+      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -175,6 +185,7 @@ function VocabularyFolderService() {
     deleteVocabularyFolder,
     updateVocabulary,
     deleteVocabulary,
+    searchVocabularyFolder,
   };
 }
 
