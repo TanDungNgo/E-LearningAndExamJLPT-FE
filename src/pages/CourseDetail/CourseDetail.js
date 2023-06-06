@@ -64,7 +64,6 @@ function CourseDetail() {
   }, [id]);
   useEffect(() => {
     console.log(value);
-
     rateCourse(value, id);
     getCourseById(id).then((res) => {
       // console.log(res);

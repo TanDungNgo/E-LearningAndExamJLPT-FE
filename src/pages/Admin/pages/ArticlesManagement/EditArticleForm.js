@@ -15,6 +15,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import ArticlesService from "~/services/articlesService";
 import { useParams } from "react-router-dom";
+import TextEditor from "../../components/Editor/TextEditor";
 const { Option } = Select;
 
 const EditArticleForm = () => {
@@ -26,6 +27,7 @@ const EditArticleForm = () => {
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState(null);
   const [checkChangeImage, setCheckChangeImage] = useState(false);
+  
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
@@ -121,7 +123,7 @@ const EditArticleForm = () => {
           },
         ]}
       >
-        <Input.TextArea style={{ height: "120px" }} />
+        <TextEditor/>
       </Form.Item>
       <Form.Item
         label="Content"
@@ -134,7 +136,7 @@ const EditArticleForm = () => {
           },
         ]}
       >
-        <Input.TextArea style={{ height: "180px" }} />
+        <TextEditor/>
       </Form.Item>
       <Form.Item
         label="Status"

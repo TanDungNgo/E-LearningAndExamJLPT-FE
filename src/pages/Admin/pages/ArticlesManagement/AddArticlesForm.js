@@ -5,6 +5,7 @@ import articlesService from "~/services/articlesService";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import { hover } from "@testing-library/user-event/dist/hover";
+import TextEditor from "../../components/Editor/TextEditor";
 
 const { TextArea } = Input;
 
@@ -51,7 +52,7 @@ const AddArticlesForm = ({ onSubmit }) => {
           image: url,
         };
         console.log(data);
-        createArticle(data);
+        // createArticle(data);
       }
     );
   };
@@ -73,14 +74,14 @@ const AddArticlesForm = ({ onSubmit }) => {
         name="description"
         rules={[{ required: true, message: "Please input a description!" }]}
       >
-        <TextArea />
+        <TextEditor/>
       </Form.Item>
       <Form.Item
         label="Content"
         name="content"
         rules={[{ required: true, message: "Please input a content!" }]}
       >
-        <TextArea />
+        <TextEditor/>
       </Form.Item>
       <Form.Item
         label="Date Submitted"
