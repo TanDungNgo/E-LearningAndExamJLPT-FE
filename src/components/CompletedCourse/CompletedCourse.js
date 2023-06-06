@@ -10,14 +10,15 @@ const cx = classNames.bind(styles);
 
 function CompletedCourse() {
   const [listCourse, setListCourse] = useState();
-  const { getAllCourse } = courseService();
+  const { getAllCourse, getCompletedCourses } = courseService();
+  const [completedCourse, setListCompletedCourse] = useState();
   useEffect(() => {
-    getAllCourse().then((res) => {
-      setListCourse(res);
+    getCompletedCourses().then((res) => {
+      setListCompletedCourse(res);
     });
   }, []);
   const renderCard = () => {
-    return listCourse?.map((item, index) => {
+    return completedCourse?.map((item, index) => {
       return (
         <div key={index}>
           <CourseCard course={item} />
@@ -35,7 +36,7 @@ function CompletedCourse() {
         </h1>
       </div>
       <div className={cx("list-course")}>
-        {listCourse ? (
+        {completedCourse ? (
           renderCard()
         ) : (
           <Space>
