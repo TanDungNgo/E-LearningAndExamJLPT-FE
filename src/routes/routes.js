@@ -55,9 +55,10 @@ import ExamHistory from "~/pages/ExamHistory/ExamHistory";
 import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
 import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
 import EditGrammarForm from "~/pages/Admin/pages/GrammarManagement/EditGrammarForm";
-import UpdateCourseCard from "~/components/UpdateCourseCard/UpdateCourseCard";
 import EditVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManagement/EditVocabularyFolderForm";
 import EditVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/EditVocabularyForm";
+import StatisticsPage from "~/pages/Admin/pages/Statistics/Statistics";
+import Statistics from "~/pages/Admin/pages/Statistics/Statistics";
 
 // Public routes
 const publicRoutes = [
@@ -198,6 +199,11 @@ const privateRoutes = [
   {
     path: config.routes.questionManagement,
     component: QuestionManagement,
+    layout: Admin
+  },
+  {
+    path: config.routes.statistics,
+    component: Statistics,
     layout: Admin
   },
   { path: config.routes.addCourse, component: AddCourseForm, layout: Admin },
