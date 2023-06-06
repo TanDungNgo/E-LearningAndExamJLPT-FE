@@ -35,7 +35,11 @@ const EditVocabularyForm = () => {
 
   const onFinish = async (values) => {
     console.log(values);
-    await updateVocabulary(id, values);
+    const data = {
+      ...values,
+      vocabularyFolder_id: 1,
+    }
+    await updateVocabulary(id, data);
   };
 
   return (

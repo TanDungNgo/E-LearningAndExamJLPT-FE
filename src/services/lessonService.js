@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import RequestHttp from "~/utils/request";
 
 function lessonService() {
@@ -37,11 +38,26 @@ function lessonService() {
       return null;
     }
   };
+  const completedLesson = async (id) => {
+    try{
+      const res = await request.put(`/lessons/watched/${id}`);
+
+      notification.success({
+        message: "Success!",
+        description: res.data.message,
+      });
+      return res.data.data;
+    }
+    catch(error){
+      console.log(error);
+    }
+  };
   return {
     getAllLesson,
     getLessonById,
     getCommentByLessonId,
-    commentLesson
+    commentLesson,
+    completedLesson,
   };
 }
 

@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./VocavularyFolder.module.scss";
 import React, { useEffect, useState } from "react";
 import Button from "~/components/Button/Button";
-import {Pagination, Select } from 'antd';
+import { Pagination, Select, Space, Spin } from 'antd';
 import VocabularyFolderCard from "~/components/VocabularyFolderCard/VocabularyFolderCard";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
 import { useParams } from "react-router-dom";
@@ -11,8 +11,12 @@ const { Option } = Select;
 
 function VocabularyFolder() {
   const [listVocabularyFolder, setListVocabularyFolder] = useState();
-  const {getAllVocabularyFolder} = vocabularyFolderService();
-
+  const { getAllVocabularyFolder, searchVocabularyFolder } = vocabularyFolderService();
+  const [keyword, setKeyword] = useState("");
+  const [data, setData] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
+  const [totalElements, setTotalElements] = useState(0);
   useEffect(() => {
     getAllVocabularyFolder().then((res) => {
       console.log(res);
@@ -21,15 +25,56 @@ function VocabularyFolder() {
 
   }, []);
 
-  const renderCard = () => {
-    return listVocabularyFolder?.map((item, index) => {
-      return(
-        <div key={index}>
-          <VocabularyFolderCard vocabularyFolder={item}/>
-        </div>
-      )
-    })
-  }
+  useEffect(() => {
+    console.log("Search");
+    fetchData();
+  }, [currentPage, keyword]);
+
+  const fetchData = () => {
+    searchVocabularyFolder(keyword)
+      .then((response) => {
+        setData(response);
+        console.log(response);
+        setTotalElements(response.length);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(1);
+    fetchData();
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const renderData = () => {
+    // Tính toán các chỉ số phân trang
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedData = data.slice(startIndex, endIndex);
+
+    return (
+      <div className={cx("card-vocabulary-folder")}>
+        {paginatedData.map((item, index) => {
+          console.log(paginatedData)
+          return (
+            <div className={cx("list-item")} key={index}>
+              <VocabularyFolderCard vocabularyFolder={item} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+  useEffect(() => {
+    const element = document.getElementById("scroll-target"); // ID của element bạn muốn cuộn đến
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" }); // Cuộn đến vị trí của element
+    }
+  }, [currentPage]);
 
   return (
     <div className={cx("container")}>
@@ -41,29 +86,35 @@ function VocabularyFolder() {
         </img>
       </div>
       <div className={cx("card-search")}>
-        <input type="text" placeholder="Search vocabulary folder" required />
-        <Button className={cx("btn-search")}>Search</Button>
+        <input
+          type="text"
+          placeholder="Search vocabulary folder"
+          required
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onSearch={handleSearch} />
+        <Button className={cx("btn-search")} onClick={handleSearch}>Search</Button>
       </div>
-      
-      <div className={cx("card-select")}>
-        <Select  placeholder="Level" className={cx("card-select__level")}>
-          <Option value="N5">N5</Option>
-          <Option value="N4">N4</Option>
-          <Option value="N3">N3</Option>
-          <Option value="N2">N2</Option>
-          <Option value="N1">N1</Option>
-        </Select>
-        <Select placeholder="Chapter" className={cx("card-select__learning")}>
-          <Option value="">Chapter 1</Option>
-          <Option value="">Chapter 2</Option>
-          <Option value="">Chapter 3</Option>
-          <Option value="">Chapter 4</Option>
-          <Option value="">Chapter 5</Option>
-        </Select>
-      </div>
-      <div className={cx("card-vocabulary-folder")}>
-        {renderCard()}
-      </div>
+      <div id="scroll-target"></div>
+
+        {!data ? (
+          <Space style={{ marginTop: "100px" }}>
+            <Spin tip="Loading" size="large">
+            </Spin>
+          </Space>
+        ) : (
+          <>
+            {renderData()}
+          </>
+        )}
+
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={totalElements}
+        onChange={handlePageChange}
+        className={cx("card-pagination")}
+      />
     </div>
   );
 }

@@ -32,31 +32,18 @@
     height: 35px;
     border-radius: 8px;
 }
-.card-select{
-    margin-left: 18%;
-}
-.card-select__level{
-    border: none;
-    font-size: 15px;
-    width: 180px;
-    height: 35px;
-    border-radius: 7px;
-    padding-left: 15px;
-    margin-left: -280px;
-}
-.card-select__learning{
-    border: none;
-    font-size: 15px;
-    width: 180px;
-    height: 35px;
-    border-radius: 7px;
-    margin-left: 50px;
-    padding-left: 15px;
-}
+
 .card-vocabulary-folder{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin: 100px 0 80px;
+    margin: 150px 0 30px;
 }
+.card-pagination{
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    margin-bottom: 30px;
+}
+
 

@@ -8,11 +8,11 @@ import courseService from "~/services/courseService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
-const { Option } = Select;
+
 function AllCourse() {
-  const { getAllCourse, searchCourse } = courseService();
+  const { searchCourse } = courseService();
   const [keyword, setKeyword] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
   const [totalElements, setTotalElements] = useState(0);
@@ -87,7 +87,6 @@ function AllCourse() {
           required
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          onSearch={handleSearch}
         />
         <Button className={cx("btn-search")} onClick={handleSearch}>
           Search
@@ -134,7 +133,6 @@ function AllCourse() {
       {!data ? (
         <Space style={{ marginTop: "100px" }}>
           <Spin tip="Loading" size="large">
-            <div className="content" />
           </Spin>
         </Space>
       ) : (
