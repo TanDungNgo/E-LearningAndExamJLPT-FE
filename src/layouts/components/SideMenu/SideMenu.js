@@ -8,9 +8,11 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { faCheckCircle, faClock, faFolderClosed, faPenToSquare, faPlusSquare, faUser } from "@fortawesome/free-regular-svg-icons";
 import routes from "~/configs/routes";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
-function SideMenu() {
+const SideMenu = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(["/profileUser"]);
@@ -18,60 +20,99 @@ function SideMenu() {
     const pathName = location.pathname;
     setSelectedKey(pathName);
   }, [location.pathname]);
-
-  const item = [
+  const handleMenuClick = (e) => {
+    console.log("Clicked menu item:", e);
+    const key = e.key;
+    switch (key) {
+      case "publicProfile":
+        navigate(routes.publicProfile);
+        break;
+      case "changePassword":
+        navigate(routes.changePassword);
+        break;
+      case "createCourse":
+        navigate(routes.createCourse);
+        break;
+      case "createLesson":
+        navigate(routes.createLesson);
+        break;
+      case "courseCreated":
+        navigate(routes.courseCreated);
+        break;
+      case "completedCourse":
+        navigate(routes.completedCourse);
+        break;
+      case "updateCourse":
+        navigate(routes.updateCourseFolder);
+        break;
+      case "examHistory":
+        navigate(routes.examHistoryFolder);
+        break;
+      default:
+        break;
+    }
+  };
+  const items = [
     {
       label: "Public Profile",
       icon: <FontAwesomeIcon icon={faUser} />,
-      key: `${routes.publicProfile}`,
+      key: "publicProfile",
     },
     {
       label: "Change Password",
       icon: <SettingOutlined />,
-      key: `${routes.changePassword}`,
-    },
-    {
+      key: "changePassword",
+    }
+  ];
+  if (
+    props?.user?.roles[0].name === "TEACHER" ||
+    props?.user?.roles[0].authority === "TEACHER"
+  ) {
+    items.splice(2, 0, {
       label: "Create Course",
       icon: <FontAwesomeIcon icon={faPlusSquare} />,
-      key: `${routes.createCourse}`,
+      key: "createCourse",
     },
     {
       label: "Create Lesson",
       icon: <FontAwesomeIcon icon={faAdd} />,
-      key: `${routes.createLesson}`,
+      key: "createLesson",
     },
     {
       label: "Courses Created",
       icon: <FontAwesomeIcon icon={faFolderClosed} />,
-      key: `${routes.courseCreated}`,
-    },
-    {
-      label: "Completed Courses",
-      icon: <FontAwesomeIcon icon={faCheckCircle} />,
-      key: `${routes.completedCourse}`,
+      key: "courseCreated",
     },
     {
       label: "Update Course",
       icon: <FontAwesomeIcon icon={faPenToSquare} />,
-      key: `${routes.updateCourse}`,
+      key: "updateCourse",
+    });
+  }
+  else if (
+    props?.user?.roles[0].name === "STUDENT" ||
+    props?.user?.roles[0].authority === "STUDENT"
+  ) {
+    items.splice(2, 0, {
+      label: "Completed Courses",
+      icon: <FontAwesomeIcon icon={faCheckCircle} />,
+      key: "completedCourse",
     },
     {
       label: "Exam History",
       icon: <FontAwesomeIcon icon={faClock} />,
-      key: `${routes.examHistoryFolder}`,
-    },
-  ]
+      key: "examHistory",
+    });
+  }
 
   return (
     <div className={cx("card")}>
       <Menu
         className={cx("card__menu")}
         mode="inline"
-        onClick={(item) => {
-          navigate(item.key);
-        }}
+        onClick={handleMenuClick}
         selectedKeys={selectedKey}
-        items={item}
+        items={items}
       ></Menu>
     </div>
   );
