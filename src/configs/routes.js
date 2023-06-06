@@ -39,7 +39,7 @@ const routes = {
   userManagement: "/admin/user",
   examManagement: "/admin/exam",
   questionManagement: "/admin/question",
-
+  statistics: "/admin/statistics",
 
   addCourse: "/admin/course/add",
   addLesson: "/admin/lesson/add",
