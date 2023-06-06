@@ -8,11 +8,11 @@ import courseService from "~/services/courseService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
-const { Option } = Select;
+
 function AllCourse() {
-  const { getAllCourse, searchCourse } = courseService();
+  const { searchCourse } = courseService();
   const [keyword, setKeyword] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
   const [totalElements, setTotalElements] = useState(0);

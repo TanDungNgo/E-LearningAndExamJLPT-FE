@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function GrammarsFolder() {
   const { getAllGrammars, searchGrammar } = grammarService();
   const [keyword, setKeyword] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [totalElements, setTotalElements] = useState(0);

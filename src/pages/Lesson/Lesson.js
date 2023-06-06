@@ -245,10 +245,10 @@ function Lesson() {
           </div>
           <div className={cx("comment")}>
             <div className={cx("comment__title")}>
-              (<span>{lesson?.comments.length}</span>)Comment
+              (<span>{comments?.length}</span>)Comment
             </div>
             <div className={cx("comment__list")}>
-              {comments.map((comment, index) => (
+              {comments?.map((comment, index) => (
                 <CommentItem
                   key={index}
                   lessonId={id}
