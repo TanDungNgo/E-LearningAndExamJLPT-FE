@@ -70,19 +70,11 @@ function VocabularyFolder() {
     );
   };
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const element = document.getElementById("scroll-target"); // ID của element bạn muốn cuộn đến
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" }); // Cuộn đến vị trí của element
+    }
   }, [currentPage]);
-
-
-  // const renderCard = () => {
-  //   return listVocabularyFolder?.map((item, index) => {
-  //     return(
-  //       <div key={index}>
-  //         <VocabularyFolderCard vocabularyFolder={item}/>
-  //       </div>
-  //     )
-  //   })
-  // }
 
   return (
     <div className={cx("container")}>

@@ -68,19 +68,13 @@ function ArticleFolder() {
     );
   };
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const element = document.getElementById("scroll-target"); // ID của element bạn muốn cuộn đến
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" }); // Cuộn đến vị trí của element
+    }
   }, [currentPage]);
   
-  // const renderCard = () => {
-  //   return listArticle?.map((item, index) => {
-  //     return(
-  //       <div key = {index}>
-  //         <ArticleCard article = {item}/>
-  //       </div>
-  //     )
-    
-  //   })
-  // }
+
   return (
     <div className={cx("container")}>
       <div className={cx("card-img")}>
@@ -100,7 +94,7 @@ function ArticleFolder() {
               onChange={(e) => setKeyword(e.target.value)} />
         <Button className={cx("btn-search")} onClick={handleSearch}>Search</Button>
       </div>
-
+      <div id="scroll-target"></div>
       <div className={cx("card-title")}>
         SOME OF OUR ARTICLES
       </div>
@@ -112,7 +106,7 @@ function ArticleFolder() {
           </Space>
         ) : (
           <>
-            <div id="scroll-target"></div>
+
             {renderData()}
           </>
         )}
