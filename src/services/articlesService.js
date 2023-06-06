@@ -81,6 +81,15 @@ function ArticlesService() {
     }
   };
 
+  const searchArticle = async (keyword) => {
+    try {
+      const res = await request.get(`/articles/search?query=${keyword}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
 
   return {
@@ -89,6 +98,7 @@ function ArticlesService() {
     createArticle,
     updateArticle,
     deleteArticle,
+    searchArticle,
   };
 }
 

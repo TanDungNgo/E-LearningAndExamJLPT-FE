@@ -133,7 +133,6 @@ function AllCourse() {
       {!data ? (
         <Space style={{ marginTop: "100px" }}>
           <Spin tip="Loading" size="large">
-            <div className="content" />
           </Spin>
         </Space>
       ) : (

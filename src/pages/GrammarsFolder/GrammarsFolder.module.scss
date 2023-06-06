@@ -39,26 +39,27 @@
     color: rgb(105, 105, 105);
     background-color: rgb(229, 229, 229);
 }
-.card-level input:hover{
-    transform: scale(1.05);
-    transition: all 400ms ease;
-}
-.card-title{
-    display: flex;
-    align-items: center;
-    padding: 30px;
-    justify-content: space-between;
-    font-size: 4rem;
-    font-weight: 600;
-    &__detail{
-        color: var(--primary);
-        font-size: 4rem;
-        font-weight: 600;
-        margin-left: 15px;
-    }
-}
+// .card-level input:hover{
+//     transform: scale(1.05);
+//     transition: all 400ms ease;
+// }
+// .card-title{
+//     display: flex;
+//     align-items: center;
+//     padding: 30px;
+//     justify-content: space-between;
+//     font-size: 4rem;
+//     font-weight: 600;
+//     &__detail{
+//         color: var(--primary);
+//         font-size: 4rem;
+//         font-weight: 600;
+//         margin-left: 15px;
+//     }
+// }
 .card-grammar{
-    width: 70%;
+    width: 80%;
+    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
