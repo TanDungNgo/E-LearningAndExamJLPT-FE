@@ -32,7 +32,10 @@ function CourseDetail() {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
-  const [value, setValue] = useState(3);
+  const [value, setValue] = useState();
+  const { rateCourse } = courseService();
+  const [rating, setRating] = useState(0);
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -60,6 +63,16 @@ function CourseDetail() {
       }
     });
   }, [id, isEnroll]);
+  useEffect(() => {
+    rateCourse(value, id).then((res) => {
+      if (res === true) {
+        setDisabled(true);
+        getCourseById(id).then((res) => {
+          setCourse(res);
+        });
+      }
+    });
+  }, [value]);
   useEffect(() => {
     getSuggestedCourses().then((res) => {
       setSuggestCourse(res);
@@ -105,9 +118,7 @@ function CourseDetail() {
       <div className={cx("card__rating")}>
         <div className={cx("card__rating-title")}>Rating:</div>
         <div className={cx("card__rating-star")}>
-          <div className={cx("card__rating-number")}>
-            {course?.rate ? course?.rate : "4.5"}
-          </div>
+          <div className={cx("card__rating-number")}>{course?.rate}</div>
           <div className={cx("card_rating-start-detaill")}>
             <svg
               className={cx("card__rating-star-detail")}
@@ -135,6 +146,7 @@ function CourseDetail() {
               character="好"
               tooltips={desc}
               onChange={setValue}
+              disabled={disabled}
               value={value}
             />
             {value ? <span>{desc[value - 1]}</span> : ""}
@@ -172,7 +184,7 @@ function CourseDetail() {
                 <li
                   key={lesson?.id}
                   className={cx("lesson-item", {
-                    "disabled": !lesson?.completed,
+                    disabled: !lesson?.completed,
                   })}
                   onClick={
                     lesson?.completed

@@ -2,61 +2,126 @@ import classNames from "classnames/bind";
 import styles from "./GrammarsFolder.module.scss";
 import React, { useEffect, useState } from "react";
 import Button from "~/components/Button/Button";
-import {Pagination } from 'antd';
+import { Pagination, Space, Spin } from 'antd';
 import grammarService from "~/services/grammarService";
 import GrammarCard from "~/components/GrammarCard/GrammarCard";
-import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function GrammarsFolder() {
-  const { id } = useParams();
-  const { getAllGrammars } = grammarService();
-  const [listGrammar, setListGrammar] = useState();
+  const { getAllGrammars, searchGrammar } = grammarService();
+  const [keyword, setKeyword] = useState("");
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalElements, setTotalElements] = useState(0);
+
   useEffect(() => {
-    getAllGrammars().then((res) => {
-      setListGrammar(res);
-    });
-  }, []);
-  const renderCard = () => {
-    return listGrammar?.map((item, index) => {
-      return(
-        <div key = {index}>
-          <GrammarCard grammar = {item}/>
-        </div>
-      )
-    })
-  }
+    console.log("Search");
+    fetchData();
+  }, [currentPage, keyword]);
+
+  const fetchData = () => {
+    searchGrammar(keyword)
+      .then((response) => {
+        setData(response);
+        console.log(response);
+        setTotalElements(response.length);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(1);
+    fetchData();
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const renderData = () => {
+    // Tính toán các chỉ số phân trang
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedData = data.slice(startIndex, endIndex);
+
+    return (
+      <div className={cx("card-grammar")}>
+        {paginatedData.map((item, index) => {
+          console.log(paginatedData)
+          return (
+            <div className={cx("list-item")} key={index}>
+              <GrammarCard grammar={item} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+  
+
   return (
     <div className={cx("container")}>
       <div className={cx("card-img")}>
-        <img
-          className={cx("card-img__detail")}
-          src="/images/bgr-grammar.png"
-        >
-        </img>
+        <img className={cx("card-img__detail")} src="/images/bgr-grammar.png" />
       </div>
-      
+
       <div className={cx("card-search")}>
-        <input type="text" placeholder="Search Grammar" required />
-        <Button className={cx("btn-search")}>Search</Button>
+        <input
+          type="text"
+          placeholder="Search grammar"
+          required
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onSearch={handleSearch}
+        />
+        <Button className={cx("btn-search")} onClick={handleSearch}>
+          Search
+        </Button>
       </div>
+
       <div className={cx("card-level")}>
-        <input type="submit" value="N5"/>
-        <input type="submit" value="N4"/>
-        <input type="submit" value="N3"/>
-        <input type="submit" value="N2"/>
-        <input type="submit" value="N1"/>
+        <input type="submit" value="N5" />
+        <input type="submit" value="N4" />
+        <input type="submit" value="N3" />
+        <input type="submit" value="N2" />
+        <input type="submit" value="N1" />
       </div>
-      < div className={cx("card-title")}>
+
+      <div className={cx("card-title")}>
         All
         <div className={cx("card-title__detail")}>Grammar</div>
       </div>
+
       <div className={cx("card-grammar")}>
-        {renderCard()}
+        {!data ? (
+          <Space style={{ marginTop: "100px" }}>
+            <Spin tip="Loading" size="large">
+              <div className="content" />
+            </Spin>
+          </Space>
+        ) : (
+          <>
+            <div id="scroll-target"></div>
+            {renderData()}
+          </>
+        )}
+
       </div>
-      <Pagination defaultCurrent={1} total={50} className={cx("card-pagination")} />
+
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={totalElements}
+        onChange={handlePageChange}
+        className={cx("card-pagination")}
+      />
     </div>
   );
 }
 
-export default GrammarsFolder
+export default GrammarsFolder;
