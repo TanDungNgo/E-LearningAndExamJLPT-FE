@@ -10,7 +10,7 @@ const routes = {
   createCourse: "/profileUser/createCourse",
   courseCreated: "/profileUser/courseCreated",
   completedCourse: "/profileUser/completedCourse",
-  updateCourse: "/profileUser/updateCourse",
+  updateCourseFolder: "/profileUser/updateCourse/:id",
   overview: "/overview",
   notFound: "*",
   lesson: "/course/:courseId/lesson/:id",
