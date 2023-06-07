@@ -44,8 +44,7 @@ function AuthService() {
             });
             setToken(res.data.data.token);
             const roles = res.data.data.roles;
-            console.log(roles[0].authority);
-            if (roles[0].authority === "ADMIN") {
+            if (roles.some((role) => role.authority === "ADMIN")) {
               navigate(routes.admin);
             } else {
               navigate(routes.home);
