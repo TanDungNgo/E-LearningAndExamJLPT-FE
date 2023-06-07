@@ -47,13 +47,13 @@ function CourseDetail() {
   }, [id]);
   useEffect(() => {
     getCourseById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setCourse(res);
       setListLesson(res.lessons);
     });
   }, [id, isEnroll]);
-  if (course === null) {
-    navigate(routes.notFound);
-  }
   useEffect(() => {
     checkEnroll(id).then((res) => {
       if (res === true) {
@@ -118,7 +118,7 @@ function CourseDetail() {
       <div className={cx("card__rating")}>
         <div className={cx("card__rating-title")}>Rating:</div>
         <div className={cx("card__rating-star")}>
-          <div className={cx("card__rating-number")}>{course?.rate}</div>
+          <div className={cx("card__rating-number")}>{course?.rate || "0"} </div>
           <div className={cx("card_rating-start-detaill")}>
             <svg
               className={cx("card__rating-star-detail")}

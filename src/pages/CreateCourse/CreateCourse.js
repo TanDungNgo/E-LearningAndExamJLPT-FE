@@ -9,10 +9,13 @@ import { Form, Input, Select, Upload, Image, InputNumber, Switch } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import courseService from "~/services/courseService";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 const { Option } = Select;
 
 const CreateCourse = () => {
+  const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
   const [fileImage, setFileImage] = useState("");
   const { createCourse } = courseService();
@@ -55,7 +58,7 @@ const CreateCourse = () => {
           banner: url,
         };
         console.log(data);
-        // createCourse(data);
+        createCourse(data,"teacher");
       }
     );
   };
@@ -90,7 +93,7 @@ const CreateCourse = () => {
                 rules={[
                   { required: true, message: "Please input a description!" },
                   {
-                    max: 500,
+                    max: 5000,
                     message: "Description should be less than 100 characters!",
                   },
                 ]}
