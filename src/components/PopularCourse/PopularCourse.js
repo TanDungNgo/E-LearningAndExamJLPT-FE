@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
-import styles from "./ListCourse.module.scss";
+import styles from "./PopularCourse.module.scss";
 import Button from "../Button/Button";
 import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
@@ -9,11 +9,11 @@ import { Space, Spin } from "antd";
 
 const cx = classNames.bind(styles);
 
-function ListCourse() {
+function PopularCourse() {
   const [listCourse, setListCourse] = useState();
-  const { getAllCourse } = courseService();
+  const { getPopularCourse } = courseService();
   useEffect(() => {
-    getAllCourse().then((res) => {
+    getPopularCourse().then((res) => {
       setListCourse(res);
     });
   }, []);
@@ -26,11 +26,6 @@ function ListCourse() {
       );
     });
   };
-  const [activeButton, setActiveButton] = useState("JLPT");
-
-  const handleButtonClick = (buttonName) => {
-    setActiveButton(buttonName);
-  };
 
   return (
     <div className={cx("container")}>
@@ -39,26 +34,6 @@ function ListCourse() {
           Popular
           <span className={cx("list-course__title--primary")}> Courses</span>
         </h1>
-        {/* <div className={cx("list-course__action")}>
-          <button
-            className={cx("list-course__button", {
-              "list-course__button--active": activeButton === "JLPT",
-              "list-course__button--inactive": activeButton !== "JLPT",
-            })}
-            onClick={() => handleButtonClick("JLPT")}
-          >
-            JLPT
-          </button>
-          <button
-            className={cx("list-course__button", {
-              "list-course__button--active": activeButton === "Kaiwa",
-              "list-course__button--inactive": activeButton !== "Kaiwa",
-            })}
-            onClick={() => handleButtonClick("Kaiwa")}
-          >
-            Kaiwa
-          </button>
-        </div> */}
       </div>
       <div className={cx("list-course")}>
         {listCourse ? (
@@ -80,4 +55,4 @@ function ListCourse() {
   );
 }
 
-export default ListCourse;
+export default PopularCourse;
