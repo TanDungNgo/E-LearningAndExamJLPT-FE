@@ -5,6 +5,7 @@ import { ConfigProvider } from "antd";
 import ScrollToTop from "./utils/ScrollToTop";
 import UserRoute from "./routes/UserRoute";
 import AdminRoute from "./routes/AdminRoute";
+import Chatbot from "./components/Chatbot/Chatbot";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
             })}
           </Routes>
         </Router>
+        <Chatbot/>
       </ConfigProvider>
     </div>
   );
