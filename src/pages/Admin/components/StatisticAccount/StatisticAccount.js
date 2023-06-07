@@ -52,7 +52,7 @@ export const data = {
 
 export default function StatisticAccount() {
   return (
-    <Card style={{height:"fit-content", width:"800px"}}>
+    <Card style={{height:"fit-content", width:"53vw"}}>
         <Chart type='bar' data={data} />
     </Card>
   );
