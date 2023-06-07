@@ -77,10 +77,7 @@ const AvatarWithDropdown = (props) => {
       danger: true,
     },
   ];
-  if (
-    props?.user?.roles[0].name === "ADMIN" ||
-    props?.user?.roles[0].authority === "ADMIN"
-  ) {
+  if (props?.user?.roles.some((role) => role.name === "ADMIN")) {
     items.splice(3, 0, {
       label: "Management",
       key: "management",
