@@ -200,3 +200,21 @@
     }
   }
 }
+.note-content-form{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  border-radius: 6px;
+  margin-top: 15px;
+
+}
+.note-btn{
+  margin-top: 8px;
+}
+.note-content{
+  display: flex;
+  margin-top: 10px;
+  gap: 20px;
+  margin-left: 12px;
+  border-bottom: 1px solid #ccc;
+}

@@ -44,6 +44,10 @@ function Lesson() {
   const [currentUser, setCurrentUser] = useState();
   const [completedLessonCount, setCompletedLessonCount] = useState(0);
   const [percentComplete, setPercentComplete] = useState(0);
+  const [note, setNote] = useState("");
+  const [timeNote, setTimeNote] = useState(0);
+  const [notes, setNotes] = useState([]);
+
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -76,6 +80,7 @@ function Lesson() {
     });
   }, [id]);
   const handleLessonClick = (id) => {
+    setNotes([]);
     navigate(`/course/${courseId}/lesson/${id}`);
   };
   const handleComment = () => {
@@ -120,6 +125,8 @@ function Lesson() {
   // Xử lý sự kiện seeking để ngăn người dùng tua video
   const handleSeeking = () => {
     console.log("seeking");
+    const videoElement = videoRef.current;
+    setCurrentTime(videoElement.currentTime);
   };
   useEffect(() => {
     if (watchedPercent > 70) {
@@ -143,6 +150,16 @@ function Lesson() {
       }
     }
   }, [watchedPercent > 70]);
+
+  const handleNote = () => {
+    const data = {
+      timeNote: timeNote,
+      note: note,
+    };
+    setNotes([...notes, data]);
+    setNote("");
+  };
+
 
   return (
     <div className={cx("lesson-container")}>
@@ -200,8 +217,8 @@ function Lesson() {
                   id === lesson.id.toString()
                     ? cx("lesson-item", "active")
                     : cx("lesson-item", {
-                        disabled: !lesson?.completed,
-                      })
+                      disabled: !lesson?.completed,
+                    })
                 }
                 key={index}
                 onClick={
@@ -292,21 +309,38 @@ function Lesson() {
             open={commentsOpen}
             onClose={() => {
               setCommentsOpen(false);
+              setTimeNote(currentTime);
             }}
             maskClosable
           >
             <div className={cx("note-form")}>
               <div className={cx("note-form__title")}>
-                <span>({formatTime(currentTime)})</span>
+                <span>({formatTime(timeNote)})</span>
               </div>
               <div className={cx("note-form__content")}>
-                {/* <Slate editor={editor} value={value} onChange={handleChange}>
-                  <Editable />
-                </Slate> */}
-                <Input.TextArea />
-                <Button type="primary" style={{ marginTop: "5px" }}>
-                  Save
+                <Input.TextArea
+                  placeholder="Write a note..."
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  style={{height: "120px"}}
+                />
+                <Button type="primary" disabled={!note} onClick={handleNote} className={cx("note-btn")}>
+                  Save Note
                 </Button>
+                <div className={cx("note-content-form")}>
+                  {notes.map((note, index) => (
+
+                    <div key={index} className={cx("note-content")}>
+                      <div className={cx("time-note")}>
+                        {formatTime(note.timeNote)}
+                      </div>
+                      <div className={cx("note")}>
+                        {note.note}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
               </div>
             </div>
           </Drawer>
