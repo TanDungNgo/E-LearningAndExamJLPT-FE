@@ -7,11 +7,11 @@ import { Space, Spin } from "antd";
 const cx = classNames.bind(styles);
 
 function ListArticle() {
-  const { getAllArticles } = articlesService();
+  const { getNewArticles } = articlesService();
   const [listArticle, setListArticle] = useState();
   useEffect(() => {
     const getListArticle = async () => {
-      const res = await getAllArticles();
+      const res = await getNewArticles();
       setListArticle(res);
     };
     getListArticle();

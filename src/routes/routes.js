@@ -77,7 +77,7 @@ const publicRoutes = [
     layout: DefaultLayout,
   },
   { path: config.routes.courseCreated, component: CourseCreated, layout: ProfileUser },
-  { path: config.routes.completedCourse, component: CompletedCourse, layout: ProfileUser },
+  { path: config.routes.completedCourse, component: CompletedCourse, layout: ProfileUser, protected: true },
   { path: config.routes.updateCourseFolder, component: UpdateCourse, layout: ProfileUser },
   { path: config.routes.overview, component: Overview, layout: DefaultLayout },
   { path: config.routes.exam, component: ExamPage, protected: true },

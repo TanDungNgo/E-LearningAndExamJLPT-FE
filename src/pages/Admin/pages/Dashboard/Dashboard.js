@@ -11,8 +11,21 @@ import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import NoticeCalendar from "../../components/NoticeCalendar/NoticeCalendar";
 import classNames from "classnames/bind";
 import styles from "./Dashboard.module.scss";
+import StatisticService from "~/services/statisticService";
+import { useEffect, useState } from "react";
 const cx = classNames.bind(styles);
 function Dashboard() {
+  const {getStatistics} = StatisticService();
+  const [statistic, setStatistic] = useState({});
+
+  useEffect(() =>{
+    const getStatistic = async () => {
+      const res = await getStatistics();
+      console.log(res);
+      setStatistic(res);
+    };
+    getStatistic();
+  }, [])
   return (
     <Space size={20} direction="horizontal">
       <Space direction="vertical" style={{width:"600px"}}>
@@ -31,7 +44,7 @@ function Dashboard() {
               />
             }
             title="Total Users"
-            value={100}
+            value={statistic.totalUsers}
           ></DashboardCard>
           <DashboardCard
             icon={
@@ -47,7 +60,7 @@ function Dashboard() {
               />
             }
             title="New Students"
-            value={50}
+            value={statistic.totalStudents}
           ></DashboardCard>
           <DashboardCard
             icon={
@@ -63,7 +76,7 @@ function Dashboard() {
               />
             }
             title="Total Courses"
-            value={50}
+            value={statistic.totalCourses}
           ></DashboardCard>
           <DashboardCard
             icon={
@@ -79,7 +92,7 @@ function Dashboard() {
               />
             }
             title="Total Lesons"
-            value={200}
+            value={statistic.totalLessons}
           ></DashboardCard>
         </Space>
         <DashboardChart />

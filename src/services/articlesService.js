@@ -14,6 +14,14 @@ function ArticlesService() {
       console.log(error);
     }
   };
+  const getNewArticles = async () => {
+    try {
+      const res = await request.get("/articles/new");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getArticleById = async (id) => {
     try {
       const res = await request.get(`/articles/${id}`);
@@ -89,9 +97,6 @@ function ArticlesService() {
       console.log(error);
     }
   };
-
-
-
   return {
     getAllArticles,
     getArticleById,
@@ -99,6 +104,7 @@ function ArticlesService() {
     updateArticle,
     deleteArticle,
     searchArticle,
+    getNewArticles,
   };
 }
 
