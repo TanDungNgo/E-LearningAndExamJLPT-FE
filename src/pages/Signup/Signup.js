@@ -147,13 +147,13 @@ function Signup() {
             <Form.Item name="typeAccount" label="Type Account:">
               <Radio.Group>
                 <Radio
-                  value="Student"
+                  value="STUDENT"
                   onChange={(e) => setAccountType(e.target.value)}
                 >
                   Student
                 </Radio>
                 <Radio
-                  value="Teacher"
+                  value="TEACHER"
                   onChange={(e) => setAccountType(e.target.value)}
                 >
                   Teacher
