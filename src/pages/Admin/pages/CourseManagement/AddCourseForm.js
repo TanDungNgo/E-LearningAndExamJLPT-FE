@@ -60,7 +60,7 @@ const AddCourseForm = ({ onSubmit }) => {
           banner: url,
         };
         console.log(data);
-        createCourse(data);
+        createCourse(data, "admin");
       }
     );
   };

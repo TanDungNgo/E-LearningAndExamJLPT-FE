@@ -67,7 +67,7 @@ const EditCourseForm = () => {
             banner: url,
           };
           console.log(data);
-          updateCourse(id, data);
+          updateCourse(id, data, "admin");
         }
       );
     } else {
@@ -76,7 +76,7 @@ const EditCourseForm = () => {
         banner: imgSrc,
       };
       console.log(data);
-      updateCourse(id, data);
+      updateCourse(id, data, "admin");
     }
   };
 
@@ -111,27 +111,21 @@ const EditCourseForm = () => {
       <Form.Item
         label="Name"
         name="name"
-        rules={[{ required: true, message: "Please input a name!" }]}
+       
       >
         <Input defaultValue={course.name} />
       </Form.Item>
       <Form.Item
         label="Description"
         name="description"
-        rules={[
-          { required: true, message: "Please input a description!" },
-          {
-            max: 500,
-            message: "Description should be less than 100 characters!",
-          },
-        ]}
+       
       >
         <Input.TextArea style={{ height: "180px" }} />
       </Form.Item>
       <Form.Item
         label="Level"
         name="level"
-        rules={[{ required: true, message: "Please select a level!" }]}
+       
       >
         <Select>
           <Option value=""></Option>
@@ -145,7 +139,7 @@ const EditCourseForm = () => {
       <Form.Item
         label="Type"
         name="type"
-        rules={[{ required: true, message: "Please select a type!" }]}
+      
       >
         <Select>
           <Option value=""></Option>
@@ -156,13 +150,7 @@ const EditCourseForm = () => {
       <Form.Item
         label="Duration"
         name="duration"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            message: "Please input a duration!",
-          },
-        ]}
+       
       >
         <InputNumber
           addonAfter={<Form.Item noStyle>Month</Form.Item>}
@@ -172,13 +160,7 @@ const EditCourseForm = () => {
       <Form.Item
         label="Price"
         name="price"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            message: "Please input a price!",
-          },
-        ]}
+       
       >
         <InputNumber
           addonAfter={<Form.Item noStyle>$</Form.Item>}
@@ -190,7 +172,7 @@ const EditCourseForm = () => {
         name="isPublic"
         valuePropName="checked"
         style={{ marginBottom: "15px" }}
-        rules={[{ required: true, message: "Please select a status!" }]}
+       
       >
         <Switch />
       </Form.Item>

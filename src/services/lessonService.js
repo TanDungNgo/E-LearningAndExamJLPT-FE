@@ -1,7 +1,10 @@
 import { notification } from "antd";
 import RequestHttp from "~/utils/request";
-
-function lessonService() {
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import routes from "~/configs/routes";
+function LessonService() {
+  const navigate = useNavigate();
   const { request } = RequestHttp();
   const getAllLesson = async () => {
     try {
@@ -52,13 +55,32 @@ function lessonService() {
       console.log(error);
     }
   };
+  const deleteComment = async (idComment) => {
+    try {
+      await request.delete(`/comments/${idComment}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            // navigate(routes.lesson);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return {
     getAllLesson,
     getLessonById,
     getCommentByLessonId,
     commentLesson,
     completedLesson,
+    deleteComment,
   };
 }
 
-export default lessonService;
+export default LessonService;
