@@ -9,7 +9,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Row, Col, Layout, theme } from "antd";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import config from "~/configs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -17,6 +17,7 @@ import Footer from "~/layouts/components/Footer/Footer";
 import AvatarWithDropdown from "~/components/AvatarWithDropdown/AvatarWithDropdown";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
 
@@ -27,15 +28,6 @@ function Admin({ children }) {
   const { getCurrentUser, logout } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
-  useEffect(() => {
-    if (user) {
-      setCurrentUser(user);
-    } else {
-      getCurrentUser().then((res) => {
-        setCurrentUser(res);
-      });
-    }
-  }, []);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -57,6 +49,28 @@ function Admin({ children }) {
   const handleLogout = () => {
     logout();
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      let currentUser = null;
+      if (user) {
+        currentUser = user;
+      } else {
+        currentUser = await getCurrentUser();
+      }
+      setCurrentUser(currentUser);
+      // if (currentUser) {
+      //   const hasAdminRole = currentUser.roles.some(
+      //     (role) => role.name === "ADMIN"
+      //   );
+      //   console.log("hasAdminRole", hasAdminRole);
+      //   if (!hasAdminRole) {
+      //     navigate(routes.home);
+      //   }
+      // }
+    };
+    fetchCurrentUser();
+  }, []);
   return (
     <Layout>
       <Layout>
