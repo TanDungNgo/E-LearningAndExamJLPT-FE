@@ -8,6 +8,7 @@ import { Button, Input } from "antd";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
 import lessonService from "~/services/lessonService";
+import Swal from "sweetalert2";
 
 const cx = classNames.bind(styles);
 const CommentItem = ({
@@ -23,7 +24,7 @@ const CommentItem = ({
   const [comment, setComment] = useState("");
   const [repliesComment, setRepliesComment] = useState(replies);
   const { getCurrentUser } = AuthService();
-  const { commentLesson } = lessonService();
+  const { commentLesson, deleteComment} = lessonService();
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
@@ -57,6 +58,22 @@ const CommentItem = ({
     setRepliesComment([...repliesComment, newComment]);
     setComment("");
   };
+  const handleDeleteComment = (idComment) => {
+    
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteComment(idComment);
+      }
+    });
+  };
   return (
     <div>
       <div className={cx("comment")}>
@@ -76,7 +93,7 @@ const CommentItem = ({
             </div>
             <div className={cx("comment-delete")}>
               <span>Delete</span>
-              <FontAwesomeIcon icon={faTrash} />
+              <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteComment(commentId)} />
             </div>
           </div>
         </div>
@@ -107,7 +124,7 @@ const CommentItem = ({
                       </div>
                       <div className={cx("comment-delete")}>
                         <span>Delete</span>
-                        <FontAwesomeIcon icon={faTrash} />
+                        <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteComment(commentId)} />
                       </div>
                     </div>
                   </div>

@@ -78,7 +78,7 @@ function UpdateCourseCard(props) {
             banner: url,
           };
           console.log(data);
-          updateCourse(id, data);
+          updateCourse(id, data, "teacher");
         }
       );
     } else {
@@ -87,7 +87,7 @@ function UpdateCourseCard(props) {
         banner: imgSrc,
       };
       console.log(data);
-      updateCourse(id, data);
+      updateCourse(id, data, "teacher");
     }
   };
 
@@ -177,19 +177,12 @@ function UpdateCourseCard(props) {
               <div className={cx("modal-body__left")}>
                 <Form.Item
                   name="name"
-                  rules={[{ required: true, message: "Please input a name!" }]}
+                  
                 >
                   <Input/>
                 </Form.Item>
                 <Form.Item
                   name="description"
-                  rules={[
-                    { required: true, message: "Please input a description!" },
-                    {
-                      max: 500,
-                      message: "Description should be less than 100 characters!",
-                    },
-                  ]}
                 >
                   <Input.TextArea 
                     placeholder="Description" 
@@ -200,7 +193,6 @@ function UpdateCourseCard(props) {
                 </Form.Item>
                 <Form.Item
                   name="level"
-                  rules={[{ required: true, message: "Please select a level!" }]}
                 >
                   <Select placeholder="Level">
                     <Option value="N1">N1</Option>
@@ -212,7 +204,6 @@ function UpdateCourseCard(props) {
                 </Form.Item>
                 <Form.Item
                   name="type"
-                  rules={[{ required: true, message: "Please select a type!" }]}
                 >
                   <Select placeholder="Type">
                     <Option value="JLPT">JLPT</Option>
@@ -221,17 +212,6 @@ function UpdateCourseCard(props) {
                 </Form.Item>
                 <Form.Item
                   name="duration"
-                  rules={[
-                    {
-                      required: true,
-                      type: "number",
-                      message: "Please input a duration!",
-                    },
-                    //   {
-                    //     min: 0,
-                    //     message: "Duration should be greater than 0!",
-                    //   },
-                  ]}
                 >
                   <InputNumber
                     placeholder="Duration"
@@ -241,17 +221,6 @@ function UpdateCourseCard(props) {
                 </Form.Item>
                 <Form.Item
                   name="price"
-                  rules={[
-                    {
-                      required: true,
-                      type: "number",
-                      message: "Please input a price!",
-                    },
-                    //   {
-                    //     min: 0,
-                    //     message: "Price should be greater than 0!",
-                    //   },
-                  ]}
                 >
                   <InputNumber
                     placeholder="Price"
