@@ -1,11 +1,12 @@
 import { Button, Space, Select, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
 import usersService from "~/services/usersService";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
 
 const roleColors = {
   ADMIN: "green",
@@ -112,13 +113,40 @@ function UserManagement() {
 
   const filteredUsers = userData.filter((user) => {
     return (
-      user.firstname.toLowerCase().includes(searchText.toLowerCase()) &&
-      (filterGender ? user.gender === filterGender : true) &&
-      (filterRole ? user.roles.find((role) => role.name === filterRole) : true)
+      user.firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+      (user.username.toLowerCase().includes(searchText.toLowerCase()) &&
+        (filterGender ? user.gender === filterGender : true) &&
+        (filterRole
+          ? user.roles.find((role) => role.name === filterRole)
+          : true))
     );
   });
+  const handleExport = () => {
+    // Get the table data
+    const dataSource = filteredUsers;
 
+    // Prepare the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataSource);
 
+    // Prepare the workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Convert the workbook to a binary string
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    // Create a Blob from the binary string
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Save the file
+    saveAs(blob, "users_data.xlsx");
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -170,11 +198,15 @@ function UserManagement() {
         >
           Insert
         </Button> */}
+        <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          Export
+        </Button>
       </div>
       <Table
         columns={columns}
         dataSource={filteredUsers}
         rowKey={(record) => record.id}
+        pagination={{ pageSize: 5 }}
       />
     </div>
   );
