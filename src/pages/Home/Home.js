@@ -5,6 +5,8 @@ import Slider from "~/components/Slider/Slider";
 import ListCourse from "~/components/ListCourse/ListCourse";
 import ListArticle from "~/components/ListArticle/ListArticle";
 import ListTeacher from "~/components/ListTeacher/ListTeacher";
+import LearningPath from "~/components/LearningPath/LearningPath";
+import Chatbot from "~/components/Chatbot/Chatbot";
 const cx = classNames.bind(styles);
 
 const Home = () => {
@@ -13,7 +15,9 @@ const Home = () => {
       <Slider/>
       <ListCourse />
       <ListArticle />
+      <LearningPath />
       <ListTeacher />
+      <Chatbot />
     </div>
   );
 };
