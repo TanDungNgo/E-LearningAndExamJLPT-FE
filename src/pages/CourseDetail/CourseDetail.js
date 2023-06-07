@@ -118,7 +118,7 @@ function CourseDetail() {
       <div className={cx("card__rating")}>
         <div className={cx("card__rating-title")}>Rating:</div>
         <div className={cx("card__rating-star")}>
-          <div className={cx("card__rating-number")}>{course?.rate}</div>
+          <div className={cx("card__rating-number")}>{course?.rate || "0"} </div>
           <div className={cx("card_rating-start-detaill")}>
             <svg
               className={cx("card__rating-star-detail")}

@@ -6,12 +6,27 @@ import Button from "../Button/Button";
 import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
 import { Space, Spin } from "antd";
+import AuthService from "~/services/authService";
+import { useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 
 function NewCourse() {
   const [listCourse, setListCourse] = useState();
   const { getNewCourse } = courseService();
+  const { getCurrentUser } = AuthService();
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [currentUser, setCurrentUser] = useState();
+  useEffect(() => {
+    if (user) {
+      const hasStudentRole = user.roles.some((role) => role.name === "STUDENT");
+      setCurrentUser(hasStudentRole);
+    } else {
+      getCurrentUser().then((res) => {
+        setCurrentUser(res);
+      });
+    }
+  }, []);
   useEffect(() => {
     getNewCourse().then((res) => {
       setListCourse(res);
@@ -20,7 +35,7 @@ function NewCourse() {
   const renderCard = () => {
     return listCourse?.map((item, index) => {
       return (
-        <div key={index}>
+        <div ckey={index}>
           <CourseCard course={item} />
         </div>
       );
@@ -47,9 +62,16 @@ function NewCourse() {
         )}
       </div>
       <div className={cx("list-course__footer")}>
-        <Button outline className={cx("button__explore")} to={routes.completedCourse}>
-          Link to my courses...
-        </Button>
+        {currentUser ? (
+            <>
+                <Button outline className={cx("button__explore")} to={routes.completedCourse}>
+                    Link to my courses...
+                </Button>
+            </>
+            ) : (
+            <>
+            </>
+        )}
       </div>
     </div>
   );
