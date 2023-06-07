@@ -49,7 +49,7 @@ export const data = {
 export function StatisticCourse() {
   console.log("data: ",labels.map(() => Math.floor(Math.random() * 200)),);
   return (
-    <Card style={{height:"fit-content", width:"700px", marginRight: "100px"}}>
+    <Card style={{height:"fit-content", width:"45vw", marginRight: "100px"}}>
         <div>
             <Bar options={options} data={data} />
         </div>

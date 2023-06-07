@@ -1,0 +1,22 @@
+.card{
+    display: flex;
+    flex-direction: row;
+}
+.card-left{
+    width: 50%;
+    &__img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+.card-right{
+    width: 50%;
+    padding: 20px 100px 0 100px;
+    &__title{
+        font-family: 'Lucida Sans Unicode';
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+}

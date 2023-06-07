@@ -27,6 +27,7 @@ const routes = {
   formUpdate: "/profileUser/updateCourse/formUpdate",
   examHistoryFolder: "/profileUser/examHistoryFolder",
   examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
+  learningPath: "/learningPath",
 
   // Admin routes
   admin: "/admin",

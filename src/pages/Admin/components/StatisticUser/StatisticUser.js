@@ -23,7 +23,9 @@ export default function StatisticUser() {
         <div style={{color: "rgba(103, 103, 103)", fontSize: "16px", fontWeight: "600", marginBottom: "10px"}}>
             Users Account
         </div>
-        <Pie data={data}/>
+        <div style={{width: "20vw"}}>
+          <Pie data={data}/>
+        </div>
     </div>
     
     );
