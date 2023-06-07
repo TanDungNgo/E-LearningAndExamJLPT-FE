@@ -23,6 +23,8 @@ export const data = {
 
 export default function StatisticRating() {
   return (
-    <Doughnut data={data} />
+    <div style={{height:"fit-content", width:"23vw"}}>
+      <Doughnut data={data} />
+    </div>
   );
 }
