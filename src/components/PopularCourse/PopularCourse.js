@@ -26,7 +26,6 @@ function PopularCourse() {
       );
     });
   };
-
   return (
     <div className={cx("container")}>
       <div className={cx("list-course__header")}>
