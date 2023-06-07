@@ -64,10 +64,7 @@ const SideMenu = (props) => {
       key: "changePassword",
     }
   ];
-  if (
-    props?.user?.roles[0].name === "TEACHER" ||
-    props?.user?.roles[0].authority === "TEACHER"
-  ) {
+  if (props?.user?.roles.some((role) => role.name === "TEACHER")) {
     items.splice(2, 0, {
       label: "Create Course",
       icon: <FontAwesomeIcon icon={faPlusSquare} />,
@@ -90,9 +87,7 @@ const SideMenu = (props) => {
     });
   }
   else if (
-    props?.user?.roles[0].name === "STUDENT" ||
-    props?.user?.roles[0].authority === "STUDENT"
-  ) {
+    props?.user?.roles.some((role) => role.name === "STUDENT")) {
     items.splice(2, 0, {
       label: "Completed Courses",
       icon: <FontAwesomeIcon icon={faCheckCircle} />,
