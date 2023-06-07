@@ -7,7 +7,7 @@ import RequestHttp from "~/utils/request";
 function CourseService() {
   const navigate = useNavigate();
   const { request } = RequestHttp();
-  const createCourse = async (course) => {
+  const createCourse = async (course, role) => {
     try {
       await request.post("/courses", course).then((res) => {
         if (res.data.status === "ok") {
@@ -16,7 +16,12 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.courseManagement);
+            if (role === "admin") {
+              navigate(routes.courseManagement);
+            }
+            else {
+              navigate(routes.courseCreated);
+            }
           });
         } else {
         }
@@ -42,6 +47,9 @@ function CourseService() {
       return null;
     }
   };
+
+
+
   const getPopularCourse = async () => {
     try {
       const res = await request.get(`/courses/popular`);
@@ -60,7 +68,7 @@ function CourseService() {
       return null;
     }
   };
-  const updateCourse = async (id, course) => {
+  const updateCourse = async (id, course, role) => {
     try {
       await request.put(`/courses/${id}`, course).then((res) => {
         if (res.data.status === "ok") {
@@ -69,7 +77,12 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.courseManagement);
+            if (role === "admin") {
+              navigate(routes.courseManagement);
+            }
+            else {
+              navigate(routes.updateCourseFolder);
+            }
           });
         } else {
         }
@@ -162,7 +175,7 @@ function CourseService() {
       return false;
     }
   };
-  const searchCourse = async (keyword,type,level) => {
+  const searchCourse = async (keyword, type, level) => {
     try {
       const res = await request.get(`/courses/search?query=${keyword}&type=${type}&level=${level}`);
       return res.data.data;
