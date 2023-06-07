@@ -47,6 +47,27 @@ function CourseService() {
       return null;
     }
   };
+
+
+
+  const getPopularCourse = async () => {
+    try {
+      const res = await request.get(`/courses/popular`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+  const getNewCourse = async () => {
+    try {
+      const res = await request.get(`/courses/new`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
   const updateCourse = async (id, course, role) => {
     try {
       await request.put(`/courses/${id}`, course).then((res) => {
@@ -179,6 +200,8 @@ function CourseService() {
     createCourse,
     getAllCourse,
     getCourseById,
+    getPopularCourse,
+    getNewCourse,
     getMyCourse,
     getCompletedCourses,
     updateCourse,

@@ -134,6 +134,10 @@
 }
 
 .card__relatedcourse {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #f2f2f2;
   height: 490px;
   width: 100%;
@@ -147,6 +151,7 @@
   text-align: center;
 }
 .card__relatedcourse-detail {
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

@@ -59,6 +59,7 @@ import EditVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManage
 import EditVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/EditVocabularyForm";
 import StatisticsPage from "~/pages/Admin/pages/Statistics/Statistics";
 import Statistics from "~/pages/Admin/pages/Statistics/Statistics";
+import LearningPath from "~/components/LearningPath/LearningPath";
 
 // Public routes
 const publicRoutes = [
@@ -115,6 +116,7 @@ const publicRoutes = [
     layout: DefaultLayout,
   },
   { path: config.routes.grammar, component: Grammar, layout: DefaultLayout },
+  { path: config.routes.learningPath, component: LearningPath},
   { path: config.routes.podcast, component: Podcast, layout: DefaultLayout },
   {
     path: config.routes.profileUser,
