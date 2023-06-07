@@ -47,13 +47,13 @@ function CourseDetail() {
   }, [id]);
   useEffect(() => {
     getCourseById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setCourse(res);
       setListLesson(res.lessons);
     });
   }, [id, isEnroll]);
-  if (course === null) {
-    navigate(routes.notFound);
-  }
   useEffect(() => {
     checkEnroll(id).then((res) => {
       if (res === true) {
