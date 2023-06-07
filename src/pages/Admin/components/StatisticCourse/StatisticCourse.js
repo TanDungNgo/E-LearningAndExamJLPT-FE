@@ -34,8 +34,6 @@ export const options = {
   },
 };
 
-
-
 export function StatisticCourse() {
   const { getCoursesByLevel } = StatisticService();
   const [coursesByLevelStatistic, setCoursesByLevelStatistic] = useState({});
@@ -66,8 +64,6 @@ export function StatisticCourse() {
       },
     ],
   };
-
-
   return (
     <Card style={{ height: "fit-content", width: "45vw", marginRight: "100px" }}>
       <div>

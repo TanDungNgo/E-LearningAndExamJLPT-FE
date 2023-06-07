@@ -20,70 +20,38 @@ const SideMenu = (props) => {
     const pathName = location.pathname;
     setSelectedKey(pathName);
   }, [location.pathname]);
-  const handleMenuClick = (e) => {
-    console.log("Clicked menu item:", e);
-    const key = e.key;
-    switch (key) {
-      case "publicProfile":
-        navigate(routes.publicProfile);
-        break;
-      case "changePassword":
-        navigate(routes.changePassword);
-        break;
-      case "createCourse":
-        navigate(routes.createCourse);
-        break;
-      case "createLesson":
-        navigate(routes.createLesson);
-        break;
-      case "courseCreated":
-        navigate(routes.courseCreated);
-        break;
-      case "completedCourse":
-        navigate(routes.completedCourse);
-        break;
-      case "updateCourse":
-        navigate(routes.updateCourseFolder);
-        break;
-      case "examHistory":
-        navigate(routes.examHistoryFolder);
-        break;
-      default:
-        break;
-    }
-  };
   const items = [
     {
       label: "Public Profile",
       icon: <FontAwesomeIcon icon={faUser} />,
-      key: "publicProfile",
+      key: "/profileUser",
     },
     {
       label: "Change Password",
       icon: <SettingOutlined />,
-      key: "changePassword",
+      key: "/profileUser/changePassword",
     }
   ];
   if (props?.user?.roles.some((role) => role.name === "TEACHER")) {
     items.splice(2, 0, {
       label: "Create Course",
       icon: <FontAwesomeIcon icon={faPlusSquare} />,
-      key: "createCourse",
+      key: "/profileUser/createCourse",
     },
     {
       label: "Create Lesson",
       icon: <FontAwesomeIcon icon={faAdd} />,
-      key: "createLesson",
+      key: "/profileUser/createLesson",
     },
     {
       label: "Courses Created",
       icon: <FontAwesomeIcon icon={faFolderClosed} />,
-      key: "courseCreated",
+      key: "/profileUser/courseCreated",
     },
     {
       label: "Update Course",
       icon: <FontAwesomeIcon icon={faPenToSquare} />,
-      key: "updateCourse",
+      key: "/profileUser/updateCourse/:id",
     });
   }
   else if (
@@ -91,12 +59,12 @@ const SideMenu = (props) => {
     items.splice(2, 0, {
       label: "Completed Courses",
       icon: <FontAwesomeIcon icon={faCheckCircle} />,
-      key: "completedCourse",
+      key: "/profileUser/completedCourse",
     },
     {
       label: "Exam History",
       icon: <FontAwesomeIcon icon={faClock} />,
-      key: "examHistory",
+      key: "/profileUser/examHistoryFolder",
     });
   }
 
@@ -105,7 +73,7 @@ const SideMenu = (props) => {
       <Menu
         className={cx("card__menu")}
         mode="inline"
-        onClick={handleMenuClick}
+        onClick={(item) => {navigate(item.key)}}
         selectedKeys={selectedKey}
         items={items}
       ></Menu>

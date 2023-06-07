@@ -1,5 +1,10 @@
 import { Button, Select, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  ExportOutlined,
+} from "@ant-design/icons";
 import { Input } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +13,9 @@ import { Link } from "react-router-dom";
 import courseService from "~/services/courseService";
 import routes from "~/configs/routes";
 import Swal from "sweetalert2";
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
+
 
 function CourseManagement() {
   const { getAllCourse, deleteCourse } = courseService();
@@ -59,7 +67,6 @@ function CourseManagement() {
     tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const handleDeleteCourse = (id) => {
-    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -143,6 +150,32 @@ function CourseManagement() {
       ),
     },
   ];
+  const handleExport = () => {
+    // Get the table data
+    const dataSource = filteredCourses;
+
+    // Prepare the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataSource);
+
+    // Prepare the workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Convert the workbook to a binary string
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    // Create a Blob from the binary string
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Save the file
+    saveAs(blob, "courses_data.xlsx");
+  };
+
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -150,13 +183,13 @@ function CourseManagement() {
           placeholder="Search by name"
           value={searchText}
           onChange={handleSearchTextChange}
-          style={{ width: 200, marginRight: 16 }}
+          style={{ width: 200, marginRight: 15 }}
         />
         <Select
           placeholder="Filter by type"
           value={filterType}
           onChange={handleFilterTypeChange}
-          style={{ width: 120, marginRight: 16 }}
+          style={{ width: 120, marginRight: 15 }}
         >
           <Select.Option value="">All</Select.Option>
           <Select.Option value="JLPT">JLPT</Select.Option>
@@ -166,7 +199,7 @@ function CourseManagement() {
           placeholder="Filter by level"
           value={filterLevel}
           onChange={handleFilterLevelChange}
-          style={{ width: 120, marginRight: 16 }}
+          style={{ width: 120, marginRight: 15 }}
         >
           <Select.Option value="">All</Select.Option>
           <Select.Option value="N1"> N1</Select.Option>
@@ -179,7 +212,7 @@ function CourseManagement() {
           placeholder="Filter by price"
           value={filterPrice}
           onChange={handleFilterPriceChange}
-          style={{ width: 150, marginRight: 16 }}
+          style={{ width: 120, marginRight: 15 }}
         >
           <Select.Option value="">All</Select.Option>
           <Select.Option value="50">Less than $20</Select.Option>
@@ -195,15 +228,22 @@ function CourseManagement() {
             />
           }
           onClick={handleResetFilters}
-          style={{ marginRight: 16 }}
+          style={{ marginRight: 15 }}
         >
           Reset Filters
         </Button>
         <Link to={routes.addCourse}>
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            style={{ marginRight: 15 }}
+          >
             Insert
           </Button>
         </Link>
+        <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          Export
+        </Button>
       </div>
       <div ref={tableRef}>
         <Table
