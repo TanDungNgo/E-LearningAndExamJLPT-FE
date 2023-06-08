@@ -152,7 +152,7 @@ const publicRoutes = [
     path: config.routes.examHistory,
     component: ExamHistory,
     layout: ProfileUser
-  }
+  },
 ];
 
 // Private routes
