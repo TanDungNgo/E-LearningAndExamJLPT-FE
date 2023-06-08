@@ -9,6 +9,7 @@ import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
 import examService from "~/services/examService";
 import { useDispatch } from "react-redux";
 import { setExam } from "~/redux/examSlice";
+import Chatbot from "~/components/Chatbot/Chatbot";
 
 const cx = classNames.bind(styles);
 
@@ -199,6 +200,7 @@ function ExamFolder() {
         onCancel={handleClickCancel}
         footer={null}
       />
+      <Chatbot />
     </div>
   );
 }
