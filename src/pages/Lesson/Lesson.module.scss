@@ -217,4 +217,9 @@
   gap: 20px;
   margin-left: 12px;
   border-bottom: 1px solid #ccc;
+  width: 300px;
+  overflow-wrap: break-word;
+  .note{
+    overflow: hidden;
+  }
 }

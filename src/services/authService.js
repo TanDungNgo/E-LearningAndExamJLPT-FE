@@ -65,7 +65,10 @@ function AuthService() {
     localStorage.removeItem("token");
     dispatch(loginFailed());
     navigate(routes.home);
-    window.location.reload();
+    notification.success({
+      message: "Success",
+      description: "Logout success!",
+    });
   };
 
   const getCurrentUser = async () => {
