@@ -13,12 +13,16 @@
   height: 380px;
   object-fit: cover;
 }
+
 .title {
   margin: 10px 0px 0px 20px;
   font-size: 20px;
   &--primary {
     color: #f483cb;
   }
+}
+.list-card{
+  width: 65%;
 }
 .card-podcast {
   width: fit-content;
@@ -31,6 +35,7 @@
   position: relative;
   transition: all 400ms ease;
   margin-bottom: 25px;
+
   &__media {
     width: 15%;
     object-fit: cover;
