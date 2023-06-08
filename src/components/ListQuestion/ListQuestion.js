@@ -99,12 +99,24 @@ function ListQuestion(props) {
           Swal.fire("Submitted!", "You submitted the exam", "success").then(
             () => {
               dispatch(addAnswer(props.quizzes));
+              exitFullscreen();
               navigate(routes.examResult);
             }
           );
         }
       }
     });
+  };
+  const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
   };
   return (
     <div className={cx("container")}>
