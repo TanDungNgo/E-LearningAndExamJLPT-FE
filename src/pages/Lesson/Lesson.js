@@ -12,7 +12,7 @@ import {
   faStickyNote,
 } from "@fortawesome/free-solid-svg-icons";
 import CommentItem from "~/components/Comment/CommentItem";
-import { Badge, Button, Drawer, Input, Progress } from "antd";
+import { Badge, Button, Drawer, Input, Progress, notification } from "antd";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -44,6 +44,7 @@ function Lesson() {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
   const [completedLessonCount, setCompletedLessonCount] = useState(0);
+  const [idLastCompletedLesson, setIdLastCompletedLesson] = useState(null);
   const [percentComplete, setPercentComplete] = useState(0);
   const [note, setNote] = useState("");
   const [timeNote, setTimeNote] = useState(0);
@@ -66,6 +67,11 @@ function Lesson() {
       }
       setCourse(res);
       setLessons(res.lessons);
+      const lastCompletedLessonId = res.lessons
+        .filter((lesson) => lesson.completed)
+        .map((lesson) => lesson.id)
+        .pop();
+      setIdLastCompletedLesson(lastCompletedLessonId);
       const completedLessons = res.lessons.filter(
         (lesson) => lesson.completed === true
       );
@@ -130,17 +136,30 @@ function Lesson() {
     setWatchedPercent(watchedPercent);
   };
   // Xử lý sự kiện seeking để ngăn người dùng tua video
+  const [isVideoSeeked, setIsVideoSeeked] = useState(false);
   const handleSeeking = () => {
     console.log("seeking");
-    const videoElement = videoRef.current;
-    setCurrentTime(videoElement.currentTime);
+    if (isVideoSeeked) {
+      setIsVideoSeeked(false); // Đặt lại trạng thái tua video
+    } else if (id == idLastCompletedLesson) {
+      setIsVideoSeeked(true); // Đánh dấu video đã được tua
+
+      // Hiển thị thông báo lỗi
+      notification.error({
+        message: "Can't rewind the video!",
+        description: "Please watch the videos in order!",
+      });
+
+      videoRef.current.currentTime = 0; // Quay lại thời điểm ban đầu
+      videoRef.current.pause();
+    }
   };
   useEffect(() => {
-    if (watchedPercent > 70) {
+    if (watchedPercent > 70 && id == idLastCompletedLesson) {
       for (const lesson of lessons) {
         if (!lesson.completed) {
           const currentLessonId = lesson.id;
-          completedLesson(currentLessonId);
+          // completedLesson(currentLessonId);
           const currentLessonIndex = lessons.findIndex(
             (lesson) => lesson.id === currentLessonId
           );
@@ -149,9 +168,7 @@ function Lesson() {
             (lesson) => lesson.completed === true
           );
           setCompletedLessonCount(completedLessons.length);
-          setPercentComplete(
-            (completedLessons.length / lessons.length) * 100
-          );
+          setPercentComplete((completedLessons.length / lessons.length) * 100);
           break;
         }
       }
@@ -166,7 +183,6 @@ function Lesson() {
     setNotes([...notes, data]);
     setNote("");
   };
-
 
   return (
     <div className={cx("lesson-container")}>
@@ -224,8 +240,8 @@ function Lesson() {
                   id === lesson.id.toString()
                     ? cx("lesson-item", "active")
                     : cx("lesson-item", {
-                      disabled: !lesson?.completed,
-                    })
+                        disabled: !lesson?.completed,
+                      })
                 }
                 key={index}
                 onClick={
@@ -329,25 +345,26 @@ function Lesson() {
                   placeholder="Write a note..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  style={{height: "120px"}}
+                  style={{ height: "120px" }}
                 />
-                <Button type="primary" disabled={!note} onClick={handleNote} className={cx("note-btn")}>
+                <Button
+                  type="primary"
+                  disabled={!note}
+                  onClick={handleNote}
+                  className={cx("note-btn")}
+                >
                   Save Note
                 </Button>
                 <div className={cx("note-content-form")}>
                   {notes.map((note, index) => (
-
                     <div key={index} className={cx("note-content")}>
                       <div className={cx("time-note")}>
                         {formatTime(note.timeNote)}
                       </div>
-                      <div className={cx("note")}>
-                        {note.note}
-                      </div>
+                      <div className={cx("note")}>{note.note}</div>
                     </div>
                   ))}
                 </div>
-
               </div>
             </div>
           </Drawer>
