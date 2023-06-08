@@ -1,11 +1,11 @@
 import { Button, Rate, Select, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import lessonData from "~/data/lessonData";
 import { useEffect, useRef, useState } from "react";
-import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
 import lessonService from "~/services/lessonService";
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
 const columns = [
   {
     title: "ID",
@@ -22,33 +22,6 @@ const columns = [
     title: "Description",
     dataIndex: "description",
     key: "description",
-  },
-
-  // {
-  //   title: "URL Video",
-  //   dataIndex: "urlVideo",
-  //   key: "urlVideo",
-  // },
-
-  // {
-  //   title: "URL Video",
-  //   dataIndex: "urlVideo",
-  //   key: "urlVideo",
-  //   render: (text) => <div style={{ wordBreak: "break-all" }}>{text}</div>
-  // },
-  {
-    title: "Rate",
-    dataIndex: "rate",
-    key: "rate",
-    // render: (_, record) => (
-    //   <Space size="middle">
-    //     <a>
-    //       <Rate
-    //         style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
-    //       />
-    //     </a>
-    //   </Space>
-    // ),
   },
   {
     title: "Action",
@@ -69,6 +42,9 @@ const columns = [
     ),
   },
 ];
+
+
+
 function LessonManagement() {
   const { getAllLesson } = lessonService();
   const [lessonData, setLessonData] = useState([]);
@@ -90,6 +66,32 @@ function LessonManagement() {
   const handlePageChange = (pageNumber) => {
     tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const handleExport = () => {
+    // Get the table data
+    const dataSource = filteredLessons;
+  
+    // Prepare the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataSource);
+  
+    // Prepare the workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+  
+    // Convert the workbook to a binary string
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+  
+    // Create a Blob from the binary string
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+  
+    // Save the file
+    saveAs(blob, "lesson_data.xlsx");
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -100,10 +102,14 @@ function LessonManagement() {
           style={{ width: 200, marginRight: 16 }}
         />
         <Link to="/admin/lesson/add">
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" style={{ marginRight: 15 }} icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
+
+        <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          Export
+        </Button>
       </div>
       <div ref={tableRef}>
         <Table

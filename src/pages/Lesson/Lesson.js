@@ -21,6 +21,7 @@ import moment from "moment";
 import courseService from "~/services/courseService";
 import { useSelector } from "react-redux";
 import AuthService from "~/services/authService";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 function Lesson() {
   const navigate = useNavigate();
@@ -60,6 +61,9 @@ function Lesson() {
 
   useEffect(() => {
     getCourseById(courseId).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setCourse(res);
       setLessons(res.lessons);
       const completedLessons = res.lessons.filter(
@@ -71,6 +75,9 @@ function Lesson() {
   }, [courseId]);
   useEffect(() => {
     getLessonById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setLesson(res);
     });
   }, [id]);

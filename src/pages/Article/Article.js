@@ -1,20 +1,25 @@
 import classNames from "classnames/bind";
 import styles from "./Article.module.scss";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import articlesService from "~/services/articlesService";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function Article() {
   const { id } = useParams();
   const { getArticleById } = articlesService();
   const [article, setArticle] = useState();
+  const navigate = useNavigate();
+  
+
   useEffect(() => {
-    const getArticle = async () => {
-      const res = await getArticleById(id);
+    getArticleById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setArticle(res);
-    };
-    getArticle();
+    });
   }, []);
   const splitString = (str) => {
     const parts = str.split(";");
