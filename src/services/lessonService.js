@@ -6,6 +6,29 @@ import routes from "~/configs/routes";
 function LessonService() {
   const navigate = useNavigate();
   const { request } = RequestHttp();
+  const createLesson = async (lesson, role) => {
+    try {
+      await request.post("/lessons", lesson).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            if (role === "admin") {
+              navigate(routes.lessonManagement);
+            }
+            else  {
+              navigate(routes.courseCreated);
+            }
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getAllLesson = async () => {
     try {
       const res = await request.get("/lessons");
@@ -74,6 +97,7 @@ function LessonService() {
     }
   };
   return {
+    createLesson,
     getAllLesson,
     getLessonById,
     getCommentByLessonId,

@@ -2,13 +2,17 @@ import classNames from "classnames/bind";
 import styles from "./CreateLesson.module.scss";
 import { Link } from "react-router-dom";
 import routes from "~/configs/routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Progress, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Form, Input, Select } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
+import lessonService from "~/services/lessonService";
 import courseService from "~/services/courseService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
 const { Option } = Select;
 const props = {
@@ -29,31 +33,40 @@ const props = {
     },
   };
 const CreateLesson = () => {
-  const [imgSrc, setImgSrc] = useState("/images/banner_course.jpg");
-  const [fileImage, setFileImage] = useState("");
-  const { createCourse } = courseService();
+  const [videoSrc, setVideoSrc] = useState("");
+  const [fileVideo, setFileVideo] = useState("");
+  const { createLesson } = lessonService();
   const [progress, setProgress] = useState(0);
+  const { getMyCourse } = courseService();
+  const [courseData, setCourseData] = useState([]);
+  const [isVideoUploaded, setIsVideoUploaded] = useState(false);
+  useEffect(() => {
+    getMyCourse().then((res) => {
+      setCourseData(res);
+    });
+  }, []);
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
-    setFileImage(file);
+    setFileVideo(file);
     if (
-      file.type === "image/jpeg" ||
-      file.type === "image/jpg" ||
-      file.type === "image/png"
+      file.type === "video/mp4" ||
+      file.type === "video/mov" ||
+      file.type === "video/avi"
     ) {
       //Tạo đối tượng để đọc file
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        // console.log(e.target.result);
-        setImgSrc(e.target.result);
+        //console.log(e.target.result);
+        setVideoSrc(e.target.result);
+        setIsVideoUploaded(true);
       };
     }
   };
   const onFinish = async (values) => {
-    const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, fileImage);
+    const storageRef = ref(storageFirebase, `videos/${fileVideo.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, fileVideo);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -68,10 +81,10 @@ const CreateLesson = () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
         const data = {
           ...values,
-          banner: url,
+          urlVideo: url,
         };
         console.log(data);
-        createCourse(data);
+        createLesson(data, "teacher");
       }
     );
   };
@@ -89,10 +102,22 @@ const CreateLesson = () => {
           <div className={cx("card-create__body")}>
             <div className={cx("card-create__input")}>
               <Form.Item
+                name="course_id"
+                rules={[{ required: true, message: "Please input a course!" }]}
+              >
+                <Select placeholder="Choose a course">
+                  {courseData.map((course) => (
+                    <Option key={course.id} values={course.id}>
+                      {course.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
                 name="name"
                 rules={[{ required: true, message: "Please input a name!" }]}
               >
-                <Input placeholder="Name" />
+                <Input placeholder="Name Lesson" />
               </Form.Item>
               <Form.Item
                 name="description"
@@ -108,26 +133,23 @@ const CreateLesson = () => {
               </Form.Item>
             </div>
             <div className={cx("card-create__import-file")}>
-              <div className={cx("card-create__input")}>
-                <Form.Item
-                  name="urlVideo"
-                  rules={[{ required: true, message: "Please input a URL!" }]}
-                >
-                  <Input placeholder="URL Video" />
-                </Form.Item>
-              </div>
                 <label htmlFor="file">
                   <UploadOutlined />
                   Import URL
                 </label>
                 <input
                   type="file"
-                  name="file"
+                  name="urlVideo"
                   id="file"
                   className={cx("card-create__input-file")}
                   onChange={handleChangeFile}
-                  accept="image/*"
+                  accept="video/*"
                 />
+                {isVideoUploaded && (
+                  <div className={cx("card-create__message")}>
+                    <FontAwesomeIcon icon={faCheck} style={{color: "#66c214", fontSize: "18px", padding: "7px"}}/>
+                  </div>
+                )}
             </div>
           </div>
           <div className={cx("form__submit")}>
