@@ -10,20 +10,20 @@ const { Meta } = Card;
 
 const podcastData = [
   {
-    title: "Podcast Episode 1",
-    description: "Description of Episode 1",
+    title: "Podcast 1: How to disagree with people in Japanese",
+    description: "In this lesson we will teach you useful phrases for disagreeing with people and how to use them in different situations. ",
     thumbnail:
-      "/images/podcast.png",
+      "/images/card(2).png",
     audioUrl:
-      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
+      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2Fpodcast_48_lesson.mp3?alt=media&token=0dfaacf9-3972-4ae4-b8bb-5b42cc02ece9&_gl=1*o46skk*_ga*MTA3NTcxNDQzOS4xNjg0MjI5OTkw*_ga_CW55HF8NVT*MTY4NjIxMzU4MS4xNy4xLjE2ODYyMTM2NDguMC4wLjA.",
   },
   {
-    title: "Podcast Episode 2",
-    description: "Description of Episode 2",
+    title: "Podcast 2: Levels of certainty in Japanese",
+    description: "In this lesson Ami Sensei and I will teach you how to express different levels of certainty in Japanese, the probability you think something will happen through various example sentences and dialogues.",
     thumbnail:
-      "/images/podcast.png",
+      "/images/card(1).png",
     audioUrl:
-      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2F37%20Track%2037.mp3?alt=media&token=8b666be4-c08f-43a8-99f1-af6247d47b9c",
+      "https://firebasestorage.googleapis.com/v0/b/e-learning-dpt.appspot.com/o/audios%2Fpodcast_49_lesson.mp3?alt=media&token=93f372fe-d48b-416d-971b-fd65135edfb6&_gl=1*10ixv9q*_ga*MTA3NTcxNDQzOS4xNjg0MjI5OTkw*_ga_CW55HF8NVT*MTY4NjIxMzU4MS4xNy4xLjE2ODYyMTM2MjYuMC4wLjA.",
   },
   // Add more episodes here...
 ];

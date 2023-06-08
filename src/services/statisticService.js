@@ -17,10 +17,31 @@ function StatisticService() {
             console.log(error);
         }
     };
+    const getAccountByRole = async () => {
+        try {
+            const res = await request.get("/statistics/accountsByRole");
+            return res.data.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getTopTeacher = async () => {
+        try {
+            const res = await request.get("/statistics/topTeachers");
+            return res.data.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     return {
         getCoursesByLevel,
         getStatistics,
+        getAccountByRole,
+        getTopTeacher,
     };
+
 }
 
 export default StatisticService;

@@ -37,12 +37,25 @@ function ExamFolder() {
       const res = await getExam(examLevel);
       dispatch(setExam(res));
       navigate(`/exam/${examLevel}/languageKnowledge`);
+      openFullscreen();
     }
   };
 
   // Handle click button "X" of modal
   const handleClickCancel = () => {
     setOpenModal(false);
+  };
+  const openFullscreen = () => {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
   };
 
   return (
