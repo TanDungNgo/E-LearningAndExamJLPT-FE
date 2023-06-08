@@ -60,6 +60,7 @@ import EditVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/EditVoc
 import StatisticsPage from "~/pages/Admin/pages/Statistics/Statistics";
 import Statistics from "~/pages/Admin/pages/Statistics/Statistics";
 import LearningPath from "~/components/LearningPath/LearningPath";
+import EditLessonForm from "~/pages/Admin/pages/LessonsManagement/EditLessonForm";
 
 // Public routes
 const publicRoutes = [
@@ -237,6 +238,7 @@ const privateRoutes = [
     layout: Admin,
   },
   {path: config.routes.editCourse, component: EditCourseForm, layout: Admin},
+  {path: config.routes.editLesson, component: EditLessonForm, layout: Admin},
   {path: config.routes.editArticle, component: EditArticleForm, layout: Admin},
   {path: config.routes.editGrammar, component: EditGrammarForm, layout: Admin},
   {path: config.routes.editVocabularyFolder, component: EditVocabularyFolderForm, layout: Admin},

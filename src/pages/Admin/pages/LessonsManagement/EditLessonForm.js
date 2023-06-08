@@ -18,19 +18,20 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 const { Option } = Select;
 
-const AddLessonForm = ({ onSubmit }) => {
-  const { getAllCourse } = courseService();
-  const { createLesson } = lessonService();
+const EditLessonForm = ({ onSubmit }) => {
+  const { id } = useParams();
+  const { getAllCourse, getCourseById } = courseService();
+  const { getLessonById, updateLesson } = lessonService();
   const [courseData, setCourseData] = useState([]);
   const [videoSrc, setVideoSrc] = useState("");
   const [fileVideo, setFileVideo] = useState("");
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(true);
-  const [isVideoUploaded, setIsVideoUploaded] = useState(false);
+  const [checkChangeVideo, setCheckChangeVideo] = useState(false);
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
@@ -46,36 +47,42 @@ const AddLessonForm = ({ onSubmit }) => {
       reader.onload = (e) => {
         //console.log(e.target.result);
         setVideoSrc(e.target.result);
-        setIsVideoUploaded(true);
+        setCheckChangeVideo(true);
       };
     }
   };
   const onFinish = (values) => {
-    // setIsSubmitting(true);
-    // setProgress(100);
-    // onSubmit(values);
-    const storageRef = ref(storageFirebase, `videos/${fileVideo.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, fileVideo);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      async () => {
-        const url = await getDownloadURL(uploadTask.snapshot.ref);
+    if (checkChangeVideo) {
+        const storageRef = ref(storageFirebase, `videos/${fileVideo.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, fileVideo);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const progress =
+                Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(progress);
+            },
+            (error) => {
+                console.log(error);
+            },
+            async () => {
+                const url = await getDownloadURL(uploadTask.snapshot.ref);
+                const data = {
+                ...values,
+                urlVideo: url,
+                };
+                console.log(data);
+                updateLesson(id, data, "admin");
+            }
+        );
+    } else {
         const data = {
-          ...values,
-          urlVideo: url,
+            ...values,
+            urlVideo: videoSrc,
         };
         console.log(data);
-        createLesson(data, "admin");
-      }
-    );
+        updateLesson(id, data, "admin");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -90,8 +97,26 @@ const AddLessonForm = ({ onSubmit }) => {
       setCourseData(res);
     });
   }, []);
+  const [form] = Form.useForm();
+  useEffect(() => {
+    const getLesson = async () => {
+      const lesson = await getLessonById(id);
+      setVideoSrc(lesson.urlVideo);
+      form.setFieldsValue({
+        name: lesson.name,
+        description: lesson.description,
+        isPublic: true,
+      });
+    };
+    getLesson();
+  }, []);
   return (
-    <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+    <Form 
+        form={form}
+        onFinish={onFinish} 
+        onFinishFailed={onFinishFailed} 
+        layout="vertical"
+    >
       <Form.Item
         name="course_id"
         rules={[{ required: true, message: "Please input a course!" }]}
@@ -135,7 +160,7 @@ const AddLessonForm = ({ onSubmit }) => {
         <div className={cx("card-create__import-file")}>
           <label htmlFor="file">
             <UploadOutlined />
-            Import URL
+            Change URL
           </label>
           <input
             type="file"
@@ -145,7 +170,7 @@ const AddLessonForm = ({ onSubmit }) => {
             onChange={handleChangeFile}
             accept="video/*"
           />
-          {isVideoUploaded && (
+          {checkChangeVideo && (
             <div className={cx("card-create__message")}>
               <FontAwesomeIcon icon={faCheck} style={{color: "#66c214", fontSize: "18px", padding: "7px"}}/>
             </div>
@@ -162,15 +187,13 @@ const AddLessonForm = ({ onSubmit }) => {
       <Form.Item>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Update
           </Button>
-          {isSubmitting && (
-            <Progress percent={progress} style={{ marginLeft: "10px" }} />
-          )}
+          <Progress percent={progress} style={{ marginLeft: "10px" }} />
         </div>
       </Form.Item>
     </Form>
   );
 };
 
-export default AddLessonForm;
+export default EditLessonForm;

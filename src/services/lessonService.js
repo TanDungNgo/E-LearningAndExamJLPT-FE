@@ -64,6 +64,29 @@ function LessonService() {
       return null;
     }
   };
+  const updateLesson = async (id, lesson, role) => {
+    try {
+      await request.put(`/lessons/${id}`, lesson).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            if (role === "admin") {
+              navigate(routes.lessonManagement);
+            }
+            else {
+              
+            }
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const completedLesson = async (id) => {
     try{
       const res = await request.put(`/lessons/watched/${id}`);
@@ -96,14 +119,34 @@ function LessonService() {
       console.log(error);
     }
   };
+  const deleteLesson = async (id) => {
+    try {
+      await request.delete(`/lessons/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.lessonManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return {
     createLesson,
     getAllLesson,
     getLessonById,
     getCommentByLessonId,
+    updateLesson,
     commentLesson,
     completedLesson,
     deleteComment,
+    deleteLesson,
   };
 }
 
