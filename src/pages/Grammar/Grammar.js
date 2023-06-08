@@ -2,20 +2,23 @@ import classNames from "classnames/bind";
 import styles from "./Grammar.module.scss";
 import React, { useEffect, useState } from "react";
 import Button from "~/components/Button/Button";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import grammarService from "~/services/grammarService";
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function Grammar() {
   const { id } = useParams();
   const { getGrammarById } = grammarService();
   const [grammar, setGrammar] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
-    const getGrammar = async () => {
-      const res = await getGrammarById(id);
+    getGrammarById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
       setGrammar(res);
-    };
-    getGrammar();
+    });
   }, []);
   const splitString = (str) => {
     const parts = str.split(";");

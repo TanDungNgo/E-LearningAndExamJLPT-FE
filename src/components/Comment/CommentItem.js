@@ -71,6 +71,7 @@ const CommentItem = ({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteComment(idComment);
+        
       }
     });
   };

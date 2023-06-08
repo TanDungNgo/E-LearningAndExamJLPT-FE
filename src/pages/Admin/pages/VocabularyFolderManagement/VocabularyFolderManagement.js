@@ -1,5 +1,5 @@
 import { Button, Select, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
@@ -8,6 +8,8 @@ import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
 import Swal from "sweetalert2";
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
 
 function VocabularyFolderManagement() {
   const columns = [
@@ -104,6 +106,31 @@ function VocabularyFolderManagement() {
       }
     });
   };
+  const handleExport = () => {
+    // Get the table data
+    const dataSource = filteredvocabularyFolder;
+
+    // Prepare the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataSource);
+
+    // Prepare the workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Convert the workbook to a binary string
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    // Create a Blob from the binary string
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Save the file
+    saveAs(blob, "courses_data.xlsx");
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -140,10 +167,14 @@ function VocabularyFolderManagement() {
           Reset Filters
         </Button>
         <Link to="/admin/vocabularyFolder/add">
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" style={{ marginRight: 15 }} icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
+
+        <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          Export
+        </Button>
       </div>
       <Table
         columns={columns}
