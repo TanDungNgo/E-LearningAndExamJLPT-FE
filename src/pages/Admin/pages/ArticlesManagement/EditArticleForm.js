@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  Upload,
-  Image,
-  Progress,
-  InputNumber,
-  Switch,
-} from "antd";
+import { Form, Input, Switch, Button, Progress } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
 import ArticlesService from "~/services/articlesService";
 import { useParams } from "react-router-dom";
-const { Option } = Select;
+import TextEditor from "../../components/Editor/TextEditor";
+import { EditorState, ContentState } from "draft-js";
 
 const EditArticleForm = () => {
   const { id } = useParams();
@@ -26,8 +17,10 @@ const EditArticleForm = () => {
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState(null);
   const [checkChangeImage, setCheckChangeImage] = useState(false);
+  const [contentEditorState, setContentEditorState] = useState(null);
+  const [descriptionEditorState, setDescriptionEditorState] = useState(null);
+
   const handleChangeFile = (e) => {
-    //Lấy file ra từ e
     let file = e.target.files[0];
     setFileImage(file);
     if (
@@ -35,16 +28,15 @@ const EditArticleForm = () => {
       file.type === "image/jpg" ||
       file.type === "image/png"
     ) {
-      //Tạo đối tượng để đọc file
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        // console.log(e.target.result);
         setImgSrc(e.target.result);
         setCheckChangeImage(true);
       };
     }
   };
+
   const onFinish = async (values) => {
     if (checkChangeImage) {
       const storageRef = ref(storageFirebase, `images/${fileImage.name}`);
@@ -64,6 +56,8 @@ const EditArticleForm = () => {
           const data = {
             ...values,
             image: url,
+            content: contentEditorState.getCurrentContent().getPlainText(),
+            description: descriptionEditorState.getCurrentContent().getPlainText(),
           };
           console.log(data);
           updateArticle(id, data);
@@ -73,6 +67,8 @@ const EditArticleForm = () => {
       const data = {
         ...values,
         image: imgSrc,
+        content: contentEditorState.getCurrentContent().getPlainText(),
+        description: descriptionEditorState.getCurrentContent().getPlainText(),
       };
       console.log(data);
       updateArticle(id, data);
@@ -82,17 +78,27 @@ const EditArticleForm = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   const [form] = Form.useForm();
+
   useEffect(() => {
     const getArticle = async () => {
       const article = await getArticleById(id);
       setImgSrc(article.image);
+      setArticle(article);
+      setContentEditorState(
+        EditorState.createWithContent(ContentState.createFromText(article.content))
+      );
+      setDescriptionEditorState(
+        EditorState.createWithContent(ContentState.createFromText(article.description))
+      );
       form.setFieldsValue({
         title: article.title,
         description: article.description,
         content: article.content,
       });
     };
+
     getArticle();
   }, []);
 
@@ -121,7 +127,10 @@ const EditArticleForm = () => {
           },
         ]}
       >
-        <Input.TextArea style={{ height: "120px" }} />
+        <TextEditor
+          defaultValue={article.description}
+          onEditorStateChange={setDescriptionEditorState}
+        />
       </Form.Item>
       <Form.Item
         label="Content"
@@ -130,31 +139,30 @@ const EditArticleForm = () => {
           { required: true, message: "Please input a content!" },
           {
             max: 5000,
-            message: "Description should be less than 100 characters!",
+            message: "Content should be less than 5000 characters!",
           },
         ]}
       >
-        <Input.TextArea style={{ height: "180px" }} />
+        <TextEditor
+          defaultValue={article.content}
+          onEditorStateChange={setContentEditorState}
+        />
       </Form.Item>
       <Form.Item
         label="Status"
         name="isPublic"
         valuePropName="checked"
         style={{ marginBottom: "15px" }}
-        rules={[{ required: true, message: "Please select a status!" }]}
       >
         <Switch />
       </Form.Item>
-      <Form.Item
-        name="image"
-        // rules={[{ required: true, message: "Please upload a banner!" }]}
-      >
+      <Form.Item name="image">
         <div>
-          <img src={imgSrc} />
+          <img src={imgSrc} alt="Article" />
           <div>
             <label
               htmlFor="file"
-              style={{ color: "##b79032", cursor: "pointer", fontSize: "16px" }}
+              style={{ color: "#b79032", cursor: "pointer", fontSize: "16px" }}
             >
               <UploadOutlined />
               Upload Image
@@ -166,7 +174,7 @@ const EditArticleForm = () => {
               onChange={handleChangeFile}
               accept="image/*"
               style={{
-                with: "0.1px",
+                width: "0.1px",
                 height: "0.1px",
                 opacity: "0",
                 overflow: "hidden",
