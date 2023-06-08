@@ -16,7 +16,7 @@ function GrammarsFolder() {
   const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
-    console.log("Search");
+    // console.log("Search");
     fetchData();
   }, [currentPage, keyword]);
 
@@ -24,7 +24,7 @@ function GrammarsFolder() {
     searchGrammar(keyword)
       .then((response) => {
         setData(response);
-        console.log(response);
+        // console.log(response);
         setTotalElements(response.length);
       })
       .catch((error) => {
@@ -49,7 +49,7 @@ function GrammarsFolder() {
     return (
       <div className={cx("card-grammar")}>
         {paginatedData.map((item, index) => {
-          console.log(paginatedData)
+          {/* console.log(paginatedData) */}
           return (
             <div className={cx("list-item")} key={index}>
               <GrammarCard grammar={item} />

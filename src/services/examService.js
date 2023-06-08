@@ -20,7 +20,7 @@ function examService() {
     }
   };
   const submitExam = async (examId, answers) => {
-    console.log(answers);
+    // console.log(answers);
     try {
       const res = await request.post(`/exams/submit/${examId}`, answers);
       // console.log(res.data.data);
@@ -30,12 +30,11 @@ function examService() {
     }
   };
 
-  const getRandomExamByLevel = async(level) => {
-    try{
+  const getRandomExamByLevel = async (level) => {
+    try {
       const res = await request.get(`/exams/level/${level}`);
       return res.data.data;
-
-    }catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };

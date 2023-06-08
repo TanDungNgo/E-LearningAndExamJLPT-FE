@@ -24,7 +24,7 @@ function ArticleFolder() {
   }, []);
 
   useEffect(() => {
-    console.log("Search");
+    // console.log("Search");
     fetchData();
   }, [currentPage, keyword]);
 
@@ -32,7 +32,7 @@ function ArticleFolder() {
     searchArticle(keyword)
       .then((response) => {
         setData(response);
-        console.log(response);
+        // console.log(response);
         setTotalElements(response.length);
       })
       .catch((error) => {

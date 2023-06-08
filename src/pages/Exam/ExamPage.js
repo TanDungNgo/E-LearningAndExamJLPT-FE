@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addAnswer } from "~/redux/examSlice";
 import routes from "~/configs/routes";
+import { Space, Spin } from "antd";
 const cx = classNames.bind(styles);
 
 function ExamPage() {
@@ -30,6 +31,7 @@ function ExamPage() {
   const [time, setTime] = useState();
   const [playlist, setPlaylist] = useState([]);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Ref để truy cập đến thành phần <audio>
   const audioRef = useRef(null);
@@ -98,6 +100,7 @@ function ExamPage() {
             index === 0 ? "not-done" : "not-seen"
           )
         );
+        setIsLoading(false);
       } else if (type === "reading") {
         setTime(exam.durationReading);
         setQuestions(exam.readingQuestions);
@@ -164,174 +167,202 @@ function ExamPage() {
   };
 
   const handleAudioEnded = () => {
-    audioRef.current.src = playlist[currentAudioIndex+1];
+    audioRef.current.src = playlist[currentAudioIndex + 1];
     audioRef.current.play();
     setCurrentAudioIndex((prevIndex) => prevIndex + 1);
   };
-
+  
   return (
-    <div className={cx("exam")}>
-      <div className={cx("exam__header")}>
-        <div className={cx("exam__header--left")}>
-          <div className={cx("couter-time")}>{formatTime(time)}</div>
+    <div>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <Space style={{ marginTop: "100px" }}>
+            <Spin
+              tip="Loading"
+              size="large"
+              style={{ fontSize: "30px" }}
+            ></Spin>
+          </Space>
         </div>
-        <div className={cx("exam__title")}>{exam?.name}</div>
-        <div className={cx("exam__header--right")}></div>
-      </div>
-      <div className={cx("exam__content")}>
-        <div className={cx("exam__content--left")}>
-          <div className={cx("question")}>
-            <div className={cx("question")}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className={cx("question__icon")}
-              />
-              <div className={cx("question__number")}>
-                Q {currentQuestion + 1} / <span>{questions.length}</span>
+      ) : (
+        <div className={cx("exam")}>
+          <div className={cx("exam__header")}>
+            <div className={cx("exam__header--left")}>
+              <div className={cx("couter-time")}>{formatTime(time)}</div>
+            </div>
+            <div className={cx("exam__title")}>{exam?.name}</div>
+            <div className={cx("exam__header--right")}></div>
+          </div>
+          <div className={cx("exam__content")}>
+            <div className={cx("exam__content--left")}>
+              <div className={cx("question")}>
+                <div className={cx("question")}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className={cx("question__icon")}
+                  />
+                  <div className={cx("question__number")}>
+                    Q {currentQuestion + 1} / <span>{questions.length}</span>
+                  </div>
+                </div>
+                {questions[currentQuestion]?.audioFile ? (
+                  <div className={cx("question__audio")}>
+                    <audio
+                      ref={audioRef}
+                      controls
+                      autoPlay
+                      onEnded={handleAudioEnded}
+                      hidden
+                    >
+                      <source
+                        src={playlist[currentAudioIndex]}
+                        type="audio/ogg"
+                      />
+                    </audio>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className={cx("question__title")}>
+                {questions[currentQuestion]?.title}
+              </div>
+              <div className={cx("question__image")}>
+                {questions[currentQuestion]?.image ? (
+                  <img
+                    src={questions[currentQuestion]?.image}
+                    width={700}
+                    alt=""
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className={cx("question__content")}>
+                {questions[currentQuestion]?.text}
+              </div>
+              <div className={cx("list-answer")}>
+                {questions[currentQuestion]?.option1 ? (
+                  <label htmlFor={`answer${1}`}>
+                    <div className={cx("answer")}>
+                      <input
+                        type="radio"
+                        name="question1"
+                        id={`answer${1}`}
+                        checked={selectedAnswers[currentQuestion] === 1}
+                        onChange={() => handleAnswerSelect(1)}
+                      />
+                      <div className={cx("answer__content")}>
+                        1.<span>{questions[currentQuestion]?.option1}</span>
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <></>
+                )}
+                {questions[currentQuestion]?.option2 ? (
+                  <label htmlFor={`answer${2}`}>
+                    <div className={cx("answer")}>
+                      <input
+                        type="radio"
+                        name="question2"
+                        id={`answer${2}`}
+                        checked={selectedAnswers[currentQuestion] === 2}
+                        onChange={() => handleAnswerSelect(2)}
+                      />
+                      <div className={cx("answer__content")}>
+                        2.<span>{questions[currentQuestion]?.option2}</span>
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <></>
+                )}
+                {questions[currentQuestion]?.option3 ? (
+                  <label htmlFor={`answer${3}`}>
+                    <div className={cx("answer")}>
+                      <input
+                        type="radio"
+                        name="question3"
+                        id={`answer${3}`}
+                        checked={selectedAnswers[currentQuestion] === 3}
+                        onChange={() => handleAnswerSelect(3)}
+                      />
+                      <div className={cx("answer__content")}>
+                        3.<span>{questions[currentQuestion]?.option3}</span>
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <></>
+                )}
+                {questions[currentQuestion]?.option4 ? (
+                  <label htmlFor={`answer${0}`}>
+                    <div className={cx("answer")}>
+                      <input
+                        type="radio"
+                        name="question4"
+                        id={`answer${0}`}
+                        checked={selectedAnswers[currentQuestion] === 4}
+                        onChange={() => handleAnswerSelect(4)}
+                      />
+                      <div className={cx("answer__content")}>
+                        4.<span>{questions[currentQuestion]?.option4}</span>
+                      </div>
+                    </div>
+                  </label>
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className={cx("button")}>
+                <Button
+                  primary
+                  className={cx("button__prev")}
+                  leftIcon={<FontAwesomeIcon icon={faChevronLeft} />}
+                  onClick={handlePrevQuestion}
+                  disabled={currentQuestion === 0}
+                >
+                  Prev
+                </Button>
+                <Button
+                  primary
+                  className={cx("button__next")}
+                  rightIcon={<FontAwesomeIcon icon={faChevronRight} />}
+                  onClick={handleNextQuestion}
+                  disabled={currentQuestion === questions.length - 1}
+                >
+                  Next
+                </Button>
+                <Button
+                  outline
+                  className={cx("button__clear")}
+                  onClick={handleClearSelection}
+                >
+                  Clear Selection
+                </Button>
               </div>
             </div>
-            {questions[currentQuestion]?.audioFile ? (
-              <div className={cx("question__audio")}>
-                <audio
-                  ref={audioRef}
-                  controls
-                  autoPlay
-                  onEnded={handleAudioEnded}
-                  hidden
-                >
-                  <source src={playlist[currentAudioIndex]} type="audio/ogg" />
-                </audio>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className={cx("question__title")}>
-            {questions[currentQuestion]?.title}
-          </div>
-          <div className={cx("question__image")}>
-            {questions[currentQuestion]?.image ? (
-              <img src={questions[currentQuestion]?.image} width={700} alt="" />
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className={cx("question__content")}>
-            {questions[currentQuestion]?.text}
-          </div>
-          <div className={cx("list-answer")}>
-            {questions[currentQuestion]?.option1 ? (
-              <label htmlFor={`answer${1}`}>
-                <div className={cx("answer")}>
-                  <input
-                    type="radio"
-                    name="question1"
-                    id={`answer${1}`}
-                    checked={selectedAnswers[currentQuestion] === 1}
-                    onChange={() => handleAnswerSelect(1)}
-                  />
-                  <div className={cx("answer__content")}>
-                    1.<span>{questions[currentQuestion]?.option1}</span>
-                  </div>
-                </div>
-              </label>
-            ) : (
-              <></>
-            )}
-            {questions[currentQuestion]?.option2 ? (
-              <label htmlFor={`answer${2}`}>
-                <div className={cx("answer")}>
-                  <input
-                    type="radio"
-                    name="question2"
-                    id={`answer${2}`}
-                    checked={selectedAnswers[currentQuestion] === 2}
-                    onChange={() => handleAnswerSelect(2)}
-                  />
-                  <div className={cx("answer__content")}>
-                    2.<span>{questions[currentQuestion]?.option2}</span>
-                  </div>
-                </div>
-              </label>
-            ) : (
-              <></>
-            )}
-            {questions[currentQuestion]?.option3 ? (
-              <label htmlFor={`answer${3}`}>
-                <div className={cx("answer")}>
-                  <input
-                    type="radio"
-                    name="question3"
-                    id={`answer${3}`}
-                    checked={selectedAnswers[currentQuestion] === 3}
-                    onChange={() => handleAnswerSelect(3)}
-                  />
-                  <div className={cx("answer__content")}>
-                    3.<span>{questions[currentQuestion]?.option3}</span>
-                  </div>
-                </div>
-              </label>
-            ) : (
-              <></>
-            )}
-            {questions[currentQuestion]?.option4 ? (
-              <label htmlFor={`answer${4}`}>
-                <div className={cx("answer")}>
-                  <input
-                    type="radio"
-                    name="question4"
-                    id={`answer${4}`}
-                    checked={selectedAnswers[currentQuestion] === 4}
-                    onChange={() => handleAnswerSelect(4)}
-                  />
-                  <div className={cx("answer__content")}>
-                    4.<span>{questions[currentQuestion]?.option4}</span>
-                  </div>
-                </div>
-              </label>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className={cx("button")}>
-            <Button
-              primary
-              className={cx("button__prev")}
-              leftIcon={<FontAwesomeIcon icon={faChevronLeft} />}
-              onClick={handlePrevQuestion}
-              disabled={currentQuestion === 0}
-            >
-              Prev
-            </Button>
-            <Button
-              primary
-              className={cx("button__next")}
-              rightIcon={<FontAwesomeIcon icon={faChevronRight} />}
-              onClick={handleNextQuestion}
-              disabled={currentQuestion === questions.length - 1}
-            >
-              Next
-            </Button>
-            <Button
-              outline
-              className={cx("button__clear")}
-              onClick={handleClearSelection}
-            >
-              Clear Selection
-            </Button>
+            <div className={cx("exam__content--right")}>
+              <ListQuestion
+                examId={exam?.id}
+                questions={questions}
+                quizzes={selectedAnswers}
+                selectedQuestionIndex={currentQuestion}
+                statusAnswers={statusAnswers}
+                onQuestionClick={handleQuestionClick}
+              />
+            </div>
           </div>
         </div>
-        <div className={cx("exam__content--right")}>
-          <ListQuestion
-            examId={exam?.id}
-            questions={questions}
-            quizzes={selectedAnswers}
-            selectedQuestionIndex={currentQuestion}
-            statusAnswers={statusAnswers}
-            onQuestionClick={handleQuestionClick}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 }
