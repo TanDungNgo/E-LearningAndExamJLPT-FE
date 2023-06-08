@@ -59,7 +59,7 @@ function Dashboard() {
                 }}
               />
             }
-            title="New Students"
+            title="Total Students"
             value={statistic.totalStudents}
           ></DashboardCard>
           <DashboardCard
