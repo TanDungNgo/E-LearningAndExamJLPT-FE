@@ -126,7 +126,7 @@ function VocabularyFolderService() {
     }
   };
 
-  const updateVocabulary = async (id, vocabulary) => {
+  const updateVocabulary = async (id, vocabulary, idFolder) => {
     try {
       await request.put(`/vocabularies/${id}`, vocabulary).then((res) => {
         if (res.data.status === "ok") {
@@ -135,7 +135,7 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.vocabularyManagement);
+            navigate(`/admin/vocabulary/${idFolder}`);
           });
         } else {
         }
@@ -153,7 +153,7 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(`"/admin/vocabulary/${idFolder}"`);
+            navigate(`/admin/vocabulary/${idFolder}`);
           });
         } else {
         }
