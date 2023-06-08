@@ -4,13 +4,13 @@ import classNames from "classnames/bind";
 import VocabularyCard from "~/components/VocabularyCard/VocabularyCard";
 import VocabularyFolderCard from "~/components/VocabularyFolderCard/VocabularyFolderCard";
 import styles from "./Vocabulary.module.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { data } from "../Admin/components/DashboardChart/DashboardChart";
-
+import routes from "~/configs/routes";
 const cx = classNames.bind(styles);
 
 function Vocabulary() {
@@ -22,6 +22,7 @@ function Vocabulary() {
   const [listNextVocabularyFolder, setNextListVocabularyFolder] = useState();
   const [folderTitle, setFolderTitle] = useState("");
   const [folderVocabCount, setFolderVocabCount] = useState(0);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -33,6 +34,10 @@ function Vocabulary() {
   }, []);
   useEffect(() => {
     getVocabularyFolderById(id).then((res) => {
+      if (!res) {
+        navigate(routes.notFound);
+      }
+
       setVocabularyFolder(res);
       setListVocabularies(res.vocabularies);
       setFolderTitle(res.title);
