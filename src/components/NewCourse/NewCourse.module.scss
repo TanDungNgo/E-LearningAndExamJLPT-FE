@@ -1,15 +1,17 @@
 .container{
-    padding: 0 100px 0 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #e1e1e1;
     height: 550px;
   }
   .list-course {
+    width: 80%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12rem, 20rem));
-    gap: 10rem;
+    gap: 9rem;
     justify-content: center;
     justify-items: center;
-    padding: 10px 38px 10px 38px;
     min-height: 540px;
   }
   .list-course__header {
