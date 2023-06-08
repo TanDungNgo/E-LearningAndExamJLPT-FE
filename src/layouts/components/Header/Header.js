@@ -89,6 +89,7 @@ const Header = () => {
   };
   const handleLogout = () => {
     logout();
+    setCurrentUser(null);
   };
   const renderMenu = () => {
     return MENU_ITEMS.map((item, index) => {

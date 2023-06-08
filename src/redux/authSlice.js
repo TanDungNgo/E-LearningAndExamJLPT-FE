@@ -23,6 +23,7 @@ const authSlice = createSlice({
       state.login.isFetching = false;
       state.login.error = true;
       state.login.validate_err = action.payload;
+      state.login.currentUser = null;
     },
   },
 });
