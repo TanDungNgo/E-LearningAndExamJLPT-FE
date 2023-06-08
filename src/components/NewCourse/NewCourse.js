@@ -16,14 +16,17 @@ function NewCourse() {
   const { getNewCourse } = courseService();
   const { getCurrentUser } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
-  const [currentUser, setCurrentUser] = useState();
+  const [checkStudent, setCheckStudent] = useState(false);
   useEffect(() => {
     if (user) {
       const hasStudentRole = user.roles.some((role) => role.name === "STUDENT");
-      setCurrentUser(hasStudentRole);
+      setCheckStudent(hasStudentRole);
     } else {
       getCurrentUser().then((res) => {
-        setCurrentUser(res);
+        const hasStudentRole = res.roles.some(
+          (role) => role.name === "STUDENT"
+        );
+        setCheckStudent(hasStudentRole);
       });
     }
   }, []);
@@ -62,15 +65,18 @@ function NewCourse() {
         )}
       </div>
       <div className={cx("list-course__footer")}>
-        {currentUser ? (
-            <>
-                <Button outline className={cx("button__explore")} to={routes.completedCourse}>
-                    Link to my courses...
-                </Button>
-            </>
-            ) : (
-            <>
-            </>
+        {checkStudent ? (
+          <>
+            <Button
+              outline
+              className={cx("button__explore")}
+              to={routes.completedCourse}
+            >
+              Link to my courses...
+            </Button>
+          </>
+        ) : (
+          <></>
         )}
       </div>
     </div>
