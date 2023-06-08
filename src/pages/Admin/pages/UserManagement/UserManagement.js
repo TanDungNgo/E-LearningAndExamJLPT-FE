@@ -1,12 +1,17 @@
 import { Button, Space, Select, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  ExportOutlined,
+} from "@ant-design/icons";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
 import usersService from "~/services/usersService";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { saveAs } from "file-saver";
-import XLSX from 'xlsx/dist/xlsx.full.min';
+import XLSX from "xlsx/dist/xlsx.full.min";
 
 const roleColors = {
   ADMIN: "green",
@@ -112,15 +117,18 @@ function UserManagement() {
   };
 
   const filteredUsers = userData.filter((user) => {
-    return (
+    const isNameMatch =
       user.firstname.toLowerCase().includes(searchText.toLowerCase()) ||
       user.lastname.toLowerCase().includes(searchText.toLowerCase()) ||
-      (user.username.toLowerCase().includes(searchText.toLowerCase()) &&
-        (filterGender ? user.gender === filterGender : true) &&
-        (filterRole
-          ? user.roles.find((role) => role.name === filterRole)
-          : true))
-    );
+      user.username.toLowerCase().includes(searchText.toLowerCase());
+
+    const isGenderMatch = filterGender ? user.gender === filterGender : true;
+
+    const isRoleMatch = filterRole
+      ? user.roles.find((role) => role.name === filterRole)
+      : true;
+
+    return isNameMatch && isGenderMatch && isRoleMatch;
   });
   const handleExport = () => {
     // Get the table data

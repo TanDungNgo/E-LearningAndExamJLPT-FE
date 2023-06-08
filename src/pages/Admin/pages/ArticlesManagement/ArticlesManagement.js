@@ -1,5 +1,5 @@
 import { Button, Select, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import articlesData from "~/data/articlesData";
 import { useEffect, useRef, useState } from "react";
@@ -7,6 +7,8 @@ import { Option } from "antd/es/mentions";
 import { Link } from "react-router-dom";
 import articlesService from "~/services/articlesService";
 import Swal from "sweetalert2";
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
 
 function ArticlesManagement() {
   const columns = [
@@ -112,6 +114,31 @@ function ArticlesManagement() {
       }
     });
   };
+  const handleExport = () => {
+    // Get the table data
+    const dataSource = filteredArticles;
+
+    // Prepare the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataSource);
+
+    // Prepare the workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Convert the workbook to a binary string
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    // Create a Blob from the binary string
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Save the file
+    saveAs(blob, "article_data.xlsx");
+  };
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
@@ -122,10 +149,13 @@ function ArticlesManagement() {
           style={{ width: 200, marginRight: 16 }}
         />
         <Link to="/admin/articles/add">
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" style={{ marginRight: 15 }} icon={<PlusOutlined />}>
             Insert
           </Button>
         </Link>
+        <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          Export
+        </Button>
       </div>
       <div ref={tableRef}>
         <Table
