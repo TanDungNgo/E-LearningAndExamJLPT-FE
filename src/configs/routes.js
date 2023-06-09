@@ -28,6 +28,7 @@ const routes = {
   examHistoryFolder: "/profileUser/examHistoryFolder",
   examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
   learningPath: "/learningPath",
+  listLesson: "/profileUser/updateCourse/:idCourse/listLesson/:idLesson",
 
   // Admin routes
   admin: "/admin",

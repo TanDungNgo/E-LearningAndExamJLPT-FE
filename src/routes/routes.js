@@ -9,7 +9,7 @@ import Signup from "~/pages/Signup/Signup";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import AllCourse from "~/pages/AllCourse/AllCourse";
-import CreateCourse from "~/pages/CreateCourse/CreateCourse";
+import CreateCourse from "~/pages/Profile/pages/CreateCourse/CreateCourse";
 import Overview from "~/pages/Overview/Overview";
 import ExamFolder from "~/pages/ExamFolder/ExamFolder";
 import ExamPage from "~/pages/Exam/ExamPage";
@@ -17,9 +17,9 @@ import ExamResult from "~/pages/ExamResult/ExamResult";
 import NotFound from "~/pages/NotFound/NotFound";
 import AddCourseForm from "~/pages/Admin/pages/CourseManagement/AddCourseForm";
 
-import ProfileUser from "~/layouts/ProfileUser/ProfileUser";
-import PublicProfile from "~/pages/PublicProfile/PublicProfile";
-import ChangePassword from "~/pages/ChangePassword/ChangePassword";
+import ProfileUser from "~/pages/Profile/ProfileUser";
+import PublicProfile from "~/pages/Profile/pages/PublicProfile/PublicProfile";
+import ChangePassword from "~/pages/Profile/pages/ChangePassword/ChangePassword";
 
 import AddLessonForm from "~/pages/Admin/pages/LessonsManagement/AddLessonForm";
 import AddVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/AddVocabularyForm";
@@ -44,13 +44,13 @@ import Article from "~/pages/Article/Article";
 import GrammarsFolder from "~/pages/GrammarsFolder/GrammarsFolder";
 import Grammar from "~/pages/Grammar/Grammar";
 import Podcast from "~/pages/Podcast/Podcast";
-import CreateLesson from "~/pages/CreateLesson/CreateLesson";
+import CreateLesson from "~/pages/Profile/pages/CreateLesson/CreateLesson";
 
-import CompletedCourse from "~/components/CompletedCourse/CompletedCourse";
-import CourseCreated from "~/components/CourseCreated/CourseCreated";
-import UpdateCourse from "~/components/UpdateCourse/UpdateCourse";
-import ExamHistoryFolder from "~/pages/ExamHistoryFolder/ExamHistoryFolder";
-import ExamHistory from "~/pages/ExamHistory/ExamHistory";
+import CompletedCourse from "~/pages/Profile/pages/CompletedCourse/CompletedCourse";
+import CourseCreated from "~/pages/Profile/pages/CourseCreated/CourseCreated";
+import UpdateCourse from "~/pages/Profile/pages/UpdateCourse/UpdateCourse";
+import ExamHistoryFolder from "~/pages/Profile/pages/ExamHistoryFolder/ExamHistoryFolder";
+import ExamHistory from "~/pages/Profile/pages/ExamHistory/ExamHistory";
 
 import EditCourseForm from "~/pages/Admin/pages/CourseManagement/EditCourseForm";
 import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleForm";
@@ -61,6 +61,7 @@ import StatisticsPage from "~/pages/Admin/pages/Statistics/Statistics";
 import Statistics from "~/pages/Admin/pages/Statistics/Statistics";
 import LearningPath from "~/components/LearningPath/LearningPath";
 import EditLessonForm from "~/pages/Admin/pages/LessonsManagement/EditLessonForm";
+import ListLesson from "~/pages/Profile/components/ListLesson/ListLesson";
 
 // Public routes
 const publicRoutes = [
@@ -154,6 +155,11 @@ const publicRoutes = [
     component: ExamHistory,
     layout: ProfileUser
   },
+  {
+    path: config.routes.listLesson,
+    component: ListLesson,
+    layout: ProfileUser
+  }
 ];
 
 // Private routes

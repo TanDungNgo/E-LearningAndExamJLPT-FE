@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CourseCard from "../CourseCard/CourseCard";
+import CourseCard from "../../../../components/CourseCard/CourseCard";
 import classNames from "classnames/bind";
 import styles from "./CourseCreated.module.scss";
 import courseService from "~/services/courseService";

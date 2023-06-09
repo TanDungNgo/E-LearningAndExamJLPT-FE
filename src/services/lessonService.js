@@ -19,7 +19,7 @@ function LessonService() {
               navigate(routes.lessonManagement);
             }
             else  {
-              navigate(routes.courseCreated);
+              navigate(`/profileUser/updateCourse/:idCourse`);
             }
           });
         } else {
@@ -40,6 +40,15 @@ function LessonService() {
   const getLessonById = async (id) => {
     try {
       const res = await request.get(`/lessons/${id}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+  const getLessonByCourse = async (id) => {
+    try {
+      const res = await request.get(`/lessons/course/${id}`);
       return res.data.data;
     } catch (error) {
       console.log(error);
@@ -119,7 +128,7 @@ function LessonService() {
       console.log(error);
     }
   };
-  const deleteLesson = async (id) => {
+  const deleteLesson = async (id, role) => {
     try {
       await request.delete(`/lessons/${id}`).then((res) => {
         if (res.data.status === "ok") {
@@ -128,7 +137,12 @@ function LessonService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.lessonManagement);
+            if (role === "admin") {
+              navigate(routes.lessonManagement);
+            }
+            else {
+              navigate(`/profileUser/updateCourse/:idCourse/listLesson/:idLesson`);
+            }
           });
         } else {
         }
@@ -141,6 +155,7 @@ function LessonService() {
     createLesson,
     getAllLesson,
     getLessonById,
+    getLessonByCourse,
     getCommentByLessonId,
     updateLesson,
     commentLesson,
