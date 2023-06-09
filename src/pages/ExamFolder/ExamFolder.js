@@ -200,7 +200,6 @@ function ExamFolder() {
         onCancel={handleClickCancel}
         footer={null}
       />
-      <Chatbot />
     </div>
   );
 }
