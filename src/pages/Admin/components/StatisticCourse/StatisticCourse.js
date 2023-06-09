@@ -43,11 +43,11 @@ export function StatisticCourse() {
   useEffect(() => {
     const getCourseStatistic = async () => {
       const res = await getCoursesByLevel();
-      console.log(res);
+      // console.log(res);
       setCoursesByLevelStatistic(res);
       const sortedKeys = Object.keys(res).sort((a, b) => a.slice(1) - b.slice(1)).reverse();
       const newArray = sortedKeys.map(key => res[key]);
-      console.log(newArray);
+      // console.log(newArray);
       setCoursesByLevelStatistic(newArray);
     };
     getCourseStatistic();

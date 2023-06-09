@@ -34,12 +34,22 @@ function StatisticService() {
             console.log(error);
         }
     };
+
+    const getMothlyCount = async () => {
+        try {
+            const res = await request.get("/statistics/monthly-count");
+            return res.data.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
     
     return {
         getCoursesByLevel,
         getStatistics,
         getAccountByRole,
         getTopTeacher,
+        getMothlyCount,
     };
 
 }

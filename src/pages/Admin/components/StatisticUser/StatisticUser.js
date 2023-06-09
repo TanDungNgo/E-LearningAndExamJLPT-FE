@@ -12,7 +12,7 @@ export default function StatisticUser() {
   useEffect(() => {
     const getUserByRole = async () => {
       const res = await getAccountByRole();
-      console.log(res);
+      // console.log(res);
       setUserByRole(res);
     };
 
