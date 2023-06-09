@@ -13,7 +13,7 @@ export default function StatisticRating() {
   useEffect(() => {
     const getTopTeachers = async () => {
       const res = await getTopTeacher();
-      console.log(res);
+      // console.log(res);
       setTopTeacher(res.map(item => item.courseCount));
     };
     getTopTeachers();
