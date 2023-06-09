@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import CourseCard from "../CourseCard/CourseCard";
 import classNames from "classnames/bind";
-import styles from "./CompletedCourse.module.scss";
+import styles from "./UpdateCourse.module.scss";
 import routes from "~/configs/routes";
 import courseService from "~/services/courseService";
 import { Space, Spin } from "antd";
+import UpdateCourseCard from "../../components/UpdateCourseCard/UpdateCourseCard";
 
 const cx = classNames.bind(styles);
 
-function CompletedCourse() {
+function UpdateCourse() {
   const [listCourse, setListCourse] = useState();
-  const { getAllCourse, getCompletedCourses } = courseService();
-  const [completedCourse, setListCompletedCourse] = useState();
+  const { getMyCourse } = courseService();
   useEffect(() => {
-    getCompletedCourses().then((res) => {
-      setListCompletedCourse(res);
+    getMyCourse().then((res) => {
+      setListCourse(res);
     });
   }, []);
   const renderCard = () => {
-    return completedCourse?.map((item, index) => {
+    return listCourse?.map((item, index) => {
       return (
         <div key={index}>
-          <CourseCard course={item} />
+          <UpdateCourseCard course={item} />
         </div>
       );
     });
@@ -31,12 +30,12 @@ function CompletedCourse() {
     <div>
       <div className={cx("list-course__header")}>
         <h1 className={cx("list-course__title")}>
-          Completed
-          <span className={cx("list-course__title--primary")}> Courses</span>
+          Update
+          <span className={cx("list-course__title--primary")}> Course</span>
         </h1>
       </div>
       <div className={cx("list-course")}>
-        {completedCourse ? (
+        {listCourse ? (
           renderCard()
         ) : (
           <Space>
@@ -50,4 +49,4 @@ function CompletedCourse() {
   );
 }
 
-export default CompletedCourse;
+export default UpdateCourse;

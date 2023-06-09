@@ -33,26 +33,28 @@ const SideMenu = (props) => {
     }
   ];
   if (props?.user?.roles.some((role) => role.name === "TEACHER")) {
-    items.splice(2, 0, {
+    items.splice(2, 0, 
+      {
+        label: "My Course",
+        icon: <FontAwesomeIcon icon={faFolderClosed} />,
+        key: "/profileUser/courseCreated",
+      },
+      {
       label: "Create Course",
       icon: <FontAwesomeIcon icon={faPlusSquare} />,
       key: "/profileUser/createCourse",
-    },
-    {
-      label: "Create Lesson",
-      icon: <FontAwesomeIcon icon={faAdd} />,
-      key: "/profileUser/createLesson",
-    },
-    {
-      label: "Courses Created",
-      icon: <FontAwesomeIcon icon={faFolderClosed} />,
-      key: "/profileUser/courseCreated",
-    },
-    {
-      label: "Update Course",
-      icon: <FontAwesomeIcon icon={faPenToSquare} />,
-      key: "/profileUser/updateCourse/:id",
-    });
+      },
+      {
+        label: "Update Course",
+        icon: <FontAwesomeIcon icon={faPenToSquare} />,
+        key: "/profileUser/updateCourse/:idCourse",
+      },
+      // {
+      //   label: "Create Lesson",
+      //   icon: <FontAwesomeIcon icon={faAdd} />,
+      //   key: "/profileUser/createLesson",
+      // },
+    );
   }
   else if (
     props?.user?.roles.some((role) => role.name === "STUDENT")) {

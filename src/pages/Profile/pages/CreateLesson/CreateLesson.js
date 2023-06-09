@@ -33,7 +33,7 @@ const props = {
     },
   };
 const CreateLesson = () => {
-  const [videoSrc, setVideoSrc] = useState("");
+  const [videoSrc, setVideoSrc] = useState(null);
   const [fileVideo, setFileVideo] = useState("");
   const { createLesson } = lessonService();
   const [progress, setProgress] = useState(0);
@@ -58,7 +58,6 @@ const CreateLesson = () => {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        //console.log(e.target.result);
         setVideoSrc(e.target.result);
         setIsVideoUploaded(true);
       };
@@ -139,7 +138,7 @@ const CreateLesson = () => {
                 </label>
                 <input
                   type="file"
-                  name="urlVideo"
+                  name="file"
                   id="file"
                   className={cx("card-create__input-file")}
                   onChange={handleChangeFile}

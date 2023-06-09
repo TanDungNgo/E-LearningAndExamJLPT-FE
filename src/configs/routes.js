@@ -28,6 +28,7 @@ const routes = {
   examHistoryFolder: "/profileUser/examHistoryFolder",
   examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
   learningPath: "/learningPath",
+  listLesson: "/profileUser/updateCourse/:idCourse/listLesson/:idLesson",
 
   // Admin routes
   admin: "/admin",
@@ -52,6 +53,7 @@ const routes = {
   addQuestion: "/admin/question/add",
 
   editCourse: "/admin/course/edit/:id",
+  editLesson: "/admin/lesson/edit/:id",
   editArticle: "/admin/articles/edit/:id",
   editGrammar: "/admin/grammar/edit/:id",
   editVocabularyFolder: "/admin/vocabularyFolder/edit/:id",

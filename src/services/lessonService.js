@@ -19,7 +19,7 @@ function LessonService() {
               navigate(routes.lessonManagement);
             }
             else  {
-              navigate(routes.courseCreated);
+              navigate(`/profileUser/updateCourse/:idCourse`);
             }
           });
         } else {
@@ -46,6 +46,15 @@ function LessonService() {
       return null;
     }
   };
+  const getLessonByCourse = async (id) => {
+    try {
+      const res = await request.get(`/lessons/course/${id}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
   const getCommentByLessonId = async (id) => {
     try {
       const res = await request.get(`/comments/lesson/${id}`);
@@ -62,6 +71,29 @@ function LessonService() {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  };
+  const updateLesson = async (id, lesson, role) => {
+    try {
+      await request.put(`/lessons/${id}`, lesson).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            if (role === "admin") {
+              navigate(routes.lessonManagement);
+            }
+            else {
+              
+            }
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
   const completedLesson = async (id) => {
@@ -96,14 +128,40 @@ function LessonService() {
       console.log(error);
     }
   };
+  const deleteLesson = async (id, role) => {
+    try {
+      await request.delete(`/lessons/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            if (role === "admin") {
+              navigate(routes.lessonManagement);
+            }
+            else {
+              navigate(`/profileUser/updateCourse/:idCourse/listLesson/:idLesson`);
+            }
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return {
     createLesson,
     getAllLesson,
     getLessonById,
+    getLessonByCourse,
     getCommentByLessonId,
+    updateLesson,
     commentLesson,
     completedLesson,
     deleteComment,
+    deleteLesson,
   };
 }
 
