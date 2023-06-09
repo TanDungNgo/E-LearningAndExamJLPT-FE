@@ -21,7 +21,7 @@ function Dashboard() {
   useEffect(() =>{
     const getStatistic = async () => {
       const res = await getStatistics();
-      console.log(res);
+      // console.log(res);
       setStatistic(res);
     };
     getStatistic();
