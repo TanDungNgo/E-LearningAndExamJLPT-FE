@@ -91,19 +91,6 @@ function GrammarsFolder() {
         </Button>
       </div>
 
-      {/* <div className={cx("card-level")}>
-        <input type="submit" value="N5" />
-        <input type="submit" value="N4" />
-        <input type="submit" value="N3" />
-        <input type="submit" value="N2" />
-        <input type="submit" value="N1" />
-      </div>
-
-      <div className={cx("card-title")}>
-        All
-        <div className={cx("card-title__detail")}>Grammar</div>
-      </div> */}
-
       <div id="scroll-target"></div>
 
       <div className={cx("card-grammar")}>

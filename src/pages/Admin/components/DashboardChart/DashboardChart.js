@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import StatisticService from '~/services/statisticService';
+import { Space, Spin } from 'antd';
 
 ChartJS.register(
   CategoryScale,
@@ -65,7 +66,7 @@ function DashboardChart() {
     datasets: [
       {
         fill: true,
-        label: "Dataset 2",
+        label: "Registered students",
         data: transformData(),
         borderColor: "#b79032",
         backgroundColor: "#f7f5e9",
@@ -76,6 +77,7 @@ function DashboardChart() {
     <div>
       <Line options={options} data={data} />
     </div>
+    
   );
   }
 
