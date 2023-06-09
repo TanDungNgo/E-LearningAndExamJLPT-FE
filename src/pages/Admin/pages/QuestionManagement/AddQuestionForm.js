@@ -6,13 +6,17 @@ import {
   Button,
   Progress,
   Switch,
+  Upload,
+  Space
 } from "antd";
+import { InboxOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined} from '@ant-design/icons';
 
 const { Option } = Select;
 
 const AddVocabularyFolderForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
+
 
   const onFinish = async (values) => {
     const data = {
@@ -29,6 +33,24 @@ const AddVocabularyFolderForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const formItemLayout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 14,
+    },
+  };
+  const normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+  
+
+
   return (
     <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
       <Form.Item
@@ -39,54 +61,88 @@ const AddVocabularyFolderForm = () => {
         <Input />
       </Form.Item>
       <Form.Item
+      name="type_question"
+      label="Type Question"
+      rules={[
+        {
+          required: true,
+          message: 'Please select your type question!',
+          type: 'array',
+        },
+      ]}
+    >
+      <Select mode="multiple" placeholder="Please select your type question!">
+        <Option value="language_knowledge_questions">Language Knowledge Questions</Option>
+        <Option value="listening_questions">Listening Questions</Option>
+        <Option value="reading_questions">Reading Questions</Option>
+      </Select>
+    </Form.Item>
+      <Form.Item
         label="Text"
         name="text"
         rules={[{ required: true, message: "Please input a text!" }]}
       >
-        <Input />
+        <Input placeholder= "Question" />
       </Form.Item>
+      
+    <Form.List name="users">
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map(({ key, name, ...restField }) => (
+              <Space
+                key={key}
+                style={{
+                  display: 'flex',
+                  marginBottom: 8,
+                }}
+                align="baseline"
+              >
+                <Form.Item
+                  {...restField}
+                  name={[name, 'option']}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Missing option ',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Option" />
+                </Form.Item>
+                <MinusCircleOutlined onClick={() => remove(name)} />
+              </Space>
+            ))}
+            <Form.Item>
+              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                Add Question
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+
       <Form.Item
-        label="Image"
-        name="image"
-        rules={[{ required: true, message: "Please input a image!" }]}
-      >
-        <Input />
+      name="upload"
+      label="Upload"
+      valuePropName="fileList"
+      getValueFromEvent={normFile}
+    >
+      <Upload name="logo" action="/upload.do" listType="picture">
+        <Button icon={<UploadOutlined />}>Upload Image</Button>
+      </Upload>
+    </Form.Item>
+
+    <Form.Item label="Audio">
+      <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+        <Upload.Dragger name="files" action="/upload.do">
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">Click or drag file to this area to upload</p>
+          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+        </Upload.Dragger>
       </Form.Item>
-      <Form.Item
-        label="Audio File"
-        name="audioFile"
-        rules={[{ required: true, message: "Please input a audioFile!" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Option1"
-        name="option1"
-        rules={[{ required: true, message: "Please input a option1!" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Option2"
-        name="option2"
-        rules={[{ required: true, message: "Please input a option2!" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Option3"
-        name="option3"
-        rules={[{ required: true, message: "Please input a option3!" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Option4"
-        name="option4"
-        rules={[{ required: true, message: "Please input a option4!" }]}
-      >
-        <Input />
-      </Form.Item>
+    </Form.Item>
       
       <Form.Item
         label="Status"

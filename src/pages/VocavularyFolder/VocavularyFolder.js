@@ -19,14 +19,14 @@ function VocabularyFolder() {
   const [totalElements, setTotalElements] = useState(0);
   useEffect(() => {
     getAllVocabularyFolder().then((res) => {
-      console.log(res);
+      // console.log(res);
       setListVocabularyFolder(res);
     });
 
   }, []);
 
   useEffect(() => {
-    console.log("Search");
+    // console.log("Search");
     fetchData();
   }, [currentPage, keyword]);
 
@@ -34,7 +34,7 @@ function VocabularyFolder() {
     searchVocabularyFolder(keyword)
       .then((response) => {
         setData(response);
-        console.log(response);
+        // console.log(response);
         setTotalElements(response.length);
       })
       .catch((error) => {
@@ -59,7 +59,7 @@ function VocabularyFolder() {
     return (
       <div className={cx("card-vocabulary-folder")}>
         {paginatedData.map((item, index) => {
-          console.log(paginatedData)
+          {/* console.log(paginatedData) */}
           return (
             <div className={cx("list-item")} key={index}>
               <VocabularyFolderCard vocabularyFolder={item} />

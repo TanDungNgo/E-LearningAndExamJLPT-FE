@@ -166,7 +166,7 @@ function VocabularyFolderService() {
   const searchVocabularyFolder = async (keyword) => {
     try {
       const res = await request.get(`/vocabularyFolders/search?query=${keyword}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     } catch (error) {
       console.log(error);
