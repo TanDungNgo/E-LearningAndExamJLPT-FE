@@ -20,7 +20,7 @@ const AddExamForm = () => {
       ...values,
     }
 
-    console.log(data);
+    // console.log(data);
     // createVocabularyFolder(data);
     
     setProgress(100);

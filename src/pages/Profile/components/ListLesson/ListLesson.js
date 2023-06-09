@@ -317,9 +317,6 @@ function ListLesson(props) {
                     <FontAwesomeIcon icon={faCheck} style={{color: "#66c214", fontSize: "18px", padding: "7px"}}/>
                   </div>
                 )}
-                <div>
-                  {videoSrc}
-                </div>
             </div>
           </div>
           <div className={cx("form__submit")}>

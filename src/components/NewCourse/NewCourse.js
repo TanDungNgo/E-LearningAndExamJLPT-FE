@@ -38,7 +38,7 @@ function NewCourse() {
   const renderCard = () => {
     return listCourse?.map((item, index) => {
       return (
-        <div ckey={index}>
+        <div key={index}>
           <CourseCard course={item} />
         </div>
       );

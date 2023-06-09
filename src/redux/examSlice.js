@@ -27,6 +27,7 @@ const examSlice = createSlice({
     },
     addAnswer: (state, action) => {
       state.answer = [...state.answer, ...action.payload];
+      localStorage.setItem("answer", JSON.stringify(state.answer));
     },
     resetAnswers: (state) => {
       state.answer = [];

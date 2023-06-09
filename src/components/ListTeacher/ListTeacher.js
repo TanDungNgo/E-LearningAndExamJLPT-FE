@@ -25,7 +25,7 @@ function ListTeacher() {
     const getListTearcher = async () =>{
       const res = await getUserByTeacher();
       setListTeacher(res);
-      console.log(res);
+      // console.log(res);
 
     };
     getListTearcher();

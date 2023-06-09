@@ -20,7 +20,7 @@ function AllCourse() {
   const [level, setLevel] = useState("");
 
   useEffect(() => {
-    console.log("Search");
+    // console.log("Search");
     fetchData();
   }, [currentPage, keyword, type, level]);
 
