@@ -66,7 +66,7 @@ const EditCourseForm = () => {
             ...values,
             banner: url,
           };
-          console.log(data);
+          // console.log(data);
           updateCourse(id, data, "admin");
         }
       );
@@ -75,7 +75,7 @@ const EditCourseForm = () => {
         ...values,
         banner: imgSrc,
       };
-      console.log(data);
+      // console.log(data);
       updateCourse(id, data, "admin");
     }
   };

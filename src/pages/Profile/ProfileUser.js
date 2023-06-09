@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ProfileUser.module.scss";
 import React, { useEffect, useState } from "react";
 import { ConfigProvider, Layout, Menu } from "antd";
-import SideMenu from "../components/SideMenu/SideMenu";
+import SideMenu from "./components/SideMenu/SideMenu";
 import { Content } from "antd/es/layout/layout";
 import Footer from "~/layouts/components/Footer/Footer";
 import Header from "~/layouts/components/Header/Header";

@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
-import Button from "../Button/Button";
+import Button from "../../../../components/Button/Button";
 import styles from "./UpdateCourseCard.module.scss";
-import { Modal } from "antd";
+import { Dropdown, Modal, Progress } from "antd";
 import { useEffect, useState } from "react";
 import { InputNumber} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -9,15 +9,21 @@ import { Form, Input, Select } from "antd";
 import { Option } from "antd/es/mentions";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CourseService from "~/services/courseService";
+import lessonService from "~/services/lessonService";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
-import { faLeaf } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faLeaf } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import routes from "~/configs/routes";
+import Swal from "sweetalert2";
+import { Colors } from "chart.js";
 const cx = classNames.bind(styles);
 
 function UpdateCourseCard(props) {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { getCourseById, updateCourse } = CourseService();
+  const { getAllCourse, getCourseById, updateCourse, deleteCourse } = CourseService();
+  const [courseData, setCourseData] = useState([]);
   const [imgSrc, setImgSrc] = useState("");
   const [fileImage, setFileImage] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -43,7 +49,7 @@ function UpdateCourseCard(props) {
       };
     }
   };
-  const handleshowModal = async () => {
+  const handleShowModal = async () => {
     navigate(`/profileUser/updateCourse/${props.course.id}`);
     const course = await getCourseById(props.course.id);
     setImgSrc(course.banner);
@@ -97,7 +103,60 @@ function UpdateCourseCard(props) {
   const handleCancel = () => {
     setOpenModal(false);
   };
-  
+  const handleDeleteCourse = (id, role) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCourse(id, role).then((res) => {
+          getAllCourse().then((res) => {
+            setCourseData(res);
+          });
+        });
+      }
+    });
+  };
+  const items = [
+    {
+      label: "Update information",
+      key: "updateInfo",
+    },
+    {
+      label: "Edit lesson",
+      key: "updateLesson",
+    },
+    {
+      label: "Delete course",
+      key: "deleteCourse",
+    },
+  ];
+  const handleMenuClick = (e) => {
+    console.log("Clicked menu item:", e);
+    const key = e.key;
+    switch (key) {
+      case "updateInfo":
+        handleShowModal();
+        break;
+      case "updateLesson":
+        navigate(`/profileUser/updateCourse/${props.course.id}/listLesson/:idLesson`);
+        break;
+      case "deleteCourse":
+        handleDeleteCourse(props.course.id, "teacher");
+        break;
+      default:
+        break;
+    }
+  };
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
   return (
     <div className={cx("card")}>
       <div className={cx("card__header")}>
@@ -126,13 +185,15 @@ function UpdateCourseCard(props) {
         </div>
       </div>
       <div className={cx("card__footer")}>
-        <Button
-          primary
-          className={cx("card__button")}
-          onClick={handleshowModal}
-        >
-          Update
-        </Button>
+        <Dropdown menu={menuProps}>
+          <Button
+            primary
+            className={cx("card__button")}
+            // onClick={handleshowModal}
+          >
+            Update
+          </Button>
+        </Dropdown>
         <div className={cx("card__info")}>
           <div className={cx("card__author")}>
             <img
@@ -186,9 +247,6 @@ function UpdateCourseCard(props) {
                 >
                   <Input.TextArea 
                     placeholder="Description" 
-                    // defaultValue={props.course.description
-                    //   ? props.course.description
-                    //   : "This is a JLPT N2 (Grammar and Reading) course for Vietnamese."}
                   />
                 </Form.Item>
                 <Form.Item

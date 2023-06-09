@@ -91,7 +91,7 @@ function CourseService() {
       console.log(error);
     }
   };
-  const deleteCourse = async (id) => {
+  const deleteCourse = async (id, role) => {
     try {
       await request.delete(`/courses/${id}`).then((res) => {
         if (res.data.status === "ok") {
@@ -100,7 +100,12 @@ function CourseService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.courseManagement);
+            if (role === "admin") {
+              navigate(routes.courseManagement);
+            }
+            else {
+              navigate(routes.updateCourse);
+            }
           });
         } else {
         }
