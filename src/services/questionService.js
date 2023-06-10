@@ -8,7 +8,7 @@ function QuestionService() {
   const navigate = useNavigate();
   const getAllQuestion = async (id) => {
     try {
-      const res = await request.get(`/questions/exam/{id}/${id}`);
+      const res = await request.get(`/questions/exam/${id}`);
       return res.data.data;
     } catch (error) {
       console.log(error);

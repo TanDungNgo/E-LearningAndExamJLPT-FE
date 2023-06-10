@@ -13,6 +13,7 @@ import XLSX from 'xlsx/dist/xlsx.full.min';
 import Swal from "sweetalert2";
 
 function ExamManagement() {
+  
 
   const columns = [
     {
@@ -24,7 +25,9 @@ function ExamManagement() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text) => <Link to="/admin/question">{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/admin/exam/${record.id}`}>{text}</Link>
+      ),
     },
     {
       title: "Level",
