@@ -40,7 +40,7 @@ const routes = {
   articlesManagement: "/admin/articles",
   userManagement: "/admin/user",
   examManagement: "/admin/exam",
-  questionManagement: "/admin/question",
+  questionManagement: "/admin/exam/:id",
   statistics: "/admin/statistics",
 
   addCourse: "/admin/course/add",
@@ -57,7 +57,9 @@ const routes = {
   editArticle: "/admin/articles/edit/:id",
   editGrammar: "/admin/grammar/edit/:id",
   editVocabularyFolder: "/admin/vocabularyFolder/edit/:id",
+  editExam: "/admin/exam/edit/:id",
   editVocabulary: "/admin/vocabularyFolder/:idFolder/vocabulary/edit/:id",
+
 
 };
 

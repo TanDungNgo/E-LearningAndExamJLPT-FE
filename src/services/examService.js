@@ -1,7 +1,11 @@
+import routes from "~/configs/routes";
 import RequestHttp from "~/utils/request";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-function examService() {
+function ExamService() {
   const { request } = RequestHttp();
+  const navigate = useNavigate();
 
   const getAllExam = async () => {
     try {
@@ -47,13 +51,75 @@ function examService() {
     }
   };
 
+  const createExam = async (exam) => {
+    try {
+      await request.post("/exams/create", exam).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.examManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateExam = async (id, exam) => {
+    try {
+      await request.put(`/exams/update/${id}`, exam).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.examManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteExam = async (id) => {
+    try {
+      await request.delete(`/exams/delete/${id}`).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(routes.examManagement);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  
+
   return {
     getAllExam,
     getExam,
     submitExam,
     getRandomExamByLevel,
     getExamById,
+    createExam,
+    updateExam,
+    deleteExam,
   };
 }
 
-export default examService;
+export default ExamService;

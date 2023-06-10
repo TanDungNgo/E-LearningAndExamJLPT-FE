@@ -10,44 +10,51 @@ import examData from "~/data/examData";
 import examService from "~/services/examService";
 import { saveAs } from "file-saver";
 import XLSX from 'xlsx/dist/xlsx.full.min';
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <Link to="/admin/question">{text}</Link>,
-  },
-  {
-    title: "Level",
-    dataIndex: "level",
-    key: "level",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>
-          <EditOutlined
-            style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
-          />
-        </a>
-        <a>
+import Swal from "sweetalert2";
+
+function ExamManagement() {
+  
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text, record) => (
+        <Link to={`/admin/exam/${record.id}`}>{text}</Link>
+      ),
+    },
+    {
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      key: "action",
+      render: (id) => (
+        <Space size="middle">
+          <Link to={`/admin/exam/edit/${id}`}>
+            <EditOutlined
+              style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
+            />
+          </Link>
           <DeleteOutlined
+            onClick={() => handleDeleteExam(id)}
             style={{ fontSize: "20px", marginLeft: "10px", color: "#f40808" }}
           />
-        </a>
-      </Space>
-    ),
-  },
-];
-function ExamManagement() {
-  const { getAllExam } = examService();
+        </Space>
+      ),
+    },
+  ];
+  
+  const { getAllExam, deleteExam} = examService();
   const [examData, setExamData] = useState([]);
 
   useEffect(() => {
@@ -106,6 +113,27 @@ function ExamManagement() {
     // Save the file
     saveAs(blob, "courses_data.xlsx");
   };
+
+  const handleDeleteExam = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteExam(id).then((res) => {
+          getAllExam().then((res) => {
+            setExamData(res);
+          });
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
