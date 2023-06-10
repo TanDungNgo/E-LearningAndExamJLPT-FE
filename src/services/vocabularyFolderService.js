@@ -70,7 +70,7 @@ function VocabularyFolderService() {
     }
   };
 
-  const createVocabulary = async (vocabularies) => {
+  const createVocabulary = async (vocabularies, idFolder) => {
     try {
       await request.post("/vocabularies", vocabularies).then((res) => {
         if (res.data.status === "ok") {
@@ -79,7 +79,7 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(routes.vocabularyManagement);
+            navigate(`/admin/vocabularyfolder/${idFolder}`);
           });
         } else {
         }
@@ -135,7 +135,7 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(`/admin/vocabulary/${idFolder}`);
+            navigate(`/admin/vocabularyfolder/${idFolder}`);
           });
         } else {
         }
@@ -153,7 +153,7 @@ function VocabularyFolderService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            navigate(`/admin/vocabulary/${idFolder}`);
+            navigate(`/admin/vocabularyfolder/${idFolder}`);
           });
         } else {
         }

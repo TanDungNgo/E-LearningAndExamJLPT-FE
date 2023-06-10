@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import examData from "~/data/examData";
 import examService from "~/services/examService";
+import QuestionService from "~/services/questionService";
 
 const columns = [
     {
@@ -26,16 +27,16 @@ const columns = [
         dataIndex: "text",
         key: "text",
     },
-    {
-        title: "Image",
-        dataIndex: "image",
-        key: "image",
-    },
-    {
-        title: "Audio",
-        dataIndex: "audioFile",
-        key: "audioFile",
-    },
+    // {
+    //     title: "Image",
+    //     dataIndex: "image",
+    //     key: "image",
+    // },
+    // {
+    //     title: "Audio",
+    //     dataIndex: "audioFile",
+    //     key: "audioFile",
+    // },
     {
         title: "Option1",
         dataIndex: "option1",
@@ -75,29 +76,37 @@ const columns = [
         ),
     },
 ];
-function ExamManagement() {
+function QuestionManagement() {
+    const { id } = useParams();
 
-    const { getExamById } = examService();
+    const { getAllQuestion } = QuestionService();
     const [questionData, setQuestionData] = useState([]);
 
     useEffect(() => {
-        getExamById(1).then((res) => {
-            setQuestionData(res.languageKnowledgeQuestions);
-            console.log(res.languageKnowledgeQuestions);
-        });
-    }, []);
+        const fetchQuestions = async () => {
+            try {
+                const res = await getAllQuestion(id);
+                setQuestionData(res);
+                console.log(res);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchQuestions();
+    }, [id]);
     const [searchText, setSearchText] = useState("");
 
     const handleSearchTextChange = (event) => {
         setSearchText(event.target.value);
     };
 
-    const filterdExam = questionData.filter((question) => {
-        return (
-            question.text.toLowerCase().includes(searchText.toLowerCase())
+    // const filterQuestion = questionData.filter((question) => {
+    //     return (
+    //         question.text.toLowerCase().includes(searchText.toLowerCase())
 
-        );
-    });
+    //     );
+    // });
     return (
         <div>
             <div style={{ marginBottom: 16 }}>
@@ -113,14 +122,14 @@ function ExamManagement() {
                     </Button>
                 </Link>
             </div>
-            <Link to="/admin/question">
+            <Link to={`/admin/exam/${id}`}>
                 <Table
                     columns={columns}
-                    dataSource={filterdExam}
-                    pagination={{ pageSize: 10 }}
+                    dataSource={questionData}
+                    pagination={{ pageSize: 5 }}
                 />
             </Link>
         </div>
     );
 }
-export default ExamManagement;
+export default QuestionManagement;
