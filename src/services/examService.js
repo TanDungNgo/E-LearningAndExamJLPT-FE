@@ -50,6 +50,24 @@ function ExamService() {
       console.log(error);
     }
   };
+  const createQuestion = async (question,id) => {
+    try {
+      await request.post(`/questions`, question).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(`/admin/exam/${id}`);
+          });
+        } else {
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const createExam = async (exam) => {
     try {
@@ -116,6 +134,7 @@ function ExamService() {
     submitExam,
     getRandomExamByLevel,
     getExamById,
+    createQuestion,
     createExam,
     updateExam,
     deleteExam,

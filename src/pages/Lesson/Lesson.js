@@ -12,7 +12,15 @@ import {
   faStickyNote,
 } from "@fortawesome/free-solid-svg-icons";
 import CommentItem from "~/components/Comment/CommentItem";
-import { Badge, Button, Drawer, Input, Progress, notification } from "antd";
+import {
+  Badge,
+  Button,
+  Drawer,
+  Input,
+  List,
+  Progress,
+  notification,
+} from "antd";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,6 +30,7 @@ import courseService from "~/services/courseService";
 import { useSelector } from "react-redux";
 import AuthService from "~/services/authService";
 import routes from "~/configs/routes";
+import { DeleteOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function Lesson() {
   const navigate = useNavigate();
@@ -32,6 +41,9 @@ function Lesson() {
     getCommentByLessonId,
     commentLesson,
     completedLesson,
+    addNoteToLesson,
+    getNoteByLessonId,
+    deleteNote,
   } = lessonService();
   const { getCourseById } = courseService();
   const [course, setCourse] = useState();
@@ -49,6 +61,9 @@ function Lesson() {
   const [note, setNote] = useState("");
   const [timeNote, setTimeNote] = useState(0);
   const [notes, setNotes] = useState([]);
+  const [noteOpen, setNoteOpen] = useState(false);
+  const [listNotes, setListNotes] = useState([]);
+  const [instructionOpen, setInstructionOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -85,6 +100,9 @@ function Lesson() {
         navigate(routes.notFound);
       }
       setLesson(res);
+    });
+    getNoteByLessonId(id).then((res) => {
+      setListNotes(res);
     });
   }, [id]);
   useEffect(() => {
@@ -159,7 +177,7 @@ function Lesson() {
       for (const lesson of lessons) {
         if (!lesson.completed) {
           const currentLessonId = lesson.id;
-          // completedLesson(currentLessonId);
+          completedLesson(currentLessonId);
           const currentLessonIndex = lessons.findIndex(
             (lesson) => lesson.id === currentLessonId
           );
@@ -177,10 +195,11 @@ function Lesson() {
 
   const handleNote = () => {
     const data = {
-      timeNote: timeNote,
-      note: note,
+      time: currentTime,
+      content: note,
     };
     setNotes([...notes, data]);
+    addNoteToLesson(id, data);
     setNote("");
   };
 
@@ -206,11 +225,16 @@ function Lesson() {
               lessons
             </div>
           </div>
-          <div className={cx("note")}>
+          <div
+            className={cx("note")}
+            onClick={() => {
+              setNoteOpen(true);
+            }}
+          >
             <FontAwesomeIcon icon={faStickyNote} className={cx("icon-note")} />
-            <span>Note</span>
+            <span>Notes</span>
           </div>
-          <div className={cx("instruction")}>
+          <div className={cx("instruction")} onClick={()=>{setInstructionOpen(true)}}>
             <FontAwesomeIcon
               icon={faInfoCircle}
               className={cx("icon-instruction")}
@@ -283,6 +307,7 @@ function Lesson() {
             <FontAwesomeIcon icon={faCalendarDays} />
             <span>{moment(lesson?.createdDate).format("MMMM DD, YYYY")}</span>
           </div>
+          <div className={cx("description")}>{lesson?.description}</div>
           <div className={cx("comment")}>
             <div className={cx("comment__title")}>
               (<span>{comments?.length}</span>)Comment
@@ -328,7 +353,7 @@ function Lesson() {
             Add note
           </Button>
           <Drawer
-            title="Notes"
+            title="Add note"
             open={commentsOpen}
             onClose={() => {
               setCommentsOpen(false);
@@ -359,15 +384,51 @@ function Lesson() {
                   {notes.map((note, index) => (
                     <div key={index} className={cx("note-content")}>
                       <div className={cx("time-note")}>
-                        {formatTime(note.timeNote)}
+                        {formatTime(note.time)}
                       </div>
-                      <div className={cx("note")}>{note.note}</div>
+                      <div className={cx("note")}>{note.content}</div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </Drawer>
+          <Drawer
+            title="List notes"
+            open={noteOpen}
+            onClose={() => {
+              setNoteOpen(false);
+            }}
+            maskClosable
+          >
+            <List
+              dataSource={listNotes}
+              renderItem={(item) => {
+                return (
+                  <List.Item>
+                    <div className={cx("time-note")}>
+                      {formatTime(item.time)}
+                    </div>
+                    <div className={cx("note")}>{item.content}</div>
+                    <DeleteOutlined
+                      style={{ color: "red", cursor: "pointer" }}
+                      onClick={() => {
+                        deleteNote(item.id);
+                      }}
+                    />
+                  </List.Item>
+                );
+              }}
+            ></List>
+          </Drawer>
+          <Drawer
+            title="Instruction"
+            open={instructionOpen}
+            onClose={() => {
+              setInstructionOpen(false);
+            }}
+            maskClosable
+          ></Drawer>
         </div>
       </div>
     </div>

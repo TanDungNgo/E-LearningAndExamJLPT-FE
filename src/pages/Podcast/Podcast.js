@@ -73,11 +73,13 @@ function Podcast() {
                     </div>
                   </div>
                   <div className={cx("card-podcast__action")}>
-                    <FontAwesomeIcon
-                      className={cx("card-podcast__icon")}
-                      icon={faPlay}
-                      onClick={() => handlePlay(episode.audioUrl)}
-                    />
+                    <div className={cx("border__icon")}>
+                      <FontAwesomeIcon
+                        className={cx("card-podcast__icon")}
+                        icon={faPlay}
+                        onClick={() => handlePlay(episode.audioUrl)}
+                      />
+                    </div>
                   </div>
                 </div>
               </li>

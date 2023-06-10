@@ -17,8 +17,7 @@ function LessonService() {
           }).then(() => {
             if (role === "admin") {
               navigate(routes.lessonManagement);
-            }
-            else  {
+            } else {
               navigate(`/profileUser/updateCourse/:idCourse`);
             }
           });
@@ -84,9 +83,7 @@ function LessonService() {
           }).then(() => {
             if (role === "admin") {
               navigate(routes.lessonManagement);
-            }
-            else {
-              
+            } else {
             }
           });
         } else {
@@ -97,7 +94,7 @@ function LessonService() {
     }
   };
   const completedLesson = async (id) => {
-    try{
+    try {
       const res = await request.put(`/lessons/watched/${id}`);
 
       notification.success({
@@ -105,8 +102,7 @@ function LessonService() {
         description: res.data.message,
       });
       return res.data.data;
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
@@ -139,13 +135,41 @@ function LessonService() {
           }).then(() => {
             if (role === "admin") {
               navigate(routes.lessonManagement);
-            }
-            else {
-              navigate(`/profileUser/updateCourse/:idCourse/listLesson/:idLesson`);
+            } else {
+              navigate(
+                `/profileUser/updateCourse/:idCourse/listLesson/:idLesson`
+              );
             }
           });
         } else {
         }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addNoteToLesson = async (id, note) => {
+    try {
+      await request.post(`/lessons/note/${id}`, note).then((res) => {
+        // console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getNoteByLessonId = async (id) => {
+    try {
+      const res = await request.get(`/lessons/notes/${id}`);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+  const deleteNote = async (id) => {
+    try {
+      await request.delete(`/lessons/note/${id}`).then((res) => {
+        // console.log(res);
       });
     } catch (error) {
       console.log(error);
@@ -162,6 +186,9 @@ function LessonService() {
     completedLesson,
     deleteComment,
     deleteLesson,
+    addNoteToLesson,
+    getNoteByLessonId,
+    deleteNote,
   };
 }
 

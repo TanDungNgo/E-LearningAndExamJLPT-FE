@@ -11,7 +11,7 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu } from "antd";
+import { Menu, notification } from "antd";
 import classNames from "classnames/bind";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SideMenu.module.scss";
@@ -33,6 +33,13 @@ function SideMenu() {
       className={cx("side-menu")}
       mode="inline"
       onClick={(item) => {
+        if (item.key === "/admin/settings") {
+          notification.info({
+            message: "Coming soon",
+            description: "This feature is coming soon",
+          });
+          return;
+        }
         navigate(item.key);
       }}
       selectedKeys={selectedKey}
