@@ -1,5 +1,5 @@
 import { Button, Select, Space, Table, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined, ExportOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
 import { Option } from "antd/es/mentions";
@@ -9,6 +9,8 @@ import { Link, useParams } from "react-router-dom";
 import examData from "~/data/examData";
 import examService from "~/services/examService";
 import QuestionService from "~/services/questionService";
+import { saveAs } from "file-saver";
+import XLSX from 'xlsx/dist/xlsx.full.min';
 
 const columns = [
     {
@@ -107,6 +109,31 @@ function QuestionManagement() {
 
     //     );
     // });
+    const handleExport = () => {
+        // Get the table data
+        const dataSource = questionData;
+      
+        // Prepare the worksheet
+        const worksheet = XLSX.utils.json_to_sheet(dataSource);
+      
+        // Prepare the workbook
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      
+        // Convert the workbook to a binary string
+        const excelBuffer = XLSX.write(workbook, {
+          bookType: "xlsx",
+          type: "array",
+        });
+      
+        // Create a Blob from the binary string
+        const blob = new Blob([excelBuffer], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+      
+        // Save the file
+        saveAs(blob, "q_data.xlsx");
+      };
     return (
         <div>
             <div style={{ marginBottom: 16 }}>
@@ -116,11 +143,14 @@ function QuestionManagement() {
                     onChange={handleSearchTextChange}
                     style={{ width: 200, marginRight: 16 }}
                 />
-                <Link to="/admin/question/add">
-                    <Button type="primary" icon={<PlusOutlined />}>
+                <Link to={`/admin/exam/${id}/add`}>
+                    <Button type="primary" icon={<PlusOutlined />} style={{ marginRight: 16 }}>
                         Insert
                     </Button>
                 </Link>
+                <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+                    Export
+                </Button>
             </div>
             <Link to={`/admin/exam/${id}`}>
                 <Table

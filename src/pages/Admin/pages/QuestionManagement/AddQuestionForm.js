@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -11,24 +11,29 @@ import {
 } from "antd";
 import { InboxOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined} from '@ant-design/icons';
 import examService from "~/services/examService";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 
-const AddVocabularyFolderForm = () => {
+const AddVocabularyFolderForm = (props) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
   const [form] = Form.useForm();
   const {createQuestion} = examService();
-
   const onFinish = async (values) => {
+    const convertedArray = values.answers.map((item) => item.option);
     const data = {
+      examId: id,
       ...values,
+      answers: convertedArray,
     }
-
     console.log(data);
-
-    
     setProgress(100);
+    createQuestion(data, id);
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -51,8 +56,6 @@ const AddVocabularyFolderForm = () => {
     return e?.fileList;
   };
   
-
-
   return (
     <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
       <Form.Item
@@ -64,7 +67,7 @@ const AddVocabularyFolderForm = () => {
       </Form.Item>
       <Form.Item
         label="Type Question"
-        name="type_question"
+        name="type"
         rules={[{ required: true, message: "Please select a type question" }]}
       >
         <Select>
@@ -80,65 +83,70 @@ const AddVocabularyFolderForm = () => {
       >
         <Input placeholder= "Question" />
       </Form.Item>
-      
-    <Form.List name="answers">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space
-                key={key}
-                style={{
-                  display: 'flex',
-                  marginBottom: 8,
-                }}
-                align="baseline"
-              >
-                <Form.Item
-                  {...restField}
-                  name={[name, 'option']}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Missing option ',
-                    },
-                  ]}
+      <Form.Item label="Answer"> 
+        <Form.List name="answers">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Space
+                  key={key}
+                  style={{
+                    display: 'flex',
+                    marginBottom: 8,
+                  }}
+                  align="baseline"
                 >
-                  <Input placeholder="Option" />
-                </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add Answer
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'option']}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Missing option ',
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Option" />
+                  </Form.Item>
+                  <MinusCircleOutlined onClick={() => remove(name)} />
+                </Space>
+              ))}
+              <Form.Item>
+                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  Add Answer
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </Form.Item> 
       <Form.Item
-      name="upload"
-      label="Upload"
-      valuePropName="fileList"
-      getValueFromEvent={normFile}
-    >
-      <Upload name="logo" action="/upload.do" listType="picture">
-        <Button icon={<UploadOutlined />}>Upload Image</Button>
-      </Upload>
-    </Form.Item>
-
-    <Form.Item label="Audio">
-      <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-        <Upload.Dragger name="files" action="/upload.do">
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-        </Upload.Dragger>
+        label="Correct Answer"
+        name="correctAnswer"
+        rules={[{ required: true, message: "Please input a correct answer!" }]}
+      >
+        <Input />
       </Form.Item>
-    </Form.Item>
+      <Form.Item
+        label="Explanation"
+        name="explanation"
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="image"
+        label="Image"
+        valuePropName="fileList"
+        getValueFromEvent={normFile}
+      >
+        <Upload name="logo" action="/upload.do" listType="picture">
+          <Button icon={<UploadOutlined />}>Upload Image</Button>
+        </Upload>
+      </Form.Item>
+
+      <Form.Item label="Audio" name="audioFile">
+          <Input/>
+      </Form.Item>
       
       <Form.Item
         label="Status"

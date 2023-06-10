@@ -50,7 +50,7 @@ const routes = {
   addArticles: "/admin/articles/add",
   addVocabulary: "/admin/vocabularyFolder/:idFolder/vocabulary/add",
   addExam: "/admin/exam/add",
-  addQuestion: "/admin/question/add",
+  addQuestion: "/admin/exam/:id/add",
 
   editCourse: "/admin/course/edit/:id",
   editLesson: "/admin/lesson/edit/:id",

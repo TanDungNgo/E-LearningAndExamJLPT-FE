@@ -50,10 +50,20 @@ function ExamService() {
       console.log(error);
     }
   };
-  const createQuestion = async (question) => {
+  const createQuestion = async (question,id) => {
     try {
-      const res = await request.post(`/questions`, question);
-      return res.data.data;
+      await request.post(`/questions`, question).then((res) => {
+        if (res.data.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            text: res.data.message,
+            title: "Success!",
+          }).then(() => {
+            navigate(`/admin/exam/${id}`);
+          });
+        } else {
+        }
+      });
     } catch (error) {
       console.log(error);
     }
