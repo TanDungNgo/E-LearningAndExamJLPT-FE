@@ -169,7 +169,7 @@ function CourseDetail() {
       <div className={cx("card__content")}>
         <div className={cx("card__content-title")}>Course Content</div>
         <li>
-          {course?.lessons?.length ? course?.lessons?.length : "0"} video
+          {course?.lessons?.length ? course?.lessons?.length : course?.numberOfLesson} video
           lectures.
         </li>
         <li>Full access for life.</li>
