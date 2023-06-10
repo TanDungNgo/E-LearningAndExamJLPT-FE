@@ -9,14 +9,9 @@ import { Form, Input, Select } from "antd";
 import { Option } from "antd/es/mentions";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CourseService from "~/services/courseService";
-import lessonService from "~/services/lessonService";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storageFirebase from "~/configs/firebaseConfig";
-import { faCheck, faLeaf } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import routes from "~/configs/routes";
 import Swal from "sweetalert2";
-import { Colors } from "chart.js";
 const cx = classNames.bind(styles);
 
 function UpdateCourseCard(props) {
@@ -50,7 +45,6 @@ function UpdateCourseCard(props) {
     }
   };
   const handleShowModal = async () => {
-    navigate(`/profileUser/updateCourse/${props.course.id}`);
     const course = await getCourseById(props.course.id);
     setImgSrc(course.banner);
       form.setFieldsValue({
@@ -144,7 +138,7 @@ function UpdateCourseCard(props) {
         handleShowModal();
         break;
       case "updateLesson":
-        navigate(`/profileUser/updateCourse/${props.course.id}/listLesson/:idLesson`);
+        navigate(`/profileUser/updateCourse/${props.course.id}/listLesson`);
         break;
       case "deleteCourse":
         handleDeleteCourse(props.course.id, "teacher");
