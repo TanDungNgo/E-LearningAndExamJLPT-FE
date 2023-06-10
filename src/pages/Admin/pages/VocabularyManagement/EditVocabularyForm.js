@@ -12,15 +12,18 @@ import vocabularyData from "~/data/vocabularyData";
 const { Option } = Select;
 
 const EditVocabularyForm = () => {
-  const { id } = useParams();
-  const { getVocabularyById, updateVocabulary } = VocabularyFolderService();
+  const { id, idFolder } = useParams();
+  const { getVocabularyById, updateVocabulary, getVocabularyFolderById } = VocabularyFolderService();
   const [vocabulary, setVocabulary] = useState({});
+  const [vocabularyFolder, setVocabularyFolder] = useState({});
 
   const [form] = Form.useForm();
   useEffect(() => {
     const getVocabulary = async () => {
       const vocabulary = await getVocabularyById(id);
+      const vocabularyFolder = await getVocabularyFolderById(idFolder);
       setVocabulary(vocabulary); // Lưu dữ liệu grammar vào state
+      setVocabularyFolder(vocabularyFolder);
       form.setFieldsValue({
         audio: vocabulary.audio,
         example: vocabulary.example,
@@ -37,9 +40,9 @@ const EditVocabularyForm = () => {
     console.log(values);
     const data = {
       ...values,
-      vocabularyFolder_id: 1,
+      vocabularyFolder_id: idFolder,
     }
-    await updateVocabulary(id, data);
+    await updateVocabulary(id, data, idFolder);
   };
 
   return (
