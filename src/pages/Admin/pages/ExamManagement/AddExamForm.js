@@ -6,22 +6,24 @@ import {
   Button,
   Progress,
   Switch,
+  InputNumber,
 } from "antd";
+import ExamService from "~/services/examService";
 
 const { Option } = Select;
 
 const AddExamForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-//   const { createVocabularyFolder } = vocabularyFolderService();
+  const {createExam} = ExamService();
 
   const onFinish = async (values) => {
     const data = {
       ...values,
     }
 
-    // console.log(data);
-    // createVocabularyFolder(data);
+    console.log(data);
+    createExam(data);
     
     setProgress(100);
   };
@@ -52,6 +54,22 @@ const AddExamForm = () => {
           <Option value="N4">N4</Option>
           <Option value="N5">N5</Option>
         </Select>
+      </Form.Item>
+      <Form.Item
+        label="Price"
+        name="price"
+        rules={[
+          {
+            required: true,
+            type: "number",
+            message: "Please input a price!",
+          },
+        ]}
+      >
+        <InputNumber
+          addonAfter={<Form.Item noStyle>$</Form.Item>}
+          style={{ width: "20%" }}
+        />
       </Form.Item>
       <Form.Item
         label="Status"

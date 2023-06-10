@@ -68,9 +68,9 @@ const AddVocabularyFolderForm = () => {
         rules={[{ required: true, message: "Please select a type question" }]}
       >
         <Select>
-          <Option value="language_knowledge_questions">Language knowledge questions</Option>
-          <Option value="listening_questions">Listening questions</Option>
-          <Option value="reading_questions">Reading questions</Option>
+          <Option value="0">Language knowledge questions</Option>
+          <Option value="1">Reading questions</Option>
+          <Option value="2"> Listening questions</Option>
         </Select>
       </Form.Item>
       <Form.Item

@@ -123,14 +123,12 @@ function ListLesson(props) {
   };
   
   const handleShowUpdateModal = async (id) => {
-    navigate(`/profileUser/updateCourse/${idCourse}/listLesson/${id}`);
-      const lesson = await getLessonById(id);
-      console.log(lesson);
-      setVideoSrc(lesson.urlVideo);
-      form.setFieldsValue({
-        name: lesson.name,
-        description: lesson.description,
-      });
+    const lesson = await getLessonById(id);
+    setVideoSrc(lesson.urlVideo);
+    form.setFieldsValue({
+      name: lesson.name,
+      description: lesson.description,
+    });
     setOpenUpdateModal(true);
   };
   const handleShowInsertModal = async () => {
@@ -230,7 +228,7 @@ function ListLesson(props) {
   ];
   
   return (
-    <div>
+    <div style={{minHeight: 350}}>
       <div style={{ marginBottom: 16, marginTop: 16 }}>
         <Input
           placeholder="Search by name"
@@ -265,9 +263,21 @@ function ListLesson(props) {
         <Form 
           onFinish={onFinishUpdate} 
           onFinishFailed={onFinishFailed}
+          form={form}
         >
           <div className={cx("card-update__body")}>
             <div className={cx("card-update__input")}>
+            <Form.Item
+                name="course_id"
+              >
+                <Select placeholder="Choose a course" defaultValue={course.name} disabled>
+                  {courseData.map((course) => (
+                    <Option key={course.id} values={course.id}>
+                      {course.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
               {/* <Form.Item
                 name="course_name"
                 rules={[{ required: true, message: "Please input a course!" }]}

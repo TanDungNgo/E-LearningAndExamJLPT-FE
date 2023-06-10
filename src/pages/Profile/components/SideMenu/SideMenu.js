@@ -47,7 +47,7 @@ const SideMenu = (props) => {
       {
         label: "Update Course",
         icon: <FontAwesomeIcon icon={faPenToSquare} />,
-        key: "/profileUser/updateCourse/:idCourse",
+        key: "/profileUser/updateCourse",
       },
       // {
       //   label: "Create Lesson",

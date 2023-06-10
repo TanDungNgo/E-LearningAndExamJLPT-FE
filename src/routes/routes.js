@@ -57,6 +57,7 @@ import EditArticleForm from "~/pages/Admin/pages/ArticlesManagement/EditArticleF
 import EditGrammarForm from "~/pages/Admin/pages/GrammarManagement/EditGrammarForm";
 import EditVocabularyFolderForm from "~/pages/Admin/pages/VocabularyFolderManagement/EditVocabularyFolderForm";
 import EditVocabularyForm from "~/pages/Admin/pages/VocabularyManagement/EditVocabularyForm";
+import EditExamForm from "~/pages/Admin/pages/ExamManagement/EditExamForm";
 import StatisticsPage from "~/pages/Admin/pages/Statistics/Statistics";
 import Statistics from "~/pages/Admin/pages/Statistics/Statistics";
 import LearningPath from "~/components/LearningPath/LearningPath";
@@ -249,6 +250,7 @@ const privateRoutes = [
   {path: config.routes.editGrammar, component: EditGrammarForm, layout: Admin},
   {path: config.routes.editVocabularyFolder, component: EditVocabularyFolderForm, layout: Admin},
   {path: config.routes.editVocabulary, component: EditVocabularyForm, layout: Admin},
+  {path: config.routes.editExam, component: EditExamForm, layout: Admin},
 ];
 
 export { publicRoutes, privateRoutes };

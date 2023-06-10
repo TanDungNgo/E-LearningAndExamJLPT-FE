@@ -32,7 +32,7 @@ function GrammarService() {
             text: res.data.message,
             title: "Success!",
           }).then(() => {
-            window.location.reload();
+            navigate(routes.grammarManagement);
           });
         } else {
         }
