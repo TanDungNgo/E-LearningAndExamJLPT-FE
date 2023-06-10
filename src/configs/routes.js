@@ -56,6 +56,7 @@ const routes = {
   editGrammar: "/admin/grammar/edit/:id",
   editVocabularyFolder: "/admin/vocabularyFolder/edit/:id",
   editVocabulary: "/admin/vocabulary/edit/:id",
+  editExam: "/admin/exam/edit/:id"
 
 };
 

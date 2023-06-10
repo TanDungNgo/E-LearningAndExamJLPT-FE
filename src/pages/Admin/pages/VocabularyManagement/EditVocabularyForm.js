@@ -37,7 +37,7 @@ const EditVocabularyForm = () => {
     console.log(values);
     const data = {
       ...values,
-      vocabularyFolder_id: 1,
+      vocabularyFolder_id: 2,
     }
     await updateVocabulary(id, data);
   };

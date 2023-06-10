@@ -19,7 +19,7 @@ const AddVocabularyForm = () => {
   const onFinish = async (values) => {
     const data = {
       ...values,
-      vocabularyFolder_id: 1,
+      vocabularyFolder_id: 4,
     }
 
     console.log(data);
