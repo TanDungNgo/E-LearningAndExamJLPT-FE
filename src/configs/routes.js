@@ -10,7 +10,7 @@ const routes = {
   createCourse: "/profileUser/createCourse",
   courseCreated: "/profileUser/courseCreated",
   completedCourse: "/profileUser/completedCourse",
-  updateCourseFolder: "/profileUser/updateCourse/:id",
+  updateCourseFolder: "/profileUser/updateCourse",
   overview: "/overview",
   notFound: "*",
   lesson: "/course/:courseId/lesson/:id",
@@ -28,7 +28,7 @@ const routes = {
   examHistoryFolder: "/profileUser/examHistoryFolder",
   examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
   learningPath: "/learningPath",
-  listLesson: "/profileUser/updateCourse/:idCourse/listLesson/:idLesson",
+  listLesson: "/profileUser/updateCourse/:idCourse/listLesson",
 
   // Admin routes
   admin: "/admin",
