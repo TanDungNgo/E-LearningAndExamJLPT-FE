@@ -36,7 +36,7 @@ const routes = {
   lessonManagement: "/admin/lesson",
   grammarManagement: "/admin/grammar",
   vocabularyFolderManagement: "/admin/vocabularyfolder",
-  vocabularyManagement: "/admin/vocabulary/:id",
+  vocabularyManagement: "/admin/vocabularyfolder/:id",
   articlesManagement: "/admin/articles",
   userManagement: "/admin/user",
   examManagement: "/admin/exam",

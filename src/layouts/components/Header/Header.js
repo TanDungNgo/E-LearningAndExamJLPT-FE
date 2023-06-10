@@ -11,7 +11,7 @@ import "tippy.js/dist/tippy.css";
 import AuthService from "~/services/authService";
 import { useSelector } from "react-redux";
 import AvatarWithDropdown from "~/components/AvatarWithDropdown/AvatarWithDropdown";
-import { Badge, Dropdown, Menu } from "antd";
+import { Alert, Badge, Drawer, Dropdown, List, Menu, Tooltip } from "antd";
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
@@ -49,6 +49,8 @@ const Header = () => {
   const { getCurrentUser, logout } = AuthService();
   const user = useSelector((state) => state.auth.login.currentUser);
   const [currentUser, setCurrentUser] = useState();
+  const [comments, setComments] = useState(["New Course", "New Article"]);
+  const [commentsOpen, setCommentsOpen] = useState(false);
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
@@ -150,12 +152,17 @@ const Header = () => {
       <div className={cx("actions")}>
         {currentUser ? (
           <>
-            <Badge count={2}>
-              <Tippy content="Notification" placement="bottom">
-                <button className={cx("action__btn")}>
+            <Badge count={comments.length}>
+              <Tooltip placement="bottom" title={"Notification"}>
+                <button
+                  className={cx("action__btn")}
+                  onClick={() => {
+                    setCommentsOpen(true);
+                  }}
+                >
                   <FontAwesomeIcon icon={faBell} className={cx("icon")} />
                 </button>
-              </Tippy>
+              </Tooltip>
             </Badge>
             <AvatarWithDropdown user={currentUser} logout={handleLogout} />
           </>
@@ -182,6 +189,30 @@ const Header = () => {
             <FontAwesomeIcon icon={faBars} />
           </div>
         </Dropdown>
+        <Drawer
+          title="Notifications"
+          open={commentsOpen}
+          onClose={() => {
+            setCommentsOpen(false);
+          }}
+          maskClosable
+        >
+          <List
+            dataSource={comments}
+            renderItem={(item) => {
+              return (
+                <List.Item>
+                  <Alert
+                    style={{ width: "100%" }}
+                    message={item}
+                    type="info"
+                    closable
+                  />
+                </List.Item>
+              );
+            }}
+          ></List>
+        </Drawer>
       </div>
     </div>
   );
