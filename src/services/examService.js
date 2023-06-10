@@ -46,6 +46,14 @@ function examService() {
       console.log(error);
     }
   };
+  const createQuestion = async (question) => {
+    try {
+      const res = await request.post(`/questions`, question);
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     getAllExam,
@@ -53,6 +61,7 @@ function examService() {
     submitExam,
     getRandomExamByLevel,
     getExamById,
+    createQuestion,
   };
 }
 

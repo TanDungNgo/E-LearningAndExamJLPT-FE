@@ -10,13 +10,15 @@ import {
   Space
 } from "antd";
 import { InboxOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined} from '@ant-design/icons';
+import examService from "~/services/examService";
 
 const { Option } = Select;
 
 const AddVocabularyFolderForm = () => {
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
-
+  const [form] = Form.useForm();
+  const {createQuestion} = examService();
 
   const onFinish = async (values) => {
     const data = {
@@ -24,7 +26,7 @@ const AddVocabularyFolderForm = () => {
     }
 
     console.log(data);
-    // createVocabularyFolder(data);
+
     
     setProgress(100);
   };

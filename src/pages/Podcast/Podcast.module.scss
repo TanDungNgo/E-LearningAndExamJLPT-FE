@@ -21,7 +21,7 @@
     color: #f483cb;
   }
 }
-.list-card{
+.list-card {
   width: 65%;
 }
 .card-podcast {
@@ -79,6 +79,16 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    .border__icon {
+      padding: 5px;
+      border: 0.2rem solid;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   &:hover {
     box-shadow: 0 9px 17px -6px rgba(0, 0, 0, 0.4);
