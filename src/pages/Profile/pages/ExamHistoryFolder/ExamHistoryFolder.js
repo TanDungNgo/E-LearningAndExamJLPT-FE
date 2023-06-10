@@ -54,7 +54,7 @@ function ExamHistoryFolder() {
     });
   }, []);
   return (
-    <div>
+    <div style={{minHeight: 368}}>
       <Table
         ref={tableRef}
         columns={columns}

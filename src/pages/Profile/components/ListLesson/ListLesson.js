@@ -228,7 +228,7 @@ function ListLesson(props) {
   ];
   
   return (
-    <div>
+    <div style={{minHeight: 350}}>
       <div style={{ marginBottom: 16, marginTop: 16 }}>
         <Input
           placeholder="Search by name"
