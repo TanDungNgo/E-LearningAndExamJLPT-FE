@@ -23,7 +23,7 @@ function VocabularyFolderManagement() {
       dataIndex: "title",
       key: "title",
       render: (text, record) => (
-        <Link to={`/admin/vocabulary/${record.id}`}>{text}</Link>
+        <Link to={`/admin/vocabularyfolder/${record.id}`}>{text}</Link>
       ),
     },
     

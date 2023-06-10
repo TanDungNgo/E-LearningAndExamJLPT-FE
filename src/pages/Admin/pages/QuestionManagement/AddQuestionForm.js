@@ -79,7 +79,7 @@ const AddVocabularyFolderForm = () => {
         <Input placeholder= "Question" />
       </Form.Item>
       
-    <Form.List name="users">
+    <Form.List name="answers">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -108,7 +108,7 @@ const AddVocabularyFolderForm = () => {
             ))}
             <Form.Item>
               <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add Question
+                Add Answer
               </Button>
             </Form.Item>
           </>
