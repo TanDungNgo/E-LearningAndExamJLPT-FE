@@ -11,7 +11,9 @@ import {
   Switch,
 } from "antd";
 import vocabularyFolderService from "~/services/vocabularyFolderService";
+import { useParams } from "react-router-dom";
 const AddVocabularyForm = () => {
+  const {idFolder} = useParams();
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(true);
   const {createVocabulary} = vocabularyFolderService();
@@ -19,11 +21,11 @@ const AddVocabularyForm = () => {
   const onFinish = async (values) => {
     const data = {
       ...values,
-      vocabularyFolder_id: 4,
+      vocabularyFolder_id: idFolder,
     }
 
     console.log(data);
-    createVocabulary(data);
+    createVocabulary(data, idFolder);
     setProgress(100);
 
   };

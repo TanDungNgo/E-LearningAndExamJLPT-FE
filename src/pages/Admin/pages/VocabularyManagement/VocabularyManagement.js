@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 
 
 function VocabularyManagement() {
+  const { idFolder} = useParams();
   const columns = [
     {
       title: "ID",
@@ -46,7 +47,7 @@ function VocabularyManagement() {
       key: "action",
       render: (id) => (
         <Space size="middle">
-          <Link to={`/admin/vocabulary/edit/${id}`}>
+          <Link to={`/admin/vocabularyfolder/${idFolder}/vocabulary/edit/${id}`}>
             <EditOutlined
               style={{ fontSize: "20px", marginLeft: "10px", color: "#0a9a41" }}
             />
@@ -59,14 +60,13 @@ function VocabularyManagement() {
       ),
     },
   ];
-  const { id } = useParams();
   const { getVocabularyFolderById, deleteVocabulary, getAllVocabulary} = vocabularyFolderService();
   const [listVocabularies, setListVocabularies] = useState([]);
   const [vocabularyFolder, setVocabularyFolder] = useState();
   const [vocabularyData, setVocabularyData] = useState([]);
 
   useEffect(() => {
-    getVocabularyFolderById(id).then((res) => {
+    getVocabularyFolderById(idFolder).then((res) => {
       setVocabularyFolder(res);
       console.log(res);
       setListVocabularies(res.vocabularies);
@@ -96,8 +96,8 @@ function VocabularyManagement() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteVocabulary(idVocabulary, id).then((res) => {
-          getVocabularyFolderById(id).then((res) => {
+        deleteVocabulary(idVocabulary, idFolder).then((res) => {
+          getVocabularyFolderById(idFolder).then((res) => {
             setVocabularyFolder(res);
             console.log(res);
             setListVocabularies(res.vocabularies);
@@ -117,7 +117,7 @@ function VocabularyManagement() {
           onChange={handleSearchTextChange}
           style={{ width: 200, marginRight: 16 }}
         />
-        <Link to="/admin/vocabulary/add">
+        <Link to={`/admin/vocabularyfolder/${idFolder}/vocabulary/add`}>
           <Button type="primary" icon={<PlusOutlined />}>
             Insert
           </Button>

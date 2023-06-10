@@ -10,7 +10,7 @@ const routes = {
   createCourse: "/profileUser/createCourse",
   courseCreated: "/profileUser/courseCreated",
   completedCourse: "/profileUser/completedCourse",
-  updateCourseFolder: "/profileUser/updateCourse/:id",
+  updateCourseFolder: "/profileUser/updateCourse",
   overview: "/overview",
   notFound: "*",
   lesson: "/course/:courseId/lesson/:id",
@@ -28,7 +28,7 @@ const routes = {
   examHistoryFolder: "/profileUser/examHistoryFolder",
   examHistory: "/profileUser/examHistoryFolder/examHistory/:id",
   learningPath: "/learningPath",
-  listLesson: "/profileUser/updateCourse/:idCourse/listLesson/:idLesson",
+  listLesson: "/profileUser/updateCourse/:idCourse/listLesson",
 
   // Admin routes
   admin: "/admin",
@@ -36,7 +36,7 @@ const routes = {
   lessonManagement: "/admin/lesson",
   grammarManagement: "/admin/grammar",
   vocabularyFolderManagement: "/admin/vocabularyfolder",
-  vocabularyManagement: "/admin/vocabularyfolder/:id",
+  vocabularyManagement: "/admin/vocabularyfolder/:idFolder",
   articlesManagement: "/admin/articles",
   userManagement: "/admin/user",
   examManagement: "/admin/exam",
@@ -48,7 +48,7 @@ const routes = {
   addGrammar: "/admin/grammar/add",
   addVocabularyFolder: "/admin/vocabularyfolder/add",
   addArticles: "/admin/articles/add",
-  addVocabulary: "/admin/vocabulary/add",
+  addVocabulary: "/admin/vocabularyFolder/:idFolder/vocabulary/add",
   addExam: "/admin/exam/add",
   addQuestion: "/admin/question/add",
 
@@ -57,8 +57,12 @@ const routes = {
   editArticle: "/admin/articles/edit/:id",
   editGrammar: "/admin/grammar/edit/:id",
   editVocabularyFolder: "/admin/vocabularyFolder/edit/:id",
+<<<<<<< HEAD
   editVocabulary: "/admin/vocabulary/edit/:id",
   editExam: "/admin/exam/edit/:id"
+=======
+  editVocabulary: "/admin/vocabularyFolder/:idFolder/vocabulary/edit/:id",
+>>>>>>> develop
 
 };
 
